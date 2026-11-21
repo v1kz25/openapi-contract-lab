@@ -54,3 +54,5 @@ jobs:
           "OASDIFF_BINARY=$binary" >> $env:GITHUB_ENV
       - name: Format, test, analyze and build
         run: ./scripts/verify.ps1
+      - name: Smoke test compiled CLI
+        run: ./scripts/smoke.ps1 -Engine $env:OASDIFF_BINARY

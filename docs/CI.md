@@ -28,6 +28,8 @@ Las descargas iniciales requieren Internet: checkout, preparación de Go y archi
 3. `go vet ./...`.
 4. `go build -o dist/openapi-contract-lab.exe ./cmd/openapi-contract-lab`.
 
+Desde el issue #8, un paso posterior ejecuta `scripts/smoke.ps1 -Engine $env:OASDIFF_BINARY` sobre ese binario, incluyendo los códigos de salida y los tres formatos. Los smoke locales de Windows/PowerShell se documentan en [RELEASE.md](RELEASE.md).
+
 El script falla en cuanto una comprobación falla. `.gitattributes` mantiene los Go con LF para que el formato sea consistente al hacer checkout en Windows.
 
 `internal/cli/testdata/regression/` añade contratos mínimos OpenAPI **3.1.0**, YAML inválido intencionado y `cases.json` con expectativas revisables. El test CLI comprueba cinco casos: opcional a obligatorio (exit 3), obligatorio a opcional (exit 0), descripción (exit 0 y cero hallazgos), idéntico (igual) y YAML inválido (exit 1 sin informe). Para los hallazgos se verifican ID, nivel, severidad, compatibilidad, explicación, operación/ruta y ambas ubicaciones.
