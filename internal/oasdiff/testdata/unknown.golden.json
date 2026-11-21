@@ -1,0 +1,23 @@
+{
+  "engine": "oasdiff",
+  "engineVersion": "1.39.0",
+  "findings": [
+    {
+      "ruleId": "future-check",
+      "severity": "unknown",
+      "compatibility": "unknown",
+      "upstreamLevel": 99,
+      "message": "upstream message",
+      "section": "components",
+      "upstream": {
+        "id": "future-check",
+        "text": "upstream message",
+        "level": 99,
+        "section": "components",
+        "newDetail": {
+          "value": true
+        }
+      }
+    }
+  ]
+}
