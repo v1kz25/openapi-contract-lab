@@ -18,10 +18,10 @@ type messageSnapshot struct {
 
 func TestVerifiedMessages(t *testing.T) {
 	var snapshots []messageSnapshot
-	if len(ruleCases()) != 10 || len(templates) != 10 {
-		t.Fatal("expected ten documented rules and cases")
+	if len(ruleCases(t)) != 13 || len(templates) != 13 {
+		t.Fatal("expected thirteen documented rules and cases")
 	}
-	for _, test := range ruleCases() {
+	for _, test := range ruleCases(t) {
 		t.Run(test.id, func(t *testing.T) {
 			if !json.Valid([]byte(test.base)) || !json.Valid([]byte(test.head)) {
 				t.Fatal("invalid synthetic JSON fixture")
@@ -41,6 +41,33 @@ func TestVerifiedMessages(t *testing.T) {
 		})
 	}
 	assertSnapshot(t, "messages", snapshots)
+}
+
+func TestNewBreakingFallbacks(t *testing.T) {
+	for _, rule := range breakingRuleCases(t) {
+		for _, context := range []struct {
+			name, engine, version string
+			level                 int
+		}{
+			{"info", "oasdiff", oasdiff.Version, 1},
+			{"warning", "oasdiff", oasdiff.Version, 2},
+			{"unknown-level", "oasdiff", oasdiff.Version, 99},
+			{"other-version", "oasdiff", "future-version", 3},
+			{"other-engine", "other", oasdiff.Version, 3},
+		} {
+			t.Run(rule.id+"/"+context.name, func(t *testing.T) {
+				report := oasdiff.Report{
+					Engine: context.engine, EngineVersion: context.version,
+					Findings: []oasdiff.Finding{{RuleID: rule.id, UpstreamLevel: context.level, Message: "upstream context", Upstream: json.RawMessage(`{"extra":"retained"}`)}},
+				}
+				result := Enrich(report)
+				if !reflect.DeepEqual(result.Findings[0].Finding, report.Findings[0]) {
+					t.Fatal("fallback changed upstream data")
+				}
+				assertSnapshot(t, "fallback", result.Findings[0].Explanation)
+			})
+		}
+	}
 }
 
 func TestNeutralFallback(t *testing.T) {

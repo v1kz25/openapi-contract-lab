@@ -98,5 +98,35 @@
       "action": "Compruebe que el servidor deje de emitir el valor retirado y revise los flujos que dependían de recibirlo.",
       "locations": []
     }
+  },
+  {
+    "ruleId": "request-parameter-type-changed",
+    "explanation": {
+      "kind": "template",
+      "summary": "Cambia de forma incompatible el tipo o formato del parámetro de petición.",
+      "impact": "Un valor enviado según el contrato anterior puede incumplir el tipo o formato revisado; esta explicación conserva la clasificación del motor.",
+      "action": "Consulte los tipos o formatos concretos del mensaje original y revise la serialización y validación de los clientes afectados.",
+      "locations": []
+    }
+  },
+  {
+    "ruleId": "request-body-became-required",
+    "explanation": {
+      "kind": "template",
+      "summary": "El cuerpo de la petición pasa de opcional a obligatorio.",
+      "impact": "Una llamada que omitía el cuerpo puede dejar de cumplir el contrato revisado; no implica por sí solo cambios en sus propiedades.",
+      "action": "Localice las llamadas sin cuerpo y coordine su adaptación o una transición compatible antes de exigirlo.",
+      "locations": []
+    }
+  },
+  {
+    "ruleId": "response-required-property-removed",
+    "explanation": {
+      "kind": "template",
+      "summary": "Se retira una propiedad obligatoria del esquema de respuesta.",
+      "impact": "El contrato revisado deja de garantizar esa propiedad; un cliente que dependa de recibirla puede fallar.",
+      "action": "Identifique la propiedad y la respuesta en el mensaje original, revise los consumidores y acuerde una transición compatible.",
+      "locations": []
+    }
   }
 ]

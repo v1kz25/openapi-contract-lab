@@ -2,6 +2,8 @@
 
 > v0.1.0 experimental: CLI local con oasdiff, diez explicaciones, informes y política de severidad. Solo Windows x64 verificado; no se promete estabilidad de CLI/esquema ni cobertura completa de OpenAPI.
 
+En esta rama de desarrollo, el [issue #21](https://github.com/v1kz25/openapi-contract-lab/issues/21) amplía las explicaciones a trece combinaciones verificadas. Aún no hay release v0.2.0: el tag y los archivos de v0.1.0 conservan sus diez explicaciones originales.
+
 Explica cambios incompatibles entre contratos OpenAPI usando oasdiff, con informes locales y CI.
 
 ## Objetivo
@@ -31,7 +33,7 @@ Sin argumentos muestra ayuda. `--version` devuelve `openapi-contract-lab v0.1.0`
 
 Para comparar, preparar el binario oficial según el [spike](docs/OASDIFF-SPIKE.md). `--oasdiff` puede omitirse si oasdiff está en PATH. Las dos entradas deben ser archivos locales; se deshabilitan las referencias externas. La salida conserva rule ID, severidad, ruta, ubicaciones y el evento original. Ver [modelo y pruebas del adaptador](docs/OASDIFF-ADAPTER.md).
 
-Cada hallazgo incluye `explanation` con resumen, impacto, acción sugerida y ubicaciones. Las [diez reglas verificadas](docs/EXPLANATIONS.md) tienen texto determinista en español; otras reglas, niveles o versiones reciben un fallback neutral. La explicación conserva la clasificación de oasdiff y añade enlaces locales solo para fuentes que coinciden con las entradas conocidas.
+Cada hallazgo incluye `explanation` con resumen, impacto, acción sugerida y ubicaciones. Las [trece combinaciones verificadas en esta rama](docs/EXPLANATIONS.md) tienen texto determinista en español; otras reglas, niveles o versiones reciben un fallback neutral. La explicación conserva la clasificación de oasdiff y añade enlaces locales solo para fuentes que coinciden con las entradas conocidas.
 
 La salida JSON utiliza escapes Unicode para que Windows PowerShell 5.1 conserve los acentos incluso con codificaciones de consola antiguas. `ConvertFrom-Json` recupera el texto original; no hace falta cambiar la configuración global de Windows.
 
@@ -50,7 +52,7 @@ Una lista vacía de hallazgos no implica que los contratos sean idénticos: los 
 ## Funciones disponibles y límites
 
 - Comparación de dos archivos locales mediante oasdiff 1.39.0. Regresión probada con fixtures 3.0.3 y casos mínimos 3.1.0; no se afirma cobertura completa de 3.1 ni soporte verificado de 3.2.
-- Clasificación conservada del motor y diez explicaciones deterministas en español; fallback neutral para otras reglas/niveles.
+- Clasificación conservada del motor y trece explicaciones deterministas en español en esta rama (diez en v0.1.0); fallback neutral para otras reglas/niveles.
 - Informes JSON/Markdown/HTML offline y gate configurable por severidad. Timeout de comparación de 30 segundos; referencias externas y entradas URL/UNC deshabilitadas.
 - Solo Windows x64 verificado; PowerShell 5.1 y 7. El esquema de informe y la CLI siguen en desarrollo. Sin GUI, comparación por carpetas, editor ni autofix.
 
