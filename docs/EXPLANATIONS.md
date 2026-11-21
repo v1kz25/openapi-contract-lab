@@ -39,7 +39,7 @@ Las pruebas generan diez pares OpenAPI 3.0.3 mínimos y seguros en directorios t
 
 Una regla sin plantilla, un nivel distinto del par verificado o una versión de motor diferente recibe texto neutral que remite al mensaje y los datos originales. Esto incluye reglas conocidas cuya severidad se reduzca por contexto. No se sustituye INFO por ERR ni se inventa una causa para un nivel desconocido. Los campos `severity`, `compatibility` y `upstreamLevel` permanecen intactos.
 
-Una lista de hallazgos vacía sigue siendo `[]`: no se inventa una explicación para el cambio de descripción. Los códigos de salida siguen siendo operativos, con 0 para una comparación correcta incluso si hay breaking changes. No se implementa la política CI del issue #6 ni los informes del issue #5.
+Una lista de hallazgos vacía sigue siendo `[]`: no se inventa una explicación para el cambio de descripción. Las explicaciones no cambian la [política vigente](SEVERITY-POLICY.md): exit 3 si el informe no supera el umbral (por defecto `error`), 0 si lo supera o con `--fail-on none`, 1 para error operativo y 2 para argumentos inválidos.
 
 ## Enlaces
 
@@ -63,7 +63,7 @@ Desde PowerShell en la carpeta local `openapi-contract-lab` (si aparece System32
 
 ```powershell
 $informe = .\dist\openapi-contract-lab.exe compare --oasdiff .\dist\oasdiff-1.39.0\oasdiff.exe .\spikes\oasdiff\fixtures\base.yaml .\spikes\oasdiff\fixtures\required.yaml | ConvertFrom-Json
-$LASTEXITCODE # 0
+$LASTEXITCODE # 3: informe generado; breaking change con política predeterminada
 $informe.findings[0].explanation | Format-List kind, summary, impact, action
 $informe.findings[0].explanation.locations | Format-List *
 ```
@@ -81,7 +81,9 @@ $otro.findings[0].explanation | Format-List kind, summary, impact, action
 
 Esperado: regla upstream `request-parameter-type-changed`, `kind: fallback`, texto neutral y clasificación error/breaking conservada. El ejecutable está compilado y se ha ejecutado en el workspace; termina al imprimir el JSON.
 
-## Verificación real — 2026-11-21
+## Verificación histórica del issue #4 — 2026-11-21
+
+Evidencia anterior a los informes y la política de #5/#6; se conserva como registro histórico. Las instrucciones activas anteriores reflejan la política actual.
 
 - `go test ./...`, con `OASDIFF_BINARY` fijado y descargas Go deshabilitadas: PASS. Diez rule IDs/niveles contrastados con oasdiff real; snapshots de mensajes y fallback, preservación del hallazgo original, enlaces con espacios/Unicode/#, omisión de unidad Windows y fuentes desconocidas/ausentes.
 - `go vet ./...`, `gofmt` y compilación: correctos.
