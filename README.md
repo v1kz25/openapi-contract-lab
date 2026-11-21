@@ -1,6 +1,6 @@
 # openapi-contract-lab
 
-> Estado: comparación local con oasdiff, explicaciones para diez reglas, informes JSON/Markdown/HTML y política de severidad. Automatización CI y release aún pendientes.
+> Estado: comparación local con oasdiff, explicaciones para diez reglas, informes JSON/Markdown/HTML, política de severidad y CI de regresión para PR. Release aún pendiente.
 
 Explica cambios incompatibles entre contratos OpenAPI usando oasdiff, con informes locales y CI.
 
@@ -65,6 +65,7 @@ Una lista vacía de hallazgos no implica que los contratos sean idénticos: los 
 - El punto de entrada son los GitHub Issues, no implementar el MVP de golpe.
 - Spike local de oasdiff (issue #1): [decisión, ejemplos y evidencia](docs/OASDIFF-SPIKE.md). No es una CLI del proyecto.
 - Desarrollo principalmente desde Windows 11; sin infraestructura de pago.
+- [CI y regresión](docs/CI.md): runner estándar Windows, versiones fijadas, pruebas reales con oasdiff y análisis estático. El mismo script se puede ejecutar localmente.
 
 ## Riesgos
 
