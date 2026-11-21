@@ -18,7 +18,7 @@
 - No añadas trailers `Co-authored-by:` atribuidos a Codex, ChatGPT, OpenAI ni otros asistentes de IA.
 - No suplantes author/committer. Si una integración hace commits como bot, conserva su identidad real y advierte las atribuciones obligatorias.
 - Commits descriptivos; nunca `force push`, nunca borres ramas ni sobrescribas cambios ajenos.
-- Usa ramas `feat/<issue>-<nombre>` o `chore/<issue>-<nombre>` cuando corresponda.
+- Sigue Gitflow según docs/DEVELOPMENT.md: tareas y spikes en `feature/<issue>-<nombre>` desde `develop`, con PR hacia `develop`.
 - No mezcles cambios fuera del issue. Propón PR para revisión; nunca fusiones una PR sin aprobación explícita.
 - Antes de push/commit verifica diff, staged files, author/committer y que el mensaje no contiene trailers de IA.
 
@@ -31,3 +31,15 @@
 
 - No cambies la configuración global de Git. Una tarea pequeña por rama y Pull Request; comprueba pruebas y diff antes de proponer integración.
 - Cuando se necesite CI, usa exclusivamente recursos gratuitos de GitHub Actions; no habilites servicios que requieran tarjeta.
+
+## Gitflow
+
+- `main`: versiones estables; rama predeterminada. No trabajar directamente en ella después de la preparación inicial.
+- `develop`: integración de la próxima versión; punto de partida de tareas y spikes.
+- `feature/<issue>-<nombre>`: una tarea pequeña o spike del issue activo, creada desde `develop`; PR hacia `develop`. No avanzar al siguiente issue.
+- `release/<version>`: estabilización de una versión desde `develop`; solo correcciones, pruebas y documentación. PR hacia `main` y sincronización posterior hacia `develop` mediante otra PR.
+- `hotfix/<issue>-<nombre>`: corrección urgente de una versión publicada, desde `main`; PR hacia `main` y otra hacia `develop` para propagar la corrección.
+- Preparación de ramas y PRs autorizada dentro del issue activo. Toda fusión requiere aprobación explícita del usuario. No habilitar auto-merge.
+- No hacer force push, rebase de ramas compartidas, ni eliminar ramas. Si la interfaz ofrece eliminar la rama tras fusionar, desactivar esa opción.
+- Usar Git y GitHub CLI estándar; no se necesita instalar una extensión Gitflow ni añadir servicios o pipelines.
+- Antes de una PR: revisar diff, pruebas relevantes, identidad Git y ausencia de secretos. Registrar resultados y bloqueos reales.
