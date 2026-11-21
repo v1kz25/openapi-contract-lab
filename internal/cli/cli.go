@@ -20,28 +20,33 @@ const help = `OpenAPI Contract Lab
 
 Usage:
   openapi-contract-lab [help | version]
-  openapi-contract-lab compare [--oasdiff PATH] [--format json|markdown|html] [--output FILE] BASE HEAD
+  openapi-contract-lab compare [options] BASE HEAD
 
 Commands:
   help       Show this help (also -h, --help)
   version    Show the development version (also --version)
   compare    Compare local contracts and emit findings with verified explanations
+
+Use compare --help for export options and severity policy.
 `
 
 const compareHelp = `Usage:
-  openapi-contract-lab compare [--oasdiff PATH] [--format json|markdown|html] [--output FILE] BASE HEAD
+  openapi-contract-lab compare [options] BASE HEAD
 
 BASE and HEAD must be local files. Requires oasdiff 1.39.0.
 --oasdiff PATH selects the executable (default: oasdiff on PATH).
 --format selects json (default), markdown or html.
 --output writes a new local UTF-8 file without overwriting an existing file.
+--fail-on error|warning|info|none sets the minimum blocking severity (default: error).
+Unknown severities block unless --fail-on none. Reports retain all findings.
+Exit codes: 0 passed, 1 execution/output failure, 2 invalid arguments, 3 policy failed.
 Without --output, the report is written to stdout.
 Documentation-only edits do not produce changelog findings.
 Verified rules include deterministic Spanish explanations and local source links.
 `
 
-// Run writes command output and returns 0 on success, 1 on an output error,
-// or comparison error, or 2 on invalid arguments. Findings do not change the exit code.
+// Run returns 0 on success, 1 on execution/output failure, 2 on invalid arguments,
+// or 3 when a completed report fails the selected severity policy.
 func Run(args []string, stdout, stderr io.Writer) int {
 	if len(args) > 0 && args[0] == "compare" {
 		return compare(args[1:], stdout, stderr)
@@ -80,6 +85,7 @@ func compare(args []string, stdout, stderr io.Writer) int {
 	binary := flags.String("oasdiff", "oasdiff", "local oasdiff executable")
 	format := flags.String("format", "json", "json, markdown or html")
 	output := flags.String("output", "", "new local output file")
+	failOn := flags.String("fail-on", "error", "minimum blocking severity or none")
 	if err := flags.Parse(args); err != nil {
 		if errors.Is(err, flag.ErrHelp) {
 			if _, err := io.WriteString(stdout, compareHelp); err != nil {
@@ -97,6 +103,11 @@ func compare(args []string, stdout, stderr io.Writer) int {
 	}
 	if *format != "json" && *format != "markdown" && *format != "html" {
 		fmt.Fprintln(stderr, "error: --format must be json, markdown or html; use compare --help for usage")
+		return 2
+	}
+	policy, err := parsePolicy(*failOn)
+	if err != nil {
+		fmt.Fprintf(stderr, "error: %v; use compare --help for usage\n", err)
 		return 2
 	}
 	outputSet := false
@@ -133,6 +144,10 @@ func compare(args []string, stdout, stderr io.Writer) int {
 	if err != nil {
 		fmt.Fprintf(stderr, "error: could not write output: %v\n", err)
 		return 1
+	}
+	if policy.blocks(report.Findings) {
+		fmt.Fprintf(stderr, "policy: findings meet --fail-on %s or have unknown severity; report generated\n", *failOn)
+		return 3
 	}
 	return 0
 }

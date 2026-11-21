@@ -33,6 +33,10 @@ func TestCompareArguments(t *testing.T) {
 		{"compare"}, {"compare", "base.yaml"}, {"compare", "base", "head", "extra"},
 		{"compare", "--unknown"}, {"compare", "--oasdiff"}, {"compare", "--oasdiff=", "base", "head"},
 		{"compare", "--format", "xml", "base", "head"},
+		{"compare", "--fail-on"},
+		{"compare", "--fail-on=", "base", "head"},
+		{"compare", "--fail-on", "warn", "base", "head"},
+		{"compare", "--fail-on", "ERROR", "base", "head"},
 		{"compare", "--output=", "base", "head"},
 		{"compare", "--output", "https://example.invalid/report.html", "base", "head"},
 		{"compare", "--output", `\\server\share\report.html`, "base", "head"},
@@ -45,7 +49,7 @@ func TestCompareArguments(t *testing.T) {
 		})
 	}
 	var stdout, stderr bytes.Buffer
-	if code := cli.Run([]string{"compare", "--help"}, &stdout, &stderr); code != 0 || !strings.Contains(stdout.String(), "oasdiff 1.39.0") || stderr.Len() != 0 {
+	if code := cli.Run([]string{"compare", "--help"}, &stdout, &stderr); code != 0 || !strings.Contains(stdout.String(), "oasdiff 1.39.0") || !strings.Contains(stdout.String(), "--fail-on error|warning|info|none") || stderr.Len() != 0 {
 		t.Fatalf("exit = %d; stdout = %q; stderr = %q", code, stdout.String(), stderr.String())
 	}
 }

@@ -30,7 +30,7 @@ func TestReportIntegration(t *testing.T) {
 			path := filepath.Join(t.TempDir(), "informe español."+format)
 			var stdout, stderr bytes.Buffer
 			code := cli.Run([]string{"compare", "--oasdiff", binary, "--format", format, "--output", path, base, head}, &stdout, &stderr)
-			if code != 0 || stdout.Len() != 0 || stderr.Len() != 0 {
+			if code != 3 || stdout.Len() != 0 || !strings.Contains(stderr.String(), "policy:") {
 				t.Fatalf("exit=%d stdout=%q stderr=%q", code, stdout.String(), stderr.String())
 			}
 			data, err := os.ReadFile(path)
