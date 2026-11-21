@@ -76,6 +76,7 @@ Una lista vacía de hallazgos no implica que los contratos sean idénticos: los 
 - Desarrollo principalmente desde Windows 11; sin infraestructura de pago.
 - [CI y regresión](docs/CI.md): runner estándar Windows, versiones fijadas, pruebas reales con oasdiff y análisis estático. El mismo script se puede ejecutar localmente.
 - [Publicación](docs/RELEASE.md): v0.1.0 publicada y proceso de revisión para futuras versiones. `scripts/smoke.ps1` comprueba el ejecutable ya compilado sin SDK ni descargas. El [roadmap v0.2.0](docs/ROADMAP.md) distingue tareas propuestas de funciones disponibles.
+- [Investigación de tipos de cambio](docs/CHANGE-KIND-SPIKE.md): evidencia sobre `diff`/`summary`/`changelog` y límites para inferir igualdad o cambios solo documentales. La clasificación no está implementada.
 
 ## Riesgos
 

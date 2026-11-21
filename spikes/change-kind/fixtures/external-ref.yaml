@@ -1,0 +1,12 @@
+openapi: 3.0.3
+info: {title: Synthetic external ref control, version: 1.0.0}
+paths:
+  /items:
+    get:
+      responses:
+        '200':
+          description: Synthetic
+          content:
+            application/json:
+              schema:
+                $ref: './external.yaml'
