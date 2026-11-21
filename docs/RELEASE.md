@@ -1,5 +1,7 @@
 # Preparación de la primera publicación — issue #8
 
+Actualización: la preparación de **v0.1.0 experimental** se sigue en [issue #18](https://github.com/v1kz25/openapi-contract-lab/issues/18), desde `release/0.1.0` hacia `main`. El propietario ha elegido explícitamente **Apache-2.0**. El candidato identifica `v0.1.0`, incorpora los avisos Go BSD-3-Clause y prevé un ZIP Windows x64 sin oasdiff. Ver [notas](releases/v0.1.0.md). SHA, pruebas, CI y checksums concretos se registran en la PR del candidato antes de pedir aprobación de fusión/publicación. El historial siguiente describe el trabajo anterior del issue #8, cuando aún se devolvía `dev`.
+
 Este issue prepara instrucciones y comprobaciones. **No publica una versión estable, no crea tags, no cambia la licencia ni distribuye binarios.** La CLI conserva `openapi-contract-lab dev`. [Instalación y ejemplos](INSTALL.md) describen funciones disponibles, sin anunciar un instalador ni una GUI.
 
 ## Evidencia real — 2026-11-21

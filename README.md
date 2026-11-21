@@ -1,6 +1,6 @@
 # openapi-contract-lab
 
-> Estado: CLI de desarrollo local con comparación oasdiff, diez explicaciones, informes y política de severidad. Preparación y smoke tests de la primera publicación disponibles; todavía sin tag ni release estable.
+> v0.1.0 experimental: CLI local con oasdiff, diez explicaciones, informes y política de severidad. Solo Windows x64 verificado; no se promete estabilidad de CLI/esquema ni cobertura completa de OpenAPI.
 
 Explica cambios incompatibles entre contratos OpenAPI usando oasdiff, con informes locales y CI.
 
@@ -14,7 +14,7 @@ Go 1.27.4, sin módulos externos. La comparación ejecuta el binario local oasdi
 
 ## Uso disponible
 
-Para empezar desde cero en Windows x64, ver [instalación y compilación verificables](docs/INSTALL.md). No hay instalador ni paquete publicado. La guía fija Go 1.27.4, oasdiff 1.39.0 y sus checksums; no requiere instalación global.
+Para empezar desde cero en Windows x64, ver [instalación y compilación verificables](docs/INSTALL.md). No hay instalador. Los archivos disponibles se consultan en [GitHub Releases](https://github.com/v1kz25/openapi-contract-lab/releases); la preparación de un candidato no implica su publicación. La guía fija Go 1.27.4, oasdiff 1.39.0 y sus checksums; no requiere instalación global.
 
 Desde la raíz del repositorio, con Go 1.27.4 y el motor local ya preparados:
 
@@ -27,7 +27,7 @@ go build -trimpath -buildvcs=false -o dist/openapi-contract-lab.exe ./cmd/openap
 $LASTEXITCODE # 3: informe generado; breaking change
 ```
 
-Sin argumentos muestra ayuda. `--version` devuelve `openapi-contract-lab dev`: aún no hay release. Un comando desconocido devuelve un mensaje en stderr y código 2. La CLI no inicia un servidor ni una interfaz gráfica.
+Sin argumentos muestra ayuda. `--version` devuelve `openapi-contract-lab v0.1.0`. Un comando desconocido devuelve un mensaje en stderr y código 2. La CLI no inicia un servidor ni una interfaz gráfica. Ver [notas v0.1.0 experimental](docs/releases/v0.1.0.md).
 
 Para comparar, preparar el binario oficial según el [spike](docs/OASDIFF-SPIKE.md). `--oasdiff` puede omitirse si oasdiff está en PATH. Las dos entradas deben ser archivos locales; se deshabilitan las referencias externas. La salida conserva rule ID, severidad, ruta, ubicaciones y el evento original. Ver [modelo y pruebas del adaptador](docs/OASDIFF-ADAPTER.md).
 
@@ -82,4 +82,4 @@ Mapear los hallazgos de oasdiff a un modelo estable, diferencias entre OpenAPI 3
 
 ## Licencia
 
-**Pendiente de decisión.** Este repositorio se publica sin archivo LICENSE por ahora. Ser público en GitHub no otorga automáticamente permiso para copiar, modificar o redistribuir su contenido.
+[Apache-2.0](LICENSE), elegida explícitamente por el propietario. Conservar [NOTICE](NOTICE) y los [avisos de terceros](THIRD_PARTY_NOTICES.txt) al redistribuir los archivos correspondientes. El binario incluye runtime/biblioteca estándar Go (BSD-3-Clause); oasdiff 1.39.0 (Apache-2.0) se obtiene por separado.

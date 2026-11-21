@@ -24,7 +24,7 @@ Usage:
 
 Commands:
   help       Show this help (also -h, --help)
-  version    Show the development version (also --version)
+  version    Show the version (also --version)
   compare    Compare local contracts and emit findings with verified explanations
 
 Use compare --help for export options and severity policy.
@@ -66,7 +66,7 @@ func Run(args []string, stdout, stderr io.Writer) int {
 	case "help", "-h", "--help":
 		output = help
 	case "version", "--version":
-		output = "openapi-contract-lab dev\n"
+		output = "openapi-contract-lab v0.1.0\n"
 	default:
 		fmt.Fprintf(stderr, "error: unknown command %q; use --help for usage\n", command)
 		return 2

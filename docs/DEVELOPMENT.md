@@ -54,6 +54,8 @@ Con Go/gofmt en PATH y `OASDIFF_BINARY` definido, `./scripts/verify.ps1` ejecuta
 
 El issue #8 añade [instalación reproducible](INSTALL.md), [preparación de publicación](RELEASE.md) y `./scripts/smoke.ps1`. El smoke usa el ejecutable compilado y oasdiff local, sin SDK ni descargas; se ejecuta también en CI después de compilar. No crea tags, releases ni paquetes.
 
+El issue #18 prepara `release/0.1.0` hacia `main`, con licencia Apache-2.0 elegida por el propietario y salida `openapi-contract-lab v0.1.0`. Las notas experimentales están en [releases/v0.1.0.md](releases/v0.1.0.md). Los tests y smoke comprueban esa versión exacta; no se publican tags ni archivos sin aprobación explícita posterior. La sincronización a `develop` se propone mediante otra PR.
+
 Con la misma variable también se ejecutan los diez casos sintéticos de `internal/explain`, uno por regla documentada, y se comprueba que el motor emite los IDs/niveles esperados y las fuentes enlazadas. Los snapshots de mensajes se revisan en `internal/explain/testdata/`; no hay actualización automática de expectativas.
 
 `internal/report/testdata/` contiene snapshots revisables de HTML y Markdown para un informe mixto y otro vacío. Los tests de escape y enlaces se ejecutan sin motor. Con `OASDIFF_BINARY`, los tests de CLI también exportan JSON/Markdown/HTML reales a archivos UTF-8 en un directorio temporal. La exportación usa creación exclusiva y no sobrescribe archivos existentes.
