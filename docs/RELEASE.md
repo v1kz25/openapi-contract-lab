@@ -1,6 +1,18 @@
 # Preparación de la primera publicación — issue #8
 
-Actualización: la preparación de **v0.1.0 experimental** se sigue en [issue #18](https://github.com/v1kz25/openapi-contract-lab/issues/18), desde `release/0.1.0` hacia `main`. El propietario ha elegido explícitamente **Apache-2.0**. El candidato identifica `v0.1.0`, incorpora los avisos Go BSD-3-Clause y prevé un ZIP Windows x64 sin oasdiff. Ver [notas](releases/v0.1.0.md). SHA, pruebas, CI y checksums concretos se registran en la PR del candidato antes de pedir aprobación de fusión/publicación. El historial siguiente describe el trabajo anterior del issue #8, cuando aún se devolvía `dev`.
+## Estado vigente
+
+[v0.1.0 experimental está publicada](https://github.com/v1kz25/openapi-contract-lab/releases/tag/v0.1.0) como pre-release bajo **Apache-2.0**, con ZIP Windows x64 y checksums, sin redistribuir oasdiff. El [issue #18](https://github.com/v1kz25/openapi-contract-lab/issues/18) está completado; PR #19 integrada en `main`, tag publicado y PR #20 sincronizada a `develop`. Ver [notas de esa versión](releases/v0.1.0.md). No editar el tag, los archivos publicados ni sus evidencias al preparar v0.2.0.
+
+## Proceso para una próxima versión
+
+El [roadmap](ROADMAP.md) describe propuestas, no una publicación aprobada. Antes de una nueva release: revisar alcance/compatibilidad, fijar versión y notas, crear `release/<version>` desde `develop` aprobado, verificar su SHA exacto con tests/CI/smoke y revisar los archivos que se distribuirían. La licencia propia ya es Apache-2.0; volver a revisar avisos de terceros solo según los componentes distribuidos.
+
+Preparar PR hacia `main` y solicitar autorización explícita de fusión/publicación. Solo después crear tag y release sobre el commit aprobado y preparar otra PR de sincronización a `develop`. Sin auto-merge, force push ni borrado de ramas. Esta iteración no crea una release ni modifica tags existentes.
+
+## Registro histórico de preparación del issue #8
+
+El resto de este documento conserva la evidencia y la lista de decisiones pendientes **en aquel momento**, antes de #18. Las referencias a `dev` o licencia/publicación pendiente son históricas, no el estado actual.
 
 Este issue prepara instrucciones y comprobaciones. **No publica una versión estable, no crea tags, no cambia la licencia ni distribuye binarios.** La CLI conserva `openapi-contract-lab dev`. [Instalación y ejemplos](INSTALL.md) describen funciones disponibles, sin anunciar un instalador ni una GUI.
 

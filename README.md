@@ -14,7 +14,7 @@ Go 1.27.4, sin módulos externos. La comparación ejecuta el binario local oasdi
 
 ## Uso disponible
 
-Para empezar desde cero en Windows x64, ver [instalación y compilación verificables](docs/INSTALL.md). No hay instalador. Los archivos disponibles se consultan en [GitHub Releases](https://github.com/v1kz25/openapi-contract-lab/releases); la preparación de un candidato no implica su publicación. La guía fija Go 1.27.4, oasdiff 1.39.0 y sus checksums; no requiere instalación global.
+Para empezar desde cero en Windows x64, ver [instalación y compilación verificables](docs/INSTALL.md). No hay instalador. [v0.1.0 experimental está publicada](https://github.com/v1kz25/openapi-contract-lab/releases/tag/v0.1.0), con ZIP Windows x64 y checksums; oasdiff se obtiene por separado. La guía fija Go 1.27.4, oasdiff 1.39.0 y sus checksums; no requiere instalación global.
 
 Desde la raíz del repositorio, con Go 1.27.4 y el motor local ya preparados:
 
@@ -69,7 +69,7 @@ Una lista vacía de hallazgos no implica que los contratos sean idénticos: los 
 - Spike local de oasdiff (issue #1): [decisión, ejemplos y evidencia](docs/OASDIFF-SPIKE.md). No es una CLI del proyecto.
 - Desarrollo principalmente desde Windows 11; sin infraestructura de pago.
 - [CI y regresión](docs/CI.md): runner estándar Windows, versiones fijadas, pruebas reales con oasdiff y análisis estático. El mismo script se puede ejecutar localmente.
-- [Preparación de publicación](docs/RELEASE.md): evidencias, límites y revisión pendiente antes de cualquier tag/release. `scripts/smoke.ps1` comprueba el ejecutable ya compilado sin SDK ni descargas.
+- [Publicación](docs/RELEASE.md): v0.1.0 publicada y proceso de revisión para futuras versiones. `scripts/smoke.ps1` comprueba el ejecutable ya compilado sin SDK ni descargas. El [roadmap v0.2.0](docs/ROADMAP.md) distingue tareas propuestas de funciones disponibles.
 
 ## Riesgos
 

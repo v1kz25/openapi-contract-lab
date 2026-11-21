@@ -1,8 +1,8 @@
 # Instalación desde fuente — Windows x64
 
-Instrucciones del issue #8, actualizadas para [v0.1.0 experimental, issue #18](https://github.com/v1kz25/openapi-contract-lab/issues/18). `--version` muestra `openapi-contract-lab v0.1.0`. Licencia propia Apache-2.0, autorizada por el propietario. No se empaqueta oasdiff ni existe instalador. El candidato no equivale a una release publicada; consultar [GitHub Releases](https://github.com/v1kz25/openapi-contract-lab/releases) para conocer los archivos disponibles.
+Instrucciones del issue #8, actualizadas para [v0.1.0 experimental publicada](https://github.com/v1kz25/openapi-contract-lab/releases/tag/v0.1.0), issue #18 completado. `--version` muestra `openapi-contract-lab v0.1.0`. Licencia propia Apache-2.0, autorizada por el propietario. No se empaqueta oasdiff ni existe instalador. La versión publicada tiene ZIP Windows x64 y checksums.
 
-Si está publicado el ZIP `openapi-contract-lab_0.1.0_windows_amd64.zip`, comprobar su SHA-256 contra `SHA256SUMS.txt` antes de extraerlo en una carpeta nueva. Incluye la CLI, ejemplos y avisos; no requiere SDK para ejecutarse. Descargar oasdiff por separado como indica el paso 2 y usar `--oasdiff` con su ruta. Las notas incluidas describen los comandos. Los pasos siguientes permiten compilar desde fuente.
+Para usar el ZIP publicado `openapi-contract-lab_0.1.0_windows_amd64.zip`, comprobar su SHA-256 contra `SHA256SUMS.txt` antes de extraerlo en una carpeta nueva. Incluye la CLI, ejemplos y avisos; no requiere SDK para ejecutarse. Descargar oasdiff por separado como indica el paso 2 y usar `--oasdiff` con su ruta. Las notas incluidas describen los comandos. Los pasos siguientes permiten compilar desde fuente.
 
 Requisitos: Windows x64, Git, PowerShell 5.1 o 7, `tar` y espacio para el SDK portátil. Solo obtener código y herramientas necesita Internet. Después, compilación, comparación e informes son locales, sin credenciales ni coste adicional obligatorio. Las descargas son de Go y oasdiff oficiales.
 
@@ -11,13 +11,13 @@ Requisitos: Windows x64, Git, PowerShell 5.1 o 7, `tar` y espacio para el SDK po
 En una carpeta de trabajo nueva, no en System32:
 
 ```powershell
-git clone --branch release/0.1.0 https://github.com/v1kz25/openapi-contract-lab.git
+git clone --branch v0.1.0 https://github.com/v1kz25/openapi-contract-lab.git
 Set-Location .\openapi-contract-lab
 git remote get-url origin
 git rev-parse HEAD
 ```
 
-Guardar el SHA mostrado junto con la evidencia de compilación. La rama de release identifica el candidato; para reproducir una revisión concreta, usar su SHA aprobado en un checkout limpio (`git switch --detach SHA_APROBADO`) y comprobarlo con `git rev-parse HEAD`. Después de publicar y verificar el tag, se podrá usar `git switch --detach v0.1.0`. Si ya se tiene el repositorio, trabajar desde su raíz sin volver a clonarlo ni sobrescribir cambios.
+Guardar el SHA mostrado junto con la evidencia de compilación. El tag publicado `v0.1.0` identifica esa versión en detached HEAD; no se trabaja sobre él. Para reproducir otra revisión concreta, usar su SHA aprobado en un checkout limpio (`git switch --detach SHA_APROBADO`) y comprobarlo con `git rev-parse HEAD`. Si ya se tiene el repositorio, no volver a clonarlo ni sobrescribir cambios. Para desarrollar, seguir Gitflow desde `develop` según [DEVELOPMENT.md](DEVELOPMENT.md).
 
 ## 2. Go y oasdiff fijados
 

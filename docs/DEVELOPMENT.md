@@ -54,7 +54,7 @@ Con Go/gofmt en PATH y `OASDIFF_BINARY` definido, `./scripts/verify.ps1` ejecuta
 
 El issue #8 añade [instalación reproducible](INSTALL.md), [preparación de publicación](RELEASE.md) y `./scripts/smoke.ps1`. El smoke usa el ejecutable compilado y oasdiff local, sin SDK ni descargas; se ejecuta también en CI después de compilar. No crea tags, releases ni paquetes.
 
-El issue #18 prepara `release/0.1.0` hacia `main`, con licencia Apache-2.0 elegida por el propietario y salida `openapi-contract-lab v0.1.0`. Las notas experimentales están en [releases/v0.1.0.md](releases/v0.1.0.md). Los tests y smoke comprueban esa versión exacta; no se publican tags ni archivos sin aprobación explícita posterior. La sincronización a `develop` se propone mediante otra PR.
+El issue #18 está completado: [v0.1.0 experimental](https://github.com/v1kz25/openapi-contract-lab/releases/tag/v0.1.0) publicada bajo Apache-2.0; PR #19 integrada en `main` y PR #20 sincronizada en `develop`. Las notas están en [releases/v0.1.0.md](releases/v0.1.0.md). Los tests y smoke comprueban `openapi-contract-lab v0.1.0`; la preparación de [v0.2.0](ROADMAP.md) no cambia esa versión ni autoriza nuevas publicaciones o fusiones.
 
 Con la misma variable también se ejecutan los diez casos sintéticos de `internal/explain`, uno por regla documentada, y se comprueba que el motor emite los IDs/niveles esperados y las fuentes enlazadas. Los snapshots de mensajes se revisan en `internal/explain/testdata/`; no hay actualización automática de expectativas.
 
@@ -78,7 +78,7 @@ No requiere instalación global, privilegios de administrador ni oasdiff para ay
 
 El SDK se extrae bajo `_tools` porque `go test ./...` y `go vet ./...` ignoran los directorios que empiezan por `_`. `.gitignore` solo controla Git: extraer el SDK directamente en `dist/go1.27.4` haría que Go intentase recorrer también los tests del compilador.
 
-### Validación del issue #2 — 2026-11-21
+### Validación histórica del issue #2 — 2026-11-21
 
 Ejecutada en Windows x64, build 26300.9974, PowerShell 7.6.9, Go 1.27.4 portátil con checksum comprobado. No se modificó el PATH global. Con `GOTOOLCHAIN=local`, `GOPROXY=off` y `GOSUMDB=off`:
 
