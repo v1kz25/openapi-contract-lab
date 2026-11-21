@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [develop, main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  regression:
+    # Standard hosted runners are free for public repositories only.
+    if: github.event.repository.private == false
+    runs-on: windows-2025
+    timeout-minutes: 15
+    defaults:
+      run:
+        shell: pwsh
+    env:
+      GOTOOLCHAIN: local
+      GOPROXY: 'off'
+      GOSUMDB: 'off'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+          set-safe-directory: false
+      - name: Set up Go
+        uses: actions/setup-go@d8cbb8045d7f43706b9177cceb36c1f91a6644d5 # v7.1.0
+        with:
+          go-version: '1.27.4'
+          check-latest: false
+          cache: false
+      - name: Prepare verified local engine
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $directory = Join-Path $env:RUNNER_TEMP 'oasdiff-1.39.0'
+          New-Item -ItemType Directory -Path $directory | Out-Null
+          $archive = Join-Path $directory 'oasdiff.tar.gz'
+          Invoke-WebRequest 'https://github.com/oasdiff/oasdiff/releases/download/v1.39.0/oasdiff_1.39.0_windows_amd64.tar.gz' -OutFile $archive
+          $expected = '956a73df88e03efdf3fcc5f327446cc176fefe4adcea1978b0fef464a1ee8901'
+          if ((Get-FileHash -LiteralPath $archive -Algorithm SHA256).Hash -ne $expected) {
+            throw 'oasdiff checksum mismatch'
+          }
+          tar -xzf $archive -C $directory
+          if ($LASTEXITCODE -ne 0) { throw 'oasdiff extraction failed' }
+          $binary = Join-Path $directory 'oasdiff.exe'
+          if (!(Test-Path -LiteralPath $binary -PathType Leaf)) { throw 'oasdiff executable missing' }
+          "OASDIFF_BINARY=$binary" >> $env:GITHUB_ENV
+      - name: Format, test, analyze and build
+        run: ./scripts/verify.ps1
+      - name: Smoke test compiled CLI
+        run: ./scripts/smoke.ps1 -Engine $env:OASDIFF_BINARY

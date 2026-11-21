@@ -1,0 +1,102 @@
+[
+  {
+    "ruleId": "request-parameter-became-required",
+    "explanation": {
+      "kind": "template",
+      "summary": "El parámetro pasa de opcional a obligatorio.",
+      "impact": "Una petición que omitía el parámetro puede dejar de cumplir el contrato revisado.",
+      "action": "Revise las llamadas que lo omiten y coordine su adaptación antes de exigirlo.",
+      "locations": []
+    }
+  },
+  {
+    "ruleId": "request-parameter-became-optional",
+    "explanation": {
+      "kind": "template",
+      "summary": "El parámetro deja de ser obligatorio.",
+      "impact": "Omitirlo pasa a estar permitido por esta condición; enviarlo sigue siendo válido respecto a su obligatoriedad.",
+      "action": "Compruebe el comportamiento del servidor cuando el parámetro no se envía.",
+      "locations": []
+    }
+  },
+  {
+    "ruleId": "request-parameter-became-enum",
+    "explanation": {
+      "kind": "template",
+      "summary": "Se añade una enumeración al esquema del parámetro.",
+      "impact": "Los valores fuera de la enumeración dejan de estar permitidos por esta restricción.",
+      "action": "Contraste los valores utilizados por los clientes con la enumeración revisada.",
+      "locations": []
+    }
+  },
+  {
+    "ruleId": "request-parameter-became-not-enum",
+    "explanation": {
+      "kind": "template",
+      "summary": "Se elimina la enumeración del esquema del parámetro.",
+      "impact": "Se amplía el conjunto admitido por esta restricción; las demás restricciones del esquema siguen aplicándose.",
+      "action": "Verifique que la validación y la documentación reflejen los valores ahora admitidos.",
+      "locations": []
+    }
+  },
+  {
+    "ruleId": "request-parameter-enum-value-added",
+    "explanation": {
+      "kind": "template",
+      "summary": "Se añade un valor permitido a la enumeración del parámetro.",
+      "impact": "El valor añadido pasa a estar admitido por esta enumeración.",
+      "action": "Compruebe que el servidor acepte el nuevo valor antes de que los clientes lo utilicen.",
+      "locations": []
+    }
+  },
+  {
+    "ruleId": "request-parameter-enum-value-removed",
+    "explanation": {
+      "kind": "template",
+      "summary": "Se retira un valor de la enumeración del parámetro.",
+      "impact": "Una petición que envíe ese valor puede dejar de cumplir la enumeración revisada.",
+      "action": "Localice los clientes que envían el valor retirado y acuerde una alternativa compatible.",
+      "locations": []
+    }
+  },
+  {
+    "ruleId": "request-parameter-became-nullable",
+    "explanation": {
+      "kind": "template",
+      "summary": "El esquema del parámetro pasa a admitir null.",
+      "impact": "Se amplía la aceptación de valores nulos por este esquema; null no equivale a omitir el parámetro.",
+      "action": "Revise cómo se serializan y validan los valores nulos del parámetro.",
+      "locations": []
+    }
+  },
+  {
+    "ruleId": "request-parameter-became-not-nullable",
+    "explanation": {
+      "kind": "template",
+      "summary": "El esquema del parámetro deja de admitir null.",
+      "impact": "Un valor nulo antes permitido puede incumplir el esquema revisado; esto no cambia por sí solo la obligatoriedad del parámetro.",
+      "action": "Revise los clientes que envían null y coordine un valor válido antes de restringirlo.",
+      "locations": []
+    }
+  },
+  {
+    "ruleId": "response-property-enum-value-added",
+    "explanation": {
+      "kind": "template",
+      "summary": "Se amplía la enumeración de una propiedad de respuesta.",
+      "impact": "El servidor puede devolver un valor que el contrato anterior no contemplaba; un cliente que solo maneje los valores anteriores puede fallar.",
+      "action": "Revise el manejo de valores desconocidos y coordine el cambio con los consumidores.",
+      "locations": []
+    }
+  },
+  {
+    "ruleId": "response-property-enum-value-removed",
+    "explanation": {
+      "kind": "template",
+      "summary": "Se reduce la enumeración de una propiedad de respuesta.",
+      "impact": "La retirada de ese valor reduce las posibilidades de respuesta contempladas por este hallazgo.",
+      "action": "Compruebe que el servidor deje de emitir el valor retirado y revise los flujos que dependían de recibirlo.",
+      "locations": []
+    }
+  }
+]

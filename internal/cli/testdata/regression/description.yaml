@@ -1,0 +1,17 @@
+openapi: 3.1.0
+info:
+  title: Synthetic regression API
+  version: 1.0.0
+paths:
+  /items:
+    get:
+      parameters:
+        - name: filter
+          in: query
+          description: Filter the returned items.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Items returned.

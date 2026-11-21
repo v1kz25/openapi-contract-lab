@@ -1,0 +1,140 @@
+[
+  {
+    "name": "base.validate.json",
+    "command": "oasdiff validate spikes/oasdiff/fixtures/base.yaml -f json --config spikes/oasdiff/offline.yaml",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "name": "required.validate.json",
+    "command": "oasdiff validate spikes/oasdiff/fixtures/required.yaml -f json --config spikes/oasdiff/offline.yaml",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "name": "description.validate.json",
+    "command": "oasdiff validate spikes/oasdiff/fixtures/description.yaml -f json --config spikes/oasdiff/offline.yaml",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "name": "required.breaking.json",
+    "command": "oasdiff breaking spikes/oasdiff/fixtures/base.yaml spikes/oasdiff/fixtures/required.yaml -f json --config spikes/oasdiff/offline.yaml",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "name": "required.breaking.yaml",
+    "command": "oasdiff breaking spikes/oasdiff/fixtures/base.yaml spikes/oasdiff/fixtures/required.yaml -f yaml --config spikes/oasdiff/offline.yaml",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "name": "required.breaking.md",
+    "command": "oasdiff breaking spikes/oasdiff/fixtures/base.yaml spikes/oasdiff/fixtures/required.yaml -f markdown --config spikes/oasdiff/offline.yaml",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "name": "required.changelog.json",
+    "command": "oasdiff changelog spikes/oasdiff/fixtures/base.yaml spikes/oasdiff/fixtures/required.yaml -f json --config spikes/oasdiff/offline.yaml",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "name": "required.changelog.yaml",
+    "command": "oasdiff changelog spikes/oasdiff/fixtures/base.yaml spikes/oasdiff/fixtures/required.yaml -f yaml --config spikes/oasdiff/offline.yaml",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "name": "required.changelog.md",
+    "command": "oasdiff changelog spikes/oasdiff/fixtures/base.yaml spikes/oasdiff/fixtures/required.yaml -f markdown --config spikes/oasdiff/offline.yaml",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "name": "required.diff.json",
+    "command": "oasdiff diff spikes/oasdiff/fixtures/base.yaml spikes/oasdiff/fixtures/required.yaml -f json --config spikes/oasdiff/offline.yaml",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "name": "required.diff.yaml",
+    "command": "oasdiff diff spikes/oasdiff/fixtures/base.yaml spikes/oasdiff/fixtures/required.yaml -f yaml --config spikes/oasdiff/offline.yaml",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "name": "required.diff.md",
+    "command": "oasdiff diff spikes/oasdiff/fixtures/base.yaml spikes/oasdiff/fixtures/required.yaml -f markdown --config spikes/oasdiff/offline.yaml",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "name": "required.fail-on.json",
+    "command": "oasdiff breaking spikes/oasdiff/fixtures/base.yaml spikes/oasdiff/fixtures/required.yaml -f json --fail-on ERR --config spikes/oasdiff/offline.yaml",
+    "exit": 1,
+    "stderr": ""
+  },
+  {
+    "name": "description.breaking.json",
+    "command": "oasdiff breaking spikes/oasdiff/fixtures/base.yaml spikes/oasdiff/fixtures/description.yaml -f json --config spikes/oasdiff/offline.yaml",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "name": "description.breaking.yaml",
+    "command": "oasdiff breaking spikes/oasdiff/fixtures/base.yaml spikes/oasdiff/fixtures/description.yaml -f yaml --config spikes/oasdiff/offline.yaml",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "name": "description.breaking.md",
+    "command": "oasdiff breaking spikes/oasdiff/fixtures/base.yaml spikes/oasdiff/fixtures/description.yaml -f markdown --config spikes/oasdiff/offline.yaml",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "name": "description.changelog.json",
+    "command": "oasdiff changelog spikes/oasdiff/fixtures/base.yaml spikes/oasdiff/fixtures/description.yaml -f json --config spikes/oasdiff/offline.yaml",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "name": "description.changelog.yaml",
+    "command": "oasdiff changelog spikes/oasdiff/fixtures/base.yaml spikes/oasdiff/fixtures/description.yaml -f yaml --config spikes/oasdiff/offline.yaml",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "name": "description.changelog.md",
+    "command": "oasdiff changelog spikes/oasdiff/fixtures/base.yaml spikes/oasdiff/fixtures/description.yaml -f markdown --config spikes/oasdiff/offline.yaml",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "name": "description.diff.json",
+    "command": "oasdiff diff spikes/oasdiff/fixtures/base.yaml spikes/oasdiff/fixtures/description.yaml -f json --config spikes/oasdiff/offline.yaml",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "name": "description.diff.yaml",
+    "command": "oasdiff diff spikes/oasdiff/fixtures/base.yaml spikes/oasdiff/fixtures/description.yaml -f yaml --config spikes/oasdiff/offline.yaml",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "name": "description.diff.md",
+    "command": "oasdiff diff spikes/oasdiff/fixtures/base.yaml spikes/oasdiff/fixtures/description.yaml -f markdown --config spikes/oasdiff/offline.yaml",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "name": "description.fail-on.json",
+    "command": "oasdiff breaking spikes/oasdiff/fixtures/base.yaml spikes/oasdiff/fixtures/description.yaml -f json --fail-on ERR --config spikes/oasdiff/offline.yaml",
+    "exit": 0,
+    "stderr": ""
+  }
+]

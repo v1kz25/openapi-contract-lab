@@ -1,0 +1,23 @@
+# OpenAPI Contract Lab
+
+## Revisión del contrato
+
+**Motor:** oasdiff 1.39.0
+
+**Base:** base.yaml
+
+**Head:** head.yaml
+
+## Resumen
+
+- Hallazgos: 0
+- Errores: 0
+- Advertencias: 0
+- Informativos: 0
+- Sin clasificar: 0
+
+El changelog incluye cambios que afectan a consumidores. Una lista vacía no implica contratos idénticos; los cambios solo de descripción no generan hallazgos.
+
+## Hallazgos
+
+No hay hallazgos que mostrar.

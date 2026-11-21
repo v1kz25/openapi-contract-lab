@@ -1,6 +1,10 @@
 # Roadmap — openapi-contract-lab
 
-No hay implementación aún. Este plan es orientativo; cada fase requiere validar la anterior.
+Hay un spike local de oasdiff y una CLI Go con comparación local, explicaciones para diez reglas, informes JSON/Markdown/HTML y política de severidad con códigos de salida. La CI para PR ejecuta pruebas de regresión y análisis estático. La release sigue pendiente. Este plan es orientativo; cada fase requiere validar la anterior.
+
+La preparación de la primera publicación incluye instalación desde fuente y smoke tests del ejecutable en Windows. Tag, versión, licencia propia y publicación se revisan por separado según [RELEASE.md](RELEASE.md).
+
+El issue #18 prepara v0.1.0 experimental; Apache-2.0 ya elegida explícitamente. La publicación y la sincronización Gitflow requieren sus aprobaciones, sin añadir funciones al MVP.
 
 1. **Validación técnica / PoC**: validar el hueco real y dependencias
 2. **Configuración inicial**: crear base mínima verificable

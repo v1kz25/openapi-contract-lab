@@ -1,0 +1,46 @@
+# OpenAPI Contract Lab
+
+## Revisión del contrato
+
+**Motor:** {{md .Engine}} {{md .EngineVersion}}
+
+**Base:** {{md .Base}}
+
+**Head:** {{md .Head}}
+
+## Resumen
+
+- Hallazgos: {{.Counts.Total}}
+- Errores: {{.Counts.Errors}}
+- Advertencias: {{.Counts.Warnings}}
+- Informativos: {{.Counts.Info}}
+- Sin clasificar: {{.Counts.Unknown}}
+
+El changelog incluye cambios que afectan a consumidores. Una lista vacía no implica contratos idénticos; los cambios solo de descripción no generan hallazgos.
+
+## Hallazgos
+{{range .Findings}}
+### {{.Number}}. {{md .Explanation.Summary}}
+
+**Regla:** {{md .RuleID}}
+
+**Severidad:** {{md .Severity}} · **Compatibilidad:** {{md .Compatibility}} · **Nivel upstream:** {{.UpstreamLevel}}
+
+**Operación:** {{if .Endpoint}}{{md .Endpoint}}{{else}}No reportada{{end}}{{if .Section}} · **Sección:** {{md .Section}}{{end}}
+
+**Mensaje de oasdiff:** {{md .Message}}
+
+**Explicación:** {{md .Explanation.Kind}}
+
+**Impacto:** {{md .Explanation.Impact}}
+
+**Acción sugerida:** {{md .Explanation.Action}}
+
+**Ubicaciones:**
+{{range .Locations}}
+- **{{md .Side}}:** {{if .Link}}[{{md .File}}](<{{.Link}}>){{else}}{{md .File}}{{end}}{{if .Line}} · línea {{.Line}}{{if .Column}}, columna {{.Column}}{{end}}{{end}}
+{{else}}
+- Sin ubicación reportada.
+{{end}}{{else}}
+No hay hallazgos que mostrar.
+{{end}}

@@ -1,0 +1,46 @@
+{
+  "engine": "oasdiff",
+  "engineVersion": "1.39.0",
+  "findings": [
+    {
+      "ruleId": "request-parameter-became-required",
+      "severity": "error",
+      "compatibility": "breaking",
+      "upstreamLevel": 3,
+      "message": "the `query` request parameter `filter` became required",
+      "operation": "GET",
+      "path": "/items",
+      "section": "paths",
+      "baseSource": {
+        "file": "spikes/oasdiff/fixtures/base.yaml",
+        "line": 12,
+        "column": 11
+      },
+      "headSource": {
+        "file": "spikes/oasdiff/fixtures/required.yaml",
+        "line": 12,
+        "column": 11
+      },
+      "fingerprint": "291d500b6348",
+      "upstream": {
+        "id": "request-parameter-became-required",
+        "text": "the `query` request parameter `filter` became required",
+        "level": 3,
+        "operation": "GET",
+        "path": "/items",
+        "section": "paths",
+        "baseSource": {
+          "file": "spikes/oasdiff/fixtures/base.yaml",
+          "line": 12,
+          "column": 11
+        },
+        "revisionSource": {
+          "file": "spikes/oasdiff/fixtures/required.yaml",
+          "line": 12,
+          "column": 11
+        },
+        "fingerprint": "291d500b6348"
+      }
+    }
+  ]
+}

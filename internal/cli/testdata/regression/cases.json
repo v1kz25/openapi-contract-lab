@@ -1,0 +1,7 @@
+[
+  {"name":"required-3.1","base":"base.yaml","head":"required.yaml","exit":3,"ruleId":"request-parameter-became-required","severity":"error","compatibility":"breaking","level":3},
+  {"name":"optional-3.1","base":"required.yaml","head":"base.yaml","exit":0,"ruleId":"request-parameter-became-optional","severity":"info","compatibility":"non-breaking","level":1},
+  {"name":"description-3.1","base":"base.yaml","head":"description.yaml","exit":0},
+  {"name":"identical-3.1","base":"base.yaml","head":"base.yaml","exit":0},
+  {"name":"invalid-yaml","base":"base.yaml","head":"invalid.yaml","exit":1}
+]
