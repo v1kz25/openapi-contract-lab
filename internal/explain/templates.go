@@ -58,4 +58,19 @@ var templates = map[string]template{
 		"La retirada de ese valor reduce las posibilidades de respuesta contempladas por este hallazgo.",
 		"Compruebe que el servidor deje de emitir el valor retirado y revise los flujos que dependían de recibirlo.",
 	},
+	"request-parameter-type-changed": {
+		3, "Cambia de forma incompatible el tipo o formato del parámetro de petición.",
+		"Un valor enviado según el contrato anterior puede incumplir el tipo o formato revisado; esta explicación conserva la clasificación del motor.",
+		"Consulte los tipos o formatos concretos del mensaje original y revise la serialización y validación de los clientes afectados.",
+	},
+	"request-body-became-required": {
+		3, "El cuerpo de la petición pasa de opcional a obligatorio.",
+		"Una llamada que omitía el cuerpo puede dejar de cumplir el contrato revisado; no implica por sí solo cambios en sus propiedades.",
+		"Localice las llamadas sin cuerpo y coordine su adaptación o una transición compatible antes de exigirlo.",
+	},
+	"response-required-property-removed": {
+		3, "Se retira una propiedad obligatoria del esquema de respuesta.",
+		"El contrato revisado deja de garantizar esa propiedad; un cliente que dependa de recibirla puede fallar.",
+		"Identifique la propiedad y la respuesta en el mensaje original, revise los consumidores y acuerde una transición compatible.",
+	},
 }
