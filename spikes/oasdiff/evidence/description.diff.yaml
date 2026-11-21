@@ -1,0 +1,24 @@
+paths:
+    modified:
+        /items:
+            operations:
+                modified:
+                    GET:
+                        parameters:
+                            modified:
+                                query:
+                                    filter:
+                                        description:
+                                            from: Filter items.
+                                            to: Filter items by name.
+endpoints:
+    modified:
+        ?   method: GET
+            path: /items
+        :   parameters:
+                modified:
+                    query:
+                        filter:
+                            description:
+                                from: Filter items.
+                                to: Filter items by name.
