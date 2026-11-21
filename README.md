@@ -1,6 +1,6 @@
 # openapi-contract-lab
 
-> Estado: comparación local con oasdiff, explicaciones para diez reglas, informes JSON/Markdown/HTML, política de severidad y CI de regresión para PR. Release aún pendiente.
+> Estado: CLI de desarrollo local con comparación oasdiff, diez explicaciones, informes y política de severidad. Preparación y smoke tests de la primera publicación disponibles; todavía sin tag ni release estable.
 
 Explica cambios incompatibles entre contratos OpenAPI usando oasdiff, con informes locales y CI.
 
@@ -14,14 +14,17 @@ Go 1.27.4, sin módulos externos. La comparación ejecuta el binario local oasdi
 
 ## Uso disponible
 
-Desde la raíz del repositorio, con Go 1.27.4:
+Para empezar desde cero en Windows x64, ver [instalación y compilación verificables](docs/INSTALL.md). No hay instalador ni paquete publicado. La guía fija Go 1.27.4, oasdiff 1.39.0 y sus checksums; no requiere instalación global.
+
+Desde la raíz del repositorio, con Go 1.27.4 y el motor local ya preparados:
 
 ```powershell
 go run ./cmd/openapi-contract-lab --help
 go run ./cmd/openapi-contract-lab --version
-go build -o dist/openapi-contract-lab.exe ./cmd/openapi-contract-lab
+go build -trimpath -buildvcs=false -o dist/openapi-contract-lab.exe ./cmd/openapi-contract-lab
 ./dist/openapi-contract-lab.exe --help
 ./dist/openapi-contract-lab.exe compare --oasdiff ./dist/oasdiff-1.39.0/oasdiff.exe ./spikes/oasdiff/fixtures/base.yaml ./spikes/oasdiff/fixtures/required.yaml
+$LASTEXITCODE # 3: informe generado; breaking change
 ```
 
 Sin argumentos muestra ayuda. `--version` devuelve `openapi-contract-lab dev`: aún no hay release. Un comando desconocido devuelve un mensaje en stderr y código 2. La CLI no inicia un servidor ni una interfaz gráfica.
@@ -44,12 +47,12 @@ Por defecto, los hallazgos `error` (breaking) devuelven **3 después de generar 
 
 Una lista vacía de hallazgos no implica que los contratos sean idénticos: los cambios solo de descripción no aparecen en el changelog.
 
-## MVP previsto
+## Funciones disponibles y límites
 
-- comparar dos OpenAPI 3.x con oasdiff como fuente de verdad
-- clasificar hallazgos de ruptura y no ruptura
-- explicar cambios con reglas deterministas, localización y severidad
-- informes Markdown/HTML y código de salida para CI
+- Comparación de dos archivos locales mediante oasdiff 1.39.0. Regresión probada con fixtures 3.0.3 y casos mínimos 3.1.0; no se afirma cobertura completa de 3.1 ni soporte verificado de 3.2.
+- Clasificación conservada del motor y diez explicaciones deterministas en español; fallback neutral para otras reglas/niveles.
+- Informes JSON/Markdown/HTML offline y gate configurable por severidad. Timeout de comparación de 30 segundos; referencias externas y entradas URL/UNC deshabilitadas.
+- Solo Windows x64 verificado; PowerShell 5.1 y 7. El esquema de informe y la CLI siguen en desarrollo. Sin GUI, comparación por carpetas, editor ni autofix.
 
 ### Fuera del MVP
 
@@ -66,6 +69,7 @@ Una lista vacía de hallazgos no implica que los contratos sean idénticos: los 
 - Spike local de oasdiff (issue #1): [decisión, ejemplos y evidencia](docs/OASDIFF-SPIKE.md). No es una CLI del proyecto.
 - Desarrollo principalmente desde Windows 11; sin infraestructura de pago.
 - [CI y regresión](docs/CI.md): runner estándar Windows, versiones fijadas, pruebas reales con oasdiff y análisis estático. El mismo script se puede ejecutar localmente.
+- [Preparación de publicación](docs/RELEASE.md): evidencias, límites y revisión pendiente antes de cualquier tag/release. `scripts/smoke.ps1` comprueba el ejecutable ya compilado sin SDK ni descargas.
 
 ## Riesgos
 
