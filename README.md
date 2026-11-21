@@ -45,6 +45,8 @@ Para exportar un informe local, elegir un archivo nuevo:
 
 `--format` admite `json` (predeterminado), `markdown` y `html`. `--output` escribe UTF-8 directamente y evita la redirección de PowerShell; rechaza destinos existentes. El HTML incluye todo lo necesario, sin servidor, scripts ni recursos de red. Ver [exportación y pruebas](docs/REPORTS.md).
 
+En esta rama, HTML y Markdown agrupan por ruta/método y severidad, con resumen por grupo y sección para hallazgos sin ruta u operación. JSON conserva campos y orden upstream. Los [ejemplos comparables](docs/REPORTS.md#ejemplos-comparables-y-revisión-manual-del-issue-23) muestran la presentación anterior y la agrupada; v0.1.0 publicada mantiene la lista plana.
+
 Por defecto, los hallazgos `error` (breaking) devuelven **3 después de generar el informe**. `--fail-on error|warning|info|none` permite cambiar el umbral; `none` conserva el comportamiento de exportación sin gate. Severidades desconocidas bloquean con cualquier política activa. Los fallos operativos devuelven 1 y los argumentos inválidos 2. Ver [política y ejemplos PowerShell](docs/SEVERITY-POLICY.md).
 
 Una lista vacía de hallazgos no implica que los contratos sean idénticos: los cambios solo de descripción no aparecen en el changelog.

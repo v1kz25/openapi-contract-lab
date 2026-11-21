@@ -20,7 +20,13 @@ El changelog incluye cambios que afectan a consumidores. Una lista vacía no imp
 
 ## Hallazgos
 
-### 1. El parámetro pasa de opcional a obligatorio.
+### GET /items
+
+Hallazgos: 2 · Errores: 1 · Advertencias: 1 · Informativos: 0 · Sin clasificar: 0
+
+#### Severidad: error · Hallazgos: 1
+
+##### 1. El parámetro pasa de opcional a obligatorio.
 
 **Regla:** request-parameter-became-required
 
@@ -42,7 +48,9 @@ El changelog incluye cambios que afectan a consumidores. Una lista vacía no imp
 
 - **head:** [head.yaml](<file:///synthetic/head.yaml#L12>) · línea 12, columna 11
 
-### 2. No hay una explicación verificada para esta combinación de regla y nivel.
+#### Severidad: warning · Hallazgos: 1
+
+##### 2. No hay una explicación verificada para esta combinación de regla y nivel.
 
 **Regla:** unverified-warning
 
@@ -62,7 +70,13 @@ El changelog incluye cambios que afectan a consumidores. Una lista vacía no imp
 
 - Sin ubicación reportada.
 
-### 3. El parámetro deja de ser obligatorio.
+### POST /items
+
+Hallazgos: 1 · Errores: 0 · Advertencias: 0 · Informativos: 1 · Sin clasificar: 0
+
+#### Severidad: info · Hallazgos: 1
+
+##### 3. El parámetro deja de ser obligatorio.
 
 **Regla:** request-parameter-became-optional
 
@@ -82,7 +96,13 @@ El changelog incluye cambios que afectan a consumidores. Una lista vacía no imp
 
 - Sin ubicación reportada.
 
-### 4. No hay una explicación verificada para esta combinación de regla y nivel.
+### Sin ruta u operación
+
+Hallazgos: 1 · Errores: 0 · Advertencias: 0 · Informativos: 0 · Sin clasificar: 1
+
+#### Severidad: unknown · Hallazgos: 1
+
+##### 4. No hay una explicación verificada para esta combinación de regla y nivel.
 
 **Regla:** future-rule
 
