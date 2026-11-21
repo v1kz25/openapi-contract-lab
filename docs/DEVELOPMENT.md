@@ -2,12 +2,12 @@
 
 ## Estado
 
-No se ha creado código ni hay comandos específicos de compilación verificados. No inventar instrucciones de ejecución hasta completar el spike/setup.
+Issue #2: módulo `github.com/v1kz25/openapi-contract-lab`, entrada en `cmd/openapi-contract-lab` y manejo de comandos en `internal/cli`. Solo ayuda y versión; el adaptador oasdiff y el diff funcional corresponden a otros issues.
 
 ## Entorno propuesto
 
 - Windows 11; Git, GitHub CLI (`gh`), Codex en desktop/VS Code/CLI.
-- Stack en evaluación: Go + oasdiff (dependencia Apache-2.0; confirmar versión y API antes de integrarla).
+- Go 1.27.4 fijado en `go.mod`, sin módulos externos ni `go.sum` necesario. Para la futura integración se sigue la decisión del [spike oasdiff](OASDIFF-SPIKE.md): binario local 1.39.0, Apache-2.0.
 - Sin hosting, cuentas de servicios comerciales, API keys ni infraestructura de pago.
 
 ## Flujo de trabajo
@@ -18,10 +18,62 @@ No se ha creado código ni hay comandos específicos de compilación verificados
 4. Ejecutar y registrar pruebas; comprobar Git diff y la identidad Git.
 5. Proponer Pull Request; no fusionarla sin permiso.
 6. Actualizar el README únicamente para funciones realmente disponibles.
+7. Incluir en cada PR los pasos de comprobación manual y sus resultados esperados cuando apliquen. Avisar al usuario cuando deba probar un flujo; arrancar la aplicación local para facilitarlo cuando exista dicho flujo. La ayuda/versión inicial puede comprobarse opcionalmente desde terminal.
 
 ## Tests y comandos
 
-Pendiente del issue de inicialización. No se supone instalado ningún SDK ni versión concreta.
+Desde la raíz, con Go 1.27.4 en PATH. Estas variables solo afectan a la sesión PowerShell; las pruebas no necesitan descargas:
+
+```powershell
+$env:GOTOOLCHAIN = 'local'
+$env:GOPROXY = 'off'
+$env:GOSUMDB = 'off'
+$env:GOCACHE = Join-Path (Get-Location) 'dist/go-cache'
+gofmt -l cmd internal
+go test ./...
+go vet ./...
+go build -o dist/openapi-contract-lab.exe ./cmd/openapi-contract-lab
+./dist/openapi-contract-lab.exe --help
+./dist/openapi-contract-lab.exe --version
+./dist/openapi-contract-lab.exe diff
+$LASTEXITCODE # 2: diff aún no es un comando
+```
+
+`gofmt -l` no debe listar archivos. Ayuda/version terminan con código 0; argumentos inválidos con 2; un fallo de escritura de salida con 1. Son códigos de la CLI inicial, no la política de severidad del futuro issue #6. No hay errores tipados de dominio porque aún no existe lógica de contratos.
+
+### SDK portátil en Windows x64
+
+Si no hay Go instalado, obtener el [ZIP oficial Go 1.27.4](https://go.dev/dl/go1.27.4.windows-amd64.zip), cuyo SHA-256 publicado en [go.dev](https://go.dev/dl/?mode=json) es `178ab98950ac69ab25069307dc6ade79f3816e414cce95b4da166a115cde1e7e`. Comprobarlo antes de extraer:
+
+```powershell
+New-Item -ItemType Directory -Force dist | Out-Null
+Invoke-WebRequest 'https://go.dev/dl/go1.27.4.windows-amd64.zip' -OutFile dist/go1.27.4.windows-amd64.zip
+$sdkHash = (Get-FileHash dist/go1.27.4.windows-amd64.zip -Algorithm SHA256).Hash
+if ($sdkHash -ne '178ab98950ac69ab25069307dc6ade79f3816e414cce95b4da166a115cde1e7e') { throw 'Go checksum mismatch' }
+Expand-Archive dist/go1.27.4.windows-amd64.zip -DestinationPath dist/_tools/go1.27.4
+$env:Path = (Join-Path (Get-Location) 'dist/_tools/go1.27.4/go/bin') + [IO.Path]::PathSeparator + $env:Path
+go version
+```
+
+No requiere instalación global, privilegios de administrador ni oasdiff para ayuda/versión. La descarga inicial necesita Internet; compilación y pruebas usan la biblioteca estándar y pueden hacerse offline. El SDK conserva su [licencia BSD-3-Clause](https://github.com/golang/go/blob/go1.27.4/LICENSE) en `dist/`, que permanece ignorado por Git. Coste adicional obligatorio: 0 €. No se añade framework CLI, servicio, CI ni dependencia de terceros.
+
+El SDK se extrae bajo `_tools` porque `go test ./...` y `go vet ./...` ignoran los directorios que empiezan por `_`. `.gitignore` solo controla Git: extraer el SDK directamente en `dist/go1.27.4` haría que Go intentase recorrer también los tests del compilador.
+
+### Validación del issue #2 — 2026-11-21
+
+Ejecutada en Windows x64, build 26300.9974, PowerShell 7.6.9, Go 1.27.4 portátil con checksum comprobado. No se modificó el PATH global. Con `GOTOOLCHAIN=local`, `GOPROXY=off` y `GOSUMDB=off`:
+
+| Comando | Resultado real |
+| --- | --- |
+| `go list ./...` | Solo los paquetes `cmd/openapi-contract-lab` e `internal/cli` |
+| `go test ./...` | PASS, exit 0; `internal/cli` en 0.513 s, entrada main sin tests propios |
+| `go vet ./...` | Sin diagnósticos, exit 0 |
+| `gofmt -l cmd internal` | Sin archivos pendientes, exit 0 |
+| `go build -o dist/openapi-contract-lab.exe ./cmd/openapi-contract-lab` | Binario Windows generado, exit 0 |
+| Ejecutable con `--help` / `--version` | Ayuda / `openapi-contract-lab dev`, exit 0 |
+| Ejecutable con `diff` | `unknown command "diff"; use --help for usage`, stderr, exit 2 esperado |
+
+Los tests cubren las cuatro formas de ayuda (incluida invocación sin argumentos), dos de versión, cinco entradas inválidas y un fallo de escritura simulado. No invocan oasdiff ni servicios. El primer `go test ./...` falló al recorrer el SDK extraído directamente en `dist/`; se movió a `dist/_tools/` y se repitió la verificación completa correctamente. No se oculta ese fallo de preparación. No se probó ARM64 ni Linux/macOS.
 
 ## Gitflow
 

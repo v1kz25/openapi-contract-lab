@@ -1,6 +1,6 @@
 # openapi-contract-lab
 
-> Estado: planificación inicial. **Aún no hay MVP implementado**.
+> Estado: base Go con ayuda y versión. **Aún no hay comparación de contratos ni MVP implementado**.
 
 Explica cambios incompatibles entre contratos OpenAPI usando oasdiff, con informes locales y CI.
 
@@ -8,9 +8,22 @@ Explica cambios incompatibles entre contratos OpenAPI usando oasdiff, con inform
 
 Comparar dos especificaciones OpenAPI sin reimplementar el análisis semántico; enriquecer hallazgos con explicación determinista y generar informes offline.
 
-## Stack provisional
+## Stack
 
-Go + oasdiff (dependencia Apache-2.0; confirmar versión y API antes de integrarla). La versión concreta y la idoneidad se validarán en el primer spike técnico.
+Go 1.27.4, sin dependencias externas en el módulo inicial. El spike recomienda integrar el binario local oasdiff 1.39.0 (Apache-2.0); la CLI todavía no lo invoca.
+
+## Uso disponible
+
+Desde la raíz del repositorio, con Go 1.27.4:
+
+```powershell
+go run ./cmd/openapi-contract-lab --help
+go run ./cmd/openapi-contract-lab --version
+go build -o dist/openapi-contract-lab.exe ./cmd/openapi-contract-lab
+./dist/openapi-contract-lab.exe --help
+```
+
+Sin argumentos muestra ayuda. `--version` devuelve `openapi-contract-lab dev`: aún no hay release. Un comando desconocido devuelve un mensaje en stderr y código 2. La CLI no inicia un servidor ni una interfaz gráfica.
 
 ## MVP previsto
 

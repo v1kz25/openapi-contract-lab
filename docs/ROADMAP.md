@@ -1,6 +1,6 @@
 # Roadmap — openapi-contract-lab
 
-No hay implementación aún. Este plan es orientativo; cada fase requiere validar la anterior.
+Hay un spike local de oasdiff y una base Go con ayuda/versión. La comparación de contratos aún no está implementada. Este plan es orientativo; cada fase requiere validar la anterior.
 
 1. **Validación técnica / PoC**: validar el hueco real y dependencias
 2. **Configuración inicial**: crear base mínima verificable
