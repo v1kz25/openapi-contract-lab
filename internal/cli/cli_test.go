@@ -32,6 +32,10 @@ func TestCompareArguments(t *testing.T) {
 	for _, args := range [][]string{
 		{"compare"}, {"compare", "base.yaml"}, {"compare", "base", "head", "extra"},
 		{"compare", "--unknown"}, {"compare", "--oasdiff"}, {"compare", "--oasdiff=", "base", "head"},
+		{"compare", "--format", "xml", "base", "head"},
+		{"compare", "--output=", "base", "head"},
+		{"compare", "--output", "https://example.invalid/report.html", "base", "head"},
+		{"compare", "--output", `\\server\share\report.html`, "base", "head"},
 	} {
 		t.Run(strings.Join(args, " "), func(t *testing.T) {
 			var stdout, stderr bytes.Buffer
