@@ -62,6 +62,8 @@ Con la misma variable también se ejecutan los trece casos sintéticos de `inter
 
 El issue #23 añade agrupación en la vista HTML/Markdown, snapshots globales y [ejemplos antes/después](REPORTS.md#ejemplos-comparables-y-revisión-manual-del-issue-23). Los ejemplos agrupados son snapshots comprobados por tests, sin actualización automática. Las pruebas verifican orden, recuentos, conservación de ocurrencias y campos, encabezados hostiles, CSP y JSON sin mutaciones; la integración CLI compara varios endpoints/métodos con el motor real y conserva JSON y gate.
 
+El issue #24 amplía la [regresión OpenAPI 3.1](OPENAPI31-REGRESSION.md): `TestOpenAPI31CorpusIntegration` contrasta cinco pares, reutiliza los tres casos iniciales y añade unión con null y tipo de propiedad de respuesta. `internal/cli/testdata/openapi31/cases.json` contiene expectativas observadas con oasdiff 1.39.0, nunca regeneradas automáticamente. Los tres formatos, fallback, códigos 0/3, fuentes con espacios/Unicode/# y conservación de entradas se comprueban con el motor real al ejecutar verify.
+
 ### SDK portátil en Windows x64
 
 Si no hay Go instalado, obtener el [ZIP oficial Go 1.27.4](https://go.dev/dl/go1.27.4.windows-amd64.zip), cuyo SHA-256 publicado en [go.dev](https://go.dev/dl/?mode=json) es `178ab98950ac69ab25069307dc6ade79f3816e414cce95b4da166a115cde1e7e`. Comprobarlo antes de extraer:
