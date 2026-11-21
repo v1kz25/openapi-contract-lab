@@ -1,5 +1,7 @@
 # openapi-contract-lab
 
+<img src="docs/assets/openapi-contract-lab-logo.png" alt="OpenAPI Contract Lab: comparación y revisión de contratos API" width="640">
+
 > v0.1.0 experimental: CLI local con oasdiff, diez explicaciones, informes y política de severidad. Solo Windows x64 verificado; no se promete estabilidad de CLI/esquema ni cobertura completa de OpenAPI.
 
 En esta rama de desarrollo, el [issue #21](https://github.com/v1kz25/openapi-contract-lab/issues/21) amplía las explicaciones a trece combinaciones verificadas. Aún no hay release v0.2.0: el tag y los archivos de v0.1.0 conservan sus diez explicaciones originales.
