@@ -32,7 +32,7 @@ function Invoke-Smoke {
 $helpText = Invoke-Smoke 'help' @('--help') 0
 if ($helpText -notmatch 'Usage:' -or $helpText -notmatch 'compare') { throw 'Help regression' }
 $version = Invoke-Smoke 'version' @('--version') 0
-if ($version.Trim() -ne 'openapi-contract-lab dev') { throw 'Unexpected development version' }
+if ($version.Trim() -ne 'openapi-contract-lab v0.1.0') { throw 'Unexpected release version' }
 $compareHelp = Invoke-Smoke 'compare-help' @('compare','--help') 0
 if ($compareHelp -notmatch '--fail-on') { throw 'Policy help missing' }
 $common = @('compare','--oasdiff',$Engine)
@@ -68,5 +68,14 @@ foreach ($format in @('json','markdown','html')) {
 }
 $null = Invoke-Smoke 'invalid-policy' ($common + @('--fail-on','invalid',$base,$required)) 2
 $null = Invoke-Smoke 'missing-input' ($common + @($base,(Join-Path $directory 'missing.yaml'))) 1
+Copy-Item -LiteralPath $base -Destination (Join-Path $directory 'base.yaml')
+Copy-Item -LiteralPath $required -Destination (Join-Path $directory 'required.yaml')
+$copyBase = Join-Path $directory 'base.yaml'
+$copyHead = Join-Path $directory 'required.yaml'
+foreach ($original in @($copyBase,$copyHead)) {
+    $hash = (Get-FileHash -LiteralPath $original -Algorithm SHA256).Hash
+    $null = Invoke-Smoke ('protect-' + [IO.Path]::GetFileName($original)) ($common + @('--output',$original,$copyBase,$copyHead)) 1
+    if ((Get-FileHash -LiteralPath $original -Algorithm SHA256).Hash -ne $hash) { throw 'Input file changed' }
+}
 Write-Output ('PASS smoke; PowerShell ' + $PSVersionTable.PSVersion.ToString())
 exit 0

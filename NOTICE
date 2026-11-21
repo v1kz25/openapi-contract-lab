@@ -1,0 +1,7 @@
+OpenAPI Contract Lab
+Copyright 2026 Pablo Viqueira
+
+Licensed under the Apache License, Version 2.0.
+The compiled Windows executable includes the Go runtime and standard library.
+See THIRD_PARTY_NOTICES.txt for their copyright and license terms.
+oasdiff is a separate executable and is not included in this distribution.
