@@ -3,7 +3,6 @@ package cli
 
 import (
 	"context"
-	"encoding/json"
 	"errors"
 	"flag"
 	"fmt"
@@ -92,9 +91,7 @@ func compare(args []string, stdout, stderr io.Writer) int {
 		fmt.Fprintf(stderr, "error: %v\n", err)
 		return 1
 	}
-	encoder := json.NewEncoder(stdout)
-	encoder.SetIndent("", "  ")
-	if err := encoder.Encode(explain.Enrich(report)); err != nil {
+	if err := writeJSON(stdout, explain.Enrich(report)); err != nil {
 		fmt.Fprintf(stderr, "error: could not write output: %v\n", err)
 		return 1
 	}

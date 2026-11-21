@@ -14,7 +14,11 @@ Cada hallazgo conserva todos los campos del adaptador, incluido `upstream`, y a�
 | `action` | Comprobación o coordinación sugerida; no aplica cambios automáticos |
 | `locations` | Fuentes base/head recibidas del motor, con archivo/línea/columna y URL local cuando puede resolverse sin adivinar |
 
-No se analiza ni se extraen parámetros del texto libre del motor. El mensaje original proporciona el nombre o valor concreto; las plantillas describen la regla. Los diez pares verificados son:
+No se analiza ni se extraen parámetros del texto libre del motor. El mensaje original proporciona el nombre o valor concreto; las plantillas describen la regla.
+
+La CLI serializa el JSON usando únicamente bytes ASCII y escapes Unicode estándar (`\u00e1`, por ejemplo). Así, PowerShell 5.1 puede leer el pipeline con CP850, Windows-1252 o UTF-8 antes de `ConvertFrom-Json` sin corromper los acentos. Los valores Unicode, rutas y eventos upstream se conservan al parsear; los caracteres fuera del plano básico se representan con pares sustitutos UTF-16. No se modifica la configuración de la consola del usuario.
+
+Los diez pares verificados son:
 
 | Rule ID | Nivel upstream verificado | Cambio sintético real |
 | --- | --- | --- |
@@ -82,7 +86,8 @@ Esperado: regla upstream `request-parameter-type-changed`, `kind: fallback`, tex
 - `go test ./...`, con `OASDIFF_BINARY` fijado y descargas Go deshabilitadas: PASS. Diez rule IDs/niveles contrastados con oasdiff real; snapshots de mensajes y fallback, preservación del hallazgo original, enlaces con espacios/Unicode/#, omisión de unidad Windows y fuentes desconocidas/ausentes.
 - `go vet ./...`, `gofmt` y compilación: correctos.
 - CLI compilada: explicación y enlaces del parámetro obligatorio correctos; descripción con cero hallazgos; cambio de tipo con fallback neutral.
-- Windows PowerShell 5.1: JSON parseado y resumen en español con acentos conservados, comprobados guardando el texto y comparándolo exactamente.
+- La comprobación inicial con Windows PowerShell 5.1 y codificación heredada UTF-8 no cubría las consolas CP850. El usuario detectó acentos corruptos; se reprodujo exactamente el fallo con CP850 antes de corregir la serialización JSON.
+- Tras la corrección: Windows PowerShell 5.1 con CP850, Windows-1252 y UTF-8, mensajes template/fallback y ubicaciones comprobados exactamente. JSON de la CLI verificado byte a byte como ASCII; tests de roundtrip con acentos, rutas Unicode, emoji, CJK, escapes literales y caracteres de control, además de errores de escritura.
 - La primera integración falló por las rutas URI-escapadas del directorio temporal y por un fixture JSON de respuesta inválido. Se corrigieron ambos, se añadió validación del JSON sintético y se repitió la verificación completa correctamente.
 
 Entorno: Windows x64 build 26300.9974, Go 1.27.4 y oasdiff 1.39.0 ya comprobados. No se verificaron ARM64 ni otros sistemas operativos. Pendiente de revisión y prueba manual del usuario antes de solicitar fusión. No se avanza al siguiente issue.

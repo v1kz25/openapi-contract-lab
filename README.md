@@ -30,6 +30,8 @@ Para comparar, preparar el binario oficial según el [spike](docs/OASDIFF-SPIKE.
 
 Cada hallazgo incluye `explanation` con resumen, impacto, acción sugerida y ubicaciones. Las [diez reglas verificadas](docs/EXPLANATIONS.md) tienen texto determinista en español; otras reglas, niveles o versiones reciben un fallback neutral. La explicación conserva la clasificación de oasdiff y añade enlaces locales solo para fuentes que coinciden con las entradas conocidas.
 
+La salida JSON utiliza escapes Unicode para que Windows PowerShell 5.1 conserve los acentos incluso con codificaciones de consola antiguas. `ConvertFrom-Json` recupera el texto original; no hace falta cambiar la configuración global de Windows.
+
 Una comparación ejecutada correctamente devuelve **0 incluso si hay breaking changes**; aún no hay política CI por severidad. Una lista vacía de hallazgos no implica que los contratos sean idénticos: los cambios solo de descripción no aparecen en el changelog.
 
 ## MVP previsto
