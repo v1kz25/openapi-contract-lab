@@ -15,7 +15,7 @@ Desde la raíz del repositorio, con el ejecutable compilado y oasdiff preparado 
 - `--output`: archivo local **nuevo**, en un directorio que ya exista. La escritura evita sobrescribir cualquier archivo existente, incluidos los contratos. Para repetir la exportación, elegir otro nombre.
 - Sin `--output`, se escribe en stdout. Para guardar HTML/Markdown desde PowerShell 5.1, usar `--output`: así no intervienen su decodificación de pipelines ni la codificación de `>`/`Out-File`.
 - Archivos UTF-8 sin BOM, saltos LF. JSON mantiene los escapes Unicode compatibles con consolas antiguas. HTML declara `charset=utf-8` y Markdown conserva los caracteres Unicode.
-- Una exportación correcta devuelve 0 y no escribe mensajes adicionales en stdout al usar `--output`. Formato/argumentos inválidos: 2. Fallo de motor, renderizado o escritura: 1. Un finding breaking todavía no activa exit 1; esa política pertenece al issue #6.
+- Desde el issue #6, una exportación completada devuelve 0 si supera la política o 3 si no la supera; en ambos casos se conserva el informe. Con `--output`, stdout permanece vacío. Formato/argumentos inválidos: 2. Fallo de motor, renderizado o escritura: 1. Ver [política](SEVERITY-POLICY.md); usar `--fail-on none` para exportar sin gate.
 
 ## Contenido y estabilidad
 
@@ -40,9 +40,9 @@ Abrir PowerShell en la carpeta local `openapi-contract-lab` (no System32). Este 
 ```powershell
 $prefijo = ".\dist\revision-$(Get-Date -Format yyyyMMdd-HHmmss-fff)"
 .\dist\openapi-contract-lab.exe compare --oasdiff .\dist\oasdiff-1.39.0\oasdiff.exe --format html --output "$prefijo.html" .\spikes\oasdiff\fixtures\base.yaml .\spikes\oasdiff\fixtures\required.yaml
-$LASTEXITCODE # 0
+$LASTEXITCODE # 3: informe generado; breaking change con política predeterminada
 .\dist\openapi-contract-lab.exe compare --oasdiff .\dist\oasdiff-1.39.0\oasdiff.exe --format markdown --output "$prefijo.md" .\spikes\oasdiff\fixtures\base.yaml .\spikes\oasdiff\fixtures\required.yaml
-$LASTEXITCODE # 0
+$LASTEXITCODE # 3: informe generado; breaking change con política predeterminada
 Invoke-Item "$prefijo.html"
 Get-Content "$prefijo.md" -Encoding UTF8
 ```

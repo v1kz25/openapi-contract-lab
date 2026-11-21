@@ -2,7 +2,7 @@
 
 ## Estado
 
-Módulo `github.com/v1kz25/openapi-contract-lab`, entrada en `cmd/openapi-contract-lab` y manejo de comandos en `internal/cli`. El issue #3 añade `internal/oasdiff` y `compare`: [modelo y verificación](OASDIFF-ADAPTER.md). El issue #4 incorpora `internal/explain`: [reglas y explicaciones](EXPLANATIONS.md). El issue #5 añade `internal/report`: [informes locales Markdown/HTML](REPORTS.md). La política CI sigue pendiente.
+Módulo `github.com/v1kz25/openapi-contract-lab`, entrada en `cmd/openapi-contract-lab` y manejo de comandos en `internal/cli`. El issue #3 añade `internal/oasdiff` y `compare`: [modelo y verificación](OASDIFF-ADAPTER.md). El issue #4 incorpora `internal/explain`: [reglas y explicaciones](EXPLANATIONS.md). El issue #5 añade `internal/report`: [informes locales Markdown/HTML](REPORTS.md). El issue #6 incorpora la [política de severidad](SEVERITY-POLICY.md). La automatización CI sigue pendiente.
 
 ## Entorno propuesto
 
@@ -39,7 +39,7 @@ go build -o dist/openapi-contract-lab.exe ./cmd/openapi-contract-lab
 $LASTEXITCODE # 2: diff aún no es un comando
 ```
 
-`gofmt -l` no debe listar archivos. Ayuda/version y comparaciones correctas terminan con código 0; argumentos inválidos con 2; fallos de escritura, entrada o motor con 1. Son códigos operativos, no la política de severidad del futuro issue #6. El adaptador proporciona `*oasdiff.Error` con etapa y causa original.
+`gofmt -l` no debe listar archivos. Ayuda/version y comparaciones que superan la política terminan con código 0; argumentos inválidos con 2; fallos de escritura, entrada o motor con 1. Una comparación completada que no supera `--fail-on` devuelve 3, conservando el informe. El adaptador proporciona `*oasdiff.Error` con etapa y causa original.
 
 Para incluir las pruebas con el motor real (no se descarga durante los tests):
 

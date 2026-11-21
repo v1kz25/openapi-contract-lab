@@ -1,6 +1,6 @@
 # openapi-contract-lab
 
-> Estado: comparación local con oasdiff, explicaciones para diez reglas e informes JSON, Markdown y HTML. Política CI aún pendiente; no es un MVP completo.
+> Estado: comparación local con oasdiff, explicaciones para diez reglas, informes JSON/Markdown/HTML y política de severidad. Automatización CI y release aún pendientes.
 
 Explica cambios incompatibles entre contratos OpenAPI usando oasdiff, con informes locales y CI.
 
@@ -40,7 +40,9 @@ Para exportar un informe local, elegir un archivo nuevo:
 
 `--format` admite `json` (predeterminado), `markdown` y `html`. `--output` escribe UTF-8 directamente y evita la redirección de PowerShell; rechaza destinos existentes. El HTML incluye todo lo necesario, sin servidor, scripts ni recursos de red. Ver [exportación y pruebas](docs/REPORTS.md).
 
-Una comparación ejecutada correctamente devuelve **0 incluso si hay breaking changes**; aún no hay política CI por severidad. Una lista vacía de hallazgos no implica que los contratos sean idénticos: los cambios solo de descripción no aparecen en el changelog.
+Por defecto, los hallazgos `error` (breaking) devuelven **3 después de generar el informe**. `--fail-on error|warning|info|none` permite cambiar el umbral; `none` conserva el comportamiento de exportación sin gate. Severidades desconocidas bloquean con cualquier política activa. Los fallos operativos devuelven 1 y los argumentos inválidos 2. Ver [política y ejemplos PowerShell](docs/SEVERITY-POLICY.md).
+
+Una lista vacía de hallazgos no implica que los contratos sean idénticos: los cambios solo de descripción no aparecen en el changelog.
 
 ## MVP previsto
 

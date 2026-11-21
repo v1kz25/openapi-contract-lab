@@ -1,6 +1,6 @@
 # Roadmap — openapi-contract-lab
 
-Hay un spike local de oasdiff y una CLI Go con comparación local, explicaciones para diez reglas e informes JSON, Markdown y HTML. La política CI sigue pendiente. Este plan es orientativo; cada fase requiere validar la anterior.
+Hay un spike local de oasdiff y una CLI Go con comparación local, explicaciones para diez reglas, informes JSON/Markdown/HTML y política de severidad con códigos de salida. La automatización CI sigue pendiente. Este plan es orientativo; cada fase requiere validar la anterior.
 
 1. **Validación técnica / PoC**: validar el hueco real y dependencias
 2. **Configuración inicial**: crear base mínima verificable
