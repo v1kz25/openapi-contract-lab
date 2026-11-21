@@ -19,8 +19,14 @@
 El changelog incluye cambios que afectan a consumidores. Una lista vacía no implica contratos idénticos; los cambios solo de descripción no generan hallazgos.
 
 ## Hallazgos
+{{range .Groups}}
+### {{md .Title}}
+
+Hallazgos: {{.Counts.Total}} · Errores: {{.Counts.Errors}} · Advertencias: {{.Counts.Warnings}} · Informativos: {{.Counts.Info}} · Sin clasificar: {{.Counts.Unknown}}
+{{range .Severities}}
+#### Severidad: {{if .Severity}}{{md .Severity}}{{else}}No reportada{{end}} · Hallazgos: {{len .Findings}}
 {{range .Findings}}
-### {{.Number}}. {{md .Explanation.Summary}}
+##### {{.Number}}. {{md .Explanation.Summary}}
 
 **Regla:** {{md .RuleID}}
 
@@ -41,6 +47,6 @@ El changelog incluye cambios que afectan a consumidores. Una lista vacía no imp
 - **{{md .Side}}:** {{if .Link}}[{{md .File}}](<{{.Link}}>){{else}}{{md .File}}{{end}}{{if .Line}} · línea {{.Line}}{{if .Column}}, columna {{.Column}}{{end}}{{end}}
 {{else}}
 - Sin ubicación reportada.
-{{end}}{{else}}
+{{end}}{{end}}{{end}}{{else}}
 No hay hallazgos que mostrar.
 {{end}}

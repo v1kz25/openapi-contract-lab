@@ -60,6 +60,8 @@ Con la misma variable también se ejecutan los trece casos sintéticos de `inter
 
 `internal/report/testdata/` contiene snapshots revisables de HTML y Markdown para un informe mixto y otro vacío. Los tests de escape y enlaces se ejecutan sin motor. Con `OASDIFF_BINARY`, los tests de CLI también exportan JSON/Markdown/HTML reales a archivos UTF-8 en un directorio temporal. La exportación usa creación exclusiva y no sobrescribe archivos existentes.
 
+El issue #23 añade agrupación en la vista HTML/Markdown, snapshots globales y [ejemplos antes/después](REPORTS.md#ejemplos-comparables-y-revisión-manual-del-issue-23). Los ejemplos agrupados son snapshots comprobados por tests, sin actualización automática. Las pruebas verifican orden, recuentos, conservación de ocurrencias y campos, encabezados hostiles, CSP y JSON sin mutaciones; la integración CLI compara varios endpoints/métodos con el motor real y conserva JSON y gate.
+
 ### SDK portátil en Windows x64
 
 Si no hay Go instalado, obtener el [ZIP oficial Go 1.27.4](https://go.dev/dl/go1.27.4.windows-amd64.zip), cuyo SHA-256 publicado en [go.dev](https://go.dev/dl/?mode=json) es `178ab98950ac69ab25069307dc6ade79f3816e414cce95b4da166a115cde1e7e`. Comprobarlo antes de extraer:

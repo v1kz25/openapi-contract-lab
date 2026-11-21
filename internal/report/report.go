@@ -41,12 +41,13 @@ type finding struct {
 type view struct {
 	Engine, EngineVersion, Base, Head string
 	Counts                            counts
-	Findings                          []finding
+	Groups                            []operationGroup
 }
 
-// Render preserves upstream order and adds no timestamps or generated IDs.
+// Render groups only the human view; the input report and its order are untouched.
 func Render(format string, report explain.Report) ([]byte, error) {
 	v := view{Engine: report.Engine, EngineVersion: report.EngineVersion, Base: report.Base, Head: report.Head}
+	var items []finding
 	v.Counts.Total = len(report.Findings)
 	for i, entry := range report.Findings {
 		tone := "unknown"
@@ -67,8 +68,9 @@ func Render(format string, report explain.Report) ([]byte, error) {
 		for _, source := range entry.Explanation.Locations {
 			item.Locations = append(item.Locations, location{Location: source, Link: localLink(source.URL)})
 		}
-		v.Findings = append(v.Findings, item)
+		items = append(items, item)
 	}
+	v.Groups = groupFindings(items)
 	var output bytes.Buffer
 	var err error
 	switch format {
