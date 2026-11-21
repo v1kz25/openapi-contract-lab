@@ -2,12 +2,12 @@
 
 ## Estado
 
-Issue #2: módulo `github.com/v1kz25/openapi-contract-lab`, entrada en `cmd/openapi-contract-lab` y manejo de comandos en `internal/cli`. Solo ayuda y versión; el adaptador oasdiff y el diff funcional corresponden a otros issues.
+Módulo `github.com/v1kz25/openapi-contract-lab`, entrada en `cmd/openapi-contract-lab` y manejo de comandos en `internal/cli`. El issue #3 añade `internal/oasdiff` y `compare`: [modelo, decisiones y verificación](OASDIFF-ADAPTER.md). No hay explicaciones propias, informes ni política CI.
 
 ## Entorno propuesto
 
 - Windows 11; Git, GitHub CLI (`gh`), Codex en desktop/VS Code/CLI.
-- Go 1.27.4 fijado en `go.mod`, sin módulos externos ni `go.sum` necesario. Para la futura integración se sigue la decisión del [spike oasdiff](OASDIFF-SPIKE.md): binario local 1.39.0, Apache-2.0.
+- Go 1.27.4 fijado en `go.mod`, sin módulos externos ni `go.sum` necesario. El adaptador sigue la decisión del [spike oasdiff](OASDIFF-SPIKE.md): binario local 1.39.0, Apache-2.0.
 - Sin hosting, cuentas de servicios comerciales, API keys ni infraestructura de pago.
 
 ## Flujo de trabajo
@@ -39,7 +39,16 @@ go build -o dist/openapi-contract-lab.exe ./cmd/openapi-contract-lab
 $LASTEXITCODE # 2: diff aún no es un comando
 ```
 
-`gofmt -l` no debe listar archivos. Ayuda/version terminan con código 0; argumentos inválidos con 2; un fallo de escritura de salida con 1. Son códigos de la CLI inicial, no la política de severidad del futuro issue #6. No hay errores tipados de dominio porque aún no existe lógica de contratos.
+`gofmt -l` no debe listar archivos. Ayuda/version y comparaciones correctas terminan con código 0; argumentos inválidos con 2; fallos de escritura, entrada o motor con 1. Son códigos operativos, no la política de severidad del futuro issue #6. El adaptador proporciona `*oasdiff.Error` con etapa y causa original.
+
+Para incluir las pruebas con el motor real (no se descarga durante los tests):
+
+```powershell
+$env:OASDIFF_BINARY = (Resolve-Path 'dist/oasdiff-1.39.0/oasdiff.exe').Path
+go test ./...
+```
+
+Sin esta variable se ejecutan los tests unitarios y golden; `TestIntegration` se omite con un mensaje explícito. Las pruebas reales usan las entradas sintéticas del spike, prueban errores de YAML/referencias externas y comprueban aislamiento de configuración. No es necesario configurar CI para ejecutarlas.
 
 ### SDK portátil en Windows x64
 

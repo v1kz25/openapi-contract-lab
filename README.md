@@ -1,6 +1,6 @@
 # openapi-contract-lab
 
-> Estado: base Go con ayuda y versión. **Aún no hay comparación de contratos ni MVP implementado**.
+> Estado: comparación local con oasdiff y salida JSON normalizada. Explicaciones e informes aún pendientes; no es un MVP completo.
 
 Explica cambios incompatibles entre contratos OpenAPI usando oasdiff, con informes locales y CI.
 
@@ -10,7 +10,7 @@ Comparar dos especificaciones OpenAPI sin reimplementar el análisis semántico;
 
 ## Stack
 
-Go 1.27.4, sin dependencias externas en el módulo inicial. El spike recomienda integrar el binario local oasdiff 1.39.0 (Apache-2.0); la CLI todavía no lo invoca.
+Go 1.27.4, sin módulos externos. La comparación ejecuta el binario local oasdiff 1.39.0 (Apache-2.0), cuya versión se comprueba antes de comparar.
 
 ## Uso disponible
 
@@ -21,9 +21,14 @@ go run ./cmd/openapi-contract-lab --help
 go run ./cmd/openapi-contract-lab --version
 go build -o dist/openapi-contract-lab.exe ./cmd/openapi-contract-lab
 ./dist/openapi-contract-lab.exe --help
+./dist/openapi-contract-lab.exe compare --oasdiff ./dist/oasdiff-1.39.0/oasdiff.exe ./spikes/oasdiff/fixtures/base.yaml ./spikes/oasdiff/fixtures/required.yaml
 ```
 
 Sin argumentos muestra ayuda. `--version` devuelve `openapi-contract-lab dev`: aún no hay release. Un comando desconocido devuelve un mensaje en stderr y código 2. La CLI no inicia un servidor ni una interfaz gráfica.
+
+Para comparar, preparar el binario oficial según el [spike](docs/OASDIFF-SPIKE.md). `--oasdiff` puede omitirse si oasdiff está en PATH. Las dos entradas deben ser archivos locales; se deshabilitan las referencias externas. La salida conserva rule ID, severidad, ruta, ubicaciones y el evento original. Ver [modelo y pruebas del adaptador](docs/OASDIFF-ADAPTER.md).
+
+Una comparación ejecutada correctamente devuelve **0 incluso si hay breaking changes**; aún no hay política CI por severidad. Una lista vacía de hallazgos no implica que los contratos sean idénticos: los cambios solo de descripción no aparecen en el changelog.
 
 ## MVP previsto
 

@@ -16,7 +16,7 @@ func TestHelp(t *testing.T) {
 			if code := cli.Run(args, &stdout, &stderr); code != 0 {
 				t.Fatalf("exit = %d; stderr = %q", code, stderr.String())
 			}
-			for _, text := range []string{"OpenAPI Contract Lab", "Usage:", "help", "version", "Contract comparison is not available yet."} {
+			for _, text := range []string{"OpenAPI Contract Lab", "Usage:", "help", "version", "compare", "BASE HEAD"} {
 				if !strings.Contains(stdout.String(), text) {
 					t.Errorf("help missing %q: %q", text, stdout.String())
 				}
@@ -25,6 +25,24 @@ func TestHelp(t *testing.T) {
 				t.Errorf("unexpected stderr: %q", stderr.String())
 			}
 		})
+	}
+}
+
+func TestCompareArguments(t *testing.T) {
+	for _, args := range [][]string{
+		{"compare"}, {"compare", "base.yaml"}, {"compare", "base", "head", "extra"},
+		{"compare", "--unknown"}, {"compare", "--oasdiff"}, {"compare", "--oasdiff=", "base", "head"},
+	} {
+		t.Run(strings.Join(args, " "), func(t *testing.T) {
+			var stdout, stderr bytes.Buffer
+			if code := cli.Run(args, &stdout, &stderr); code != 2 || stdout.Len() != 0 || !strings.Contains(stderr.String(), "compare --help") {
+				t.Fatalf("exit = %d; stdout = %q; stderr = %q", code, stdout.String(), stderr.String())
+			}
+		})
+	}
+	var stdout, stderr bytes.Buffer
+	if code := cli.Run([]string{"compare", "--help"}, &stdout, &stderr); code != 0 || !strings.Contains(stdout.String(), "oasdiff 1.39.0") || stderr.Len() != 0 {
+		t.Fatalf("exit = %d; stdout = %q; stderr = %q", code, stdout.String(), stderr.String())
 	}
 }
 
