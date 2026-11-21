@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"io"
 
+	"github.com/v1kz25/openapi-contract-lab/internal/explain"
 	"github.com/v1kz25/openapi-contract-lab/internal/oasdiff"
 )
 
@@ -21,7 +22,7 @@ Usage:
 Commands:
   help       Show this help (also -h, --help)
   version    Show the development version (also --version)
-  compare    Compare local contracts and emit normalized oasdiff findings as JSON
+  compare    Compare local contracts and emit findings with verified explanations
 `
 
 const compareHelp = `Usage:
@@ -30,6 +31,7 @@ const compareHelp = `Usage:
 BASE and HEAD must be local files. Requires oasdiff 1.39.0.
 --oasdiff PATH selects the executable (default: oasdiff on PATH).
 Documentation-only edits do not produce changelog findings.
+Verified rules include deterministic Spanish explanations and local source links.
 `
 
 // Run writes command output and returns 0 on success, 1 on an output error,
@@ -92,7 +94,7 @@ func compare(args []string, stdout, stderr io.Writer) int {
 	}
 	encoder := json.NewEncoder(stdout)
 	encoder.SetIndent("", "  ")
-	if err := encoder.Encode(report); err != nil {
+	if err := encoder.Encode(explain.Enrich(report)); err != nil {
 		fmt.Fprintf(stderr, "error: could not write output: %v\n", err)
 		return 1
 	}

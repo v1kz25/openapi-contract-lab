@@ -1,6 +1,6 @@
 # openapi-contract-lab
 
-> Estado: comparación local con oasdiff y salida JSON normalizada. Explicaciones e informes aún pendientes; no es un MVP completo.
+> Estado: comparación local con oasdiff, JSON normalizado y explicaciones deterministas para diez reglas. Informes y política CI aún pendientes; no es un MVP completo.
 
 Explica cambios incompatibles entre contratos OpenAPI usando oasdiff, con informes locales y CI.
 
@@ -27,6 +27,8 @@ go build -o dist/openapi-contract-lab.exe ./cmd/openapi-contract-lab
 Sin argumentos muestra ayuda. `--version` devuelve `openapi-contract-lab dev`: aún no hay release. Un comando desconocido devuelve un mensaje en stderr y código 2. La CLI no inicia un servidor ni una interfaz gráfica.
 
 Para comparar, preparar el binario oficial según el [spike](docs/OASDIFF-SPIKE.md). `--oasdiff` puede omitirse si oasdiff está en PATH. Las dos entradas deben ser archivos locales; se deshabilitan las referencias externas. La salida conserva rule ID, severidad, ruta, ubicaciones y el evento original. Ver [modelo y pruebas del adaptador](docs/OASDIFF-ADAPTER.md).
+
+Cada hallazgo incluye `explanation` con resumen, impacto, acción sugerida y ubicaciones. Las [diez reglas verificadas](docs/EXPLANATIONS.md) tienen texto determinista en español; otras reglas, niveles o versiones reciben un fallback neutral. La explicación conserva la clasificación de oasdiff y añade enlaces locales solo para fuentes que coinciden con las entradas conocidas.
 
 Una comparación ejecutada correctamente devuelve **0 incluso si hay breaking changes**; aún no hay política CI por severidad. Una lista vacía de hallazgos no implica que los contratos sean idénticos: los cambios solo de descripción no aparecen en el changelog.
 

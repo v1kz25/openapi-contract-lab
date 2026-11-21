@@ -1,0 +1,7 @@
+{
+  "kind": "fallback",
+  "summary": "No hay una explicación verificada para esta combinación de regla y nivel.",
+  "impact": "Consulte el mensaje y los datos originales de oasdiff; no se ha inferido una causa adicional.",
+  "action": "Revise manualmente el cambio y las ubicaciones disponibles.",
+  "locations": []
+}

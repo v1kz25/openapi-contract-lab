@@ -2,7 +2,7 @@
 
 ## Estado
 
-Módulo `github.com/v1kz25/openapi-contract-lab`, entrada en `cmd/openapi-contract-lab` y manejo de comandos en `internal/cli`. El issue #3 añade `internal/oasdiff` y `compare`: [modelo, decisiones y verificación](OASDIFF-ADAPTER.md). No hay explicaciones propias, informes ni política CI.
+Módulo `github.com/v1kz25/openapi-contract-lab`, entrada en `cmd/openapi-contract-lab` y manejo de comandos en `internal/cli`. El issue #3 añade `internal/oasdiff` y `compare`: [modelo y verificación](OASDIFF-ADAPTER.md). El issue #4 incorpora `internal/explain`: [diez reglas, fuentes, snapshots y enlaces locales](EXPLANATIONS.md). No hay informes ni política CI.
 
 ## Entorno propuesto
 
@@ -49,6 +49,8 @@ go test ./...
 ```
 
 Sin esta variable se ejecutan los tests unitarios y golden; `TestIntegration` se omite con un mensaje explícito. Las pruebas reales usan las entradas sintéticas del spike, prueban errores de YAML/referencias externas y comprueban aislamiento de configuración. No es necesario configurar CI para ejecutarlas.
+
+Con la misma variable también se ejecutan los diez casos sintéticos de `internal/explain`, uno por regla documentada, y se comprueba que el motor emite los IDs/niveles esperados y las fuentes enlazadas. Los snapshots de mensajes se revisan en `internal/explain/testdata/`; no hay actualización automática de expectativas.
 
 ### SDK portátil en Windows x64
 
