@@ -1,4 +1,4 @@
-Third-party notices for OpenAPI Contract Lab v0.1.0
+Third-party notices for OpenAPI Contract Lab v0.2.0
 
 The Windows executable includes the Go 1.27.4 runtime and standard library.
 Source: https://github.com/golang/go/blob/go1.27.4/LICENSE

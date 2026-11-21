@@ -6,7 +6,7 @@
 
 La publicación cerró el [issue #18](https://github.com/v1kz25/openapi-contract-lab/issues/18). Se conservan sus [notas](releases/v0.1.0.md) como evidencia de esa versión; las futuras publicaciones requieren aprobación independiente según [RELEASE.md](RELEASE.md).
 
-## Próxima iteración: propuesta v0.2.0
+## Candidato experimental v0.2.0
 
 Backlog reducido, sin comprometer una fecha ni publicar una nueva versión. Prima explicar el impacto y facilitar la revisión frente a envolver más comandos de oasdiff. La documentación #22, las tres explicaciones #21, los informes agrupados #23 y la [regresión 3.1 con cinco pares concretos](OPENAPI31-REGRESSION.md) del #24 ya están integrados en `develop` mediante las PRs #26, #27, #28 y #31. El [spike #25](CHANGE-KIND-SPIKE.md) concluye reducir la propuesta a una señal de diferencias detectadas/no detectadas/desconocido y posponer su integración pública; no demuestra categorías generales de igualdad o cambio solo documental. La clasificación no está implementada.
 
@@ -18,7 +18,7 @@ Backlog reducido, sin comprometer una fecha ni publicar una nueva versión. Prim
 | 3: [#24, regresión 3.1](https://github.com/v1kz25/openapi-contract-lab/issues/24) | Hasta cinco pares representativos, incluidos null/uniones y respuestas; confianza verificable. | Media; motor fijado y corpus existente, después de revisar #21. | No extrapolar nullable 3.0 ni afirmar soporte total; documentar incertidumbre y mantener fallback. |
 | 4: [#25, validar tipo de cambio](https://github.com/v1kz25/openapi-contract-lab/issues/25) | Investigar idéntico/documental/contractual con las capacidades de oasdiff; evitar falsa igualdad al no haber hallazgos. | Media/alta; validar antes de diseñar una ampliación del adaptador/esquema. | Solo spike con cinco pares y decisión; si no hay señal fiable o exige gran cambio público, posponer. |
 
-El mínimo útil propuesto es #21 + #23 con regresión #24 y documentación vigente. #25 es exploración condicionada: no se promete implementar la clasificación en v0.2.0. El usuario revisará alcance y criterios de release después; no se inicia automáticamente el siguiente issue ni se cambia `--version` durante esta preparación.
+El alcance del candidato reúne #21 + #23 con regresión #24 y documentación vigente. #25 terminó como investigación: la clasificación pública queda pospuesta. El [issue #33](https://github.com/v1kz25/openapi-contract-lab/issues/33) prepara [versión, notas y ZIP para revisión](CANDIDATE-V0.2.0.md), sin nuevas funciones. Cambia la identificación a `v0.2.0` y corrige solo la resolución de la salida del runner del spike. Fusión, tag y publicación siguen pendientes de aprobación explícita; no se inicia otra funcionalidad.
 
 ## Versiones futuras, fuera de esta iteración
 

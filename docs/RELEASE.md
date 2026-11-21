@@ -1,8 +1,10 @@
-# Preparación de la primera publicación — issue #8
+# Publicación y preparación de candidatos
 
 ## Estado vigente
 
 [v0.1.0 experimental está publicada](https://github.com/v1kz25/openapi-contract-lab/releases/tag/v0.1.0) como pre-release bajo **Apache-2.0**, con ZIP Windows x64 y checksums, sin redistribuir oasdiff. El [issue #18](https://github.com/v1kz25/openapi-contract-lab/issues/18) está completado; PR #19 integrada en `main`, tag publicado y PR #20 sincronizada a `develop`. Ver [notas de esa versión](releases/v0.1.0.md). No editar el tag, los archivos publicados ni sus evidencias al preparar v0.2.0.
+
+El [issue #33](https://github.com/v1kz25/openapi-contract-lab/issues/33) prepara únicamente el **candidato experimental v0.2.0**, desde `release/0.2.0` hacia `main`: [notas](releases/v0.2.0.md), [instrucciones y verificaciones](CANDIDATE-V0.2.0.md). No es una release publicada, ni siquiera draft. `--version` identifica los bytes del candidato; no acredita su publicación. Se mantienen licencia, herramientas y límites; no se añade funcionalidad.
 
 ## Proceso para una próxima versión
 
