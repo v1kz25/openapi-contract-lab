@@ -1,0 +1,1 @@
+{"paths":{"/items":{"get":{"responses":{"200":{"description":"Items returned."}},"parameters":[{"schema":{"type":"string"},"required":false,"description":"Filter items.","in":"query","name":"filter"}]}}},"info":{"version":"1.0.0","title":"Synthetic search API"},"openapi":"3.0.3"}

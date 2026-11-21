@@ -64,6 +64,8 @@ El issue #23 añade agrupación en la vista HTML/Markdown, snapshots globales y 
 
 El issue #24 amplía la [regresión OpenAPI 3.1](OPENAPI31-REGRESSION.md): `TestOpenAPI31CorpusIntegration` contrasta cinco pares, reutiliza los tres casos iniciales y añade unión con null y tipo de propiedad de respuesta. `internal/cli/testdata/openapi31/cases.json` contiene expectativas observadas con oasdiff 1.39.0, nunca regeneradas automáticamente. Los tres formatos, fallback, códigos 0/3, fuentes con espacios/Unicode/# y conservación de entradas se comprueban con el motor real al ejecutar verify.
 
+El [spike #25](CHANGE-KIND-SPIKE.md) se reproduce por separado con `./spikes/change-kind/verify.ps1` (PowerShell 7 y motor local). Sus cinco pares, quince salidas congeladas y 25 controles no cambian código ni contrato público. El runner genera nueva evidencia en un directorio nuevo bajo `dist/`, comprueba expectativas sin actualizarlas e incluye configuración ambiental inválida y refs externas bloqueadas. La CI existente no ejecuta este runner de investigación automáticamente.
+
 ### SDK portátil en Windows x64
 
 Si no hay Go instalado, obtener el [ZIP oficial Go 1.27.4](https://go.dev/dl/go1.27.4.windows-amd64.zip), cuyo SHA-256 publicado en [go.dev](https://go.dev/dl/?mode=json) es `178ab98950ac69ab25069307dc6ade79f3816e414cce95b4da166a115cde1e7e`. Comprobarlo antes de extraer:

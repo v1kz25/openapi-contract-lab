@@ -1,0 +1,202 @@
+[
+  {
+    "name": "version",
+    "command": "oasdiff --config spikes/change-kind/offline.yaml --version",
+    "exit": 0,
+    "elapsedMs": 35,
+    "stdoutBytes": 23,
+    "stderrBytes": 0
+  },
+  {
+    "name": "identical.diff",
+    "command": "oasdiff diff --config spikes/change-kind/offline.yaml --format json --allow-external-refs=false --fetch=false -- spikes/oasdiff/fixtures/base.yaml spikes/oasdiff/fixtures/base.yaml",
+    "exit": 0,
+    "elapsedMs": 30,
+    "stdoutBytes": 3,
+    "stderrBytes": 0
+  },
+  {
+    "name": "identical.summary",
+    "command": "oasdiff summary --config spikes/change-kind/offline.yaml --format json --allow-external-refs=false --fetch=false -- spikes/oasdiff/fixtures/base.yaml spikes/oasdiff/fixtures/base.yaml",
+    "exit": 0,
+    "elapsedMs": 29,
+    "stdoutBytes": 15,
+    "stderrBytes": 0
+  },
+  {
+    "name": "identical.changelog",
+    "command": "oasdiff changelog --config spikes/change-kind/offline.yaml --format json --allow-external-refs=false --fetch=false --open=false --lang en --level INFO -- spikes/oasdiff/fixtures/base.yaml spikes/oasdiff/fixtures/base.yaml",
+    "exit": 0,
+    "elapsedMs": 29,
+    "stdoutBytes": 3,
+    "stderrBytes": 0
+  },
+  {
+    "name": "identical.fail-on-diff",
+    "command": "oasdiff diff --config spikes/change-kind/offline.yaml --format json --allow-external-refs=false --fetch=false --fail-on-diff -- spikes/oasdiff/fixtures/base.yaml spikes/oasdiff/fixtures/base.yaml",
+    "exit": 0,
+    "elapsedMs": 30,
+    "stdoutBytes": 3,
+    "stderrBytes": 0
+  },
+  {
+    "name": "format.diff",
+    "command": "oasdiff diff --config spikes/change-kind/offline.yaml --format json --allow-external-refs=false --fetch=false -- spikes/oasdiff/fixtures/base.yaml spikes/change-kind/fixtures/formatted.json",
+    "exit": 0,
+    "elapsedMs": 29,
+    "stdoutBytes": 3,
+    "stderrBytes": 0
+  },
+  {
+    "name": "format.summary",
+    "command": "oasdiff summary --config spikes/change-kind/offline.yaml --format json --allow-external-refs=false --fetch=false -- spikes/oasdiff/fixtures/base.yaml spikes/change-kind/fixtures/formatted.json",
+    "exit": 0,
+    "elapsedMs": 27,
+    "stdoutBytes": 15,
+    "stderrBytes": 0
+  },
+  {
+    "name": "format.changelog",
+    "command": "oasdiff changelog --config spikes/change-kind/offline.yaml --format json --allow-external-refs=false --fetch=false --open=false --lang en --level INFO -- spikes/oasdiff/fixtures/base.yaml spikes/change-kind/fixtures/formatted.json",
+    "exit": 0,
+    "elapsedMs": 29,
+    "stdoutBytes": 3,
+    "stderrBytes": 0
+  },
+  {
+    "name": "format.fail-on-diff",
+    "command": "oasdiff diff --config spikes/change-kind/offline.yaml --format json --allow-external-refs=false --fetch=false --fail-on-diff -- spikes/oasdiff/fixtures/base.yaml spikes/change-kind/fixtures/formatted.json",
+    "exit": 0,
+    "elapsedMs": 31,
+    "stdoutBytes": 3,
+    "stderrBytes": 0
+  },
+  {
+    "name": "description.diff",
+    "command": "oasdiff diff --config spikes/change-kind/offline.yaml --format json --allow-external-refs=false --fetch=false -- spikes/oasdiff/fixtures/base.yaml spikes/oasdiff/fixtures/description.yaml",
+    "exit": 0,
+    "elapsedMs": 29,
+    "stdoutBytes": 189,
+    "stderrBytes": 0
+  },
+  {
+    "name": "description.summary",
+    "command": "oasdiff summary --config spikes/change-kind/offline.yaml --format json --allow-external-refs=false --fetch=false -- spikes/oasdiff/fixtures/base.yaml spikes/oasdiff/fixtures/description.yaml",
+    "exit": 0,
+    "elapsedMs": 27,
+    "stdoutBytes": 76,
+    "stderrBytes": 0
+  },
+  {
+    "name": "description.changelog",
+    "command": "oasdiff changelog --config spikes/change-kind/offline.yaml --format json --allow-external-refs=false --fetch=false --open=false --lang en --level INFO -- spikes/oasdiff/fixtures/base.yaml spikes/oasdiff/fixtures/description.yaml",
+    "exit": 0,
+    "elapsedMs": 29,
+    "stdoutBytes": 3,
+    "stderrBytes": 0
+  },
+  {
+    "name": "description.fail-on-diff",
+    "command": "oasdiff diff --config spikes/change-kind/offline.yaml --format json --allow-external-refs=false --fetch=false --fail-on-diff -- spikes/oasdiff/fixtures/base.yaml spikes/oasdiff/fixtures/description.yaml",
+    "exit": 1,
+    "elapsedMs": 29,
+    "stdoutBytes": 189,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compatible.diff",
+    "command": "oasdiff diff --config spikes/change-kind/offline.yaml --format json --allow-external-refs=false --fetch=false -- spikes/oasdiff/fixtures/required.yaml spikes/oasdiff/fixtures/base.yaml",
+    "exit": 0,
+    "elapsedMs": 28,
+    "stdoutBytes": 157,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compatible.summary",
+    "command": "oasdiff summary --config spikes/change-kind/offline.yaml --format json --allow-external-refs=false --fetch=false -- spikes/oasdiff/fixtures/required.yaml spikes/oasdiff/fixtures/base.yaml",
+    "exit": 0,
+    "elapsedMs": 28,
+    "stdoutBytes": 76,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compatible.changelog",
+    "command": "oasdiff changelog --config spikes/change-kind/offline.yaml --format json --allow-external-refs=false --fetch=false --open=false --lang en --level INFO -- spikes/oasdiff/fixtures/required.yaml spikes/oasdiff/fixtures/base.yaml",
+    "exit": 0,
+    "elapsedMs": 29,
+    "stdoutBytes": 368,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compatible.fail-on-diff",
+    "command": "oasdiff diff --config spikes/change-kind/offline.yaml --format json --allow-external-refs=false --fetch=false --fail-on-diff -- spikes/oasdiff/fixtures/required.yaml spikes/oasdiff/fixtures/base.yaml",
+    "exit": 1,
+    "elapsedMs": 28,
+    "stdoutBytes": 157,
+    "stderrBytes": 0
+  },
+  {
+    "name": "breaking.diff",
+    "command": "oasdiff diff --config spikes/change-kind/offline.yaml --format json --allow-external-refs=false --fetch=false -- spikes/oasdiff/fixtures/base.yaml spikes/oasdiff/fixtures/required.yaml",
+    "exit": 0,
+    "elapsedMs": 33,
+    "stdoutBytes": 157,
+    "stderrBytes": 0
+  },
+  {
+    "name": "breaking.summary",
+    "command": "oasdiff summary --config spikes/change-kind/offline.yaml --format json --allow-external-refs=false --fetch=false -- spikes/oasdiff/fixtures/base.yaml spikes/oasdiff/fixtures/required.yaml",
+    "exit": 0,
+    "elapsedMs": 32,
+    "stdoutBytes": 76,
+    "stderrBytes": 0
+  },
+  {
+    "name": "breaking.changelog",
+    "command": "oasdiff changelog --config spikes/change-kind/offline.yaml --format json --allow-external-refs=false --fetch=false --open=false --lang en --level INFO -- spikes/oasdiff/fixtures/base.yaml spikes/oasdiff/fixtures/required.yaml",
+    "exit": 0,
+    "elapsedMs": 30,
+    "stdoutBytes": 368,
+    "stderrBytes": 0
+  },
+  {
+    "name": "breaking.fail-on-diff",
+    "command": "oasdiff diff --config spikes/change-kind/offline.yaml --format json --allow-external-refs=false --fetch=false --fail-on-diff -- spikes/oasdiff/fixtures/base.yaml spikes/oasdiff/fixtures/required.yaml",
+    "exit": 1,
+    "elapsedMs": 31,
+    "stdoutBytes": 157,
+    "stderrBytes": 0
+  },
+  {
+    "name": "description.exclude-description",
+    "command": "oasdiff diff --config spikes/change-kind/offline.yaml --format json --allow-external-refs=false --fetch=false --exclude-elements description -- spikes/oasdiff/fixtures/base.yaml spikes/oasdiff/fixtures/description.yaml",
+    "exit": 0,
+    "elapsedMs": 27,
+    "stdoutBytes": 3,
+    "stderrBytes": 0
+  },
+  {
+    "name": "external-ref.diff",
+    "command": "oasdiff diff --config spikes/change-kind/offline.yaml --format json --allow-external-refs=false --fetch=false -- spikes/oasdiff/fixtures/base.yaml spikes/change-kind/fixtures/external-ref.yaml",
+    "exit": 123,
+    "elapsedMs": 31,
+    "stdoutBytes": 0,
+    "stderrBytes": 151
+  },
+  {
+    "name": "external-ref.summary",
+    "command": "oasdiff summary --config spikes/change-kind/offline.yaml --format json --allow-external-refs=false --fetch=false -- spikes/oasdiff/fixtures/base.yaml spikes/change-kind/fixtures/external-ref.yaml",
+    "exit": 123,
+    "elapsedMs": 31,
+    "stdoutBytes": 0,
+    "stderrBytes": 151
+  },
+  {
+    "name": "external-ref.changelog",
+    "command": "oasdiff changelog --config spikes/change-kind/offline.yaml --format json --allow-external-refs=false --fetch=false --open=false -- spikes/oasdiff/fixtures/base.yaml spikes/change-kind/fixtures/external-ref.yaml",
+    "exit": 123,
+    "elapsedMs": 27,
+    "stdoutBytes": 0,
+    "stderrBytes": 151
+  }
+]
