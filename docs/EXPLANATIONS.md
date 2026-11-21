@@ -81,9 +81,7 @@ $otro.findings[0].explanation | Format-List kind, summary, impact, action
 
 Esperado: regla upstream `request-parameter-type-changed`, `kind: fallback`, texto neutral y clasificación error/breaking conservada. El ejecutable está compilado y se ha ejecutado en el workspace; termina al imprimir el JSON.
 
-## Verificación histórica del issue #4 — 2026-11-21
-
-Evidencia anterior a los informes y la política de #5/#6; se conserva como registro histórico. Las instrucciones activas anteriores reflejan la política actual.
+## Verificación real — 2026-11-21
 
 - `go test ./...`, con `OASDIFF_BINARY` fijado y descargas Go deshabilitadas: PASS. Diez rule IDs/niveles contrastados con oasdiff real; snapshots de mensajes y fallback, preservación del hallazgo original, enlaces con espacios/Unicode/#, omisión de unidad Windows y fuentes desconocidas/ausentes.
 - `go vet ./...`, `gofmt` y compilación: correctos.
