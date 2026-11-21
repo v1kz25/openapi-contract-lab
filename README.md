@@ -31,6 +31,7 @@ Go + oasdiff (dependencia Apache-2.0; confirmar versión y API antes de integrar
 
 - Ver [roadmap](docs/ROADMAP.md), [guía de desarrollo](docs/DEVELOPMENT.md) y [AGENTS.md](AGENTS.md).
 - El punto de entrada son los GitHub Issues, no implementar el MVP de golpe.
+- Spike local de oasdiff (issue #1): [decisión, ejemplos y evidencia](docs/OASDIFF-SPIKE.md). No es una CLI del proyecto.
 - Desarrollo principalmente desde Windows 11; sin infraestructura de pago.
 
 ## Riesgos
