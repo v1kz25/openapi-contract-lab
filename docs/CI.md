@@ -36,6 +36,8 @@ El script falla en cuanto una comprobación falla. `.gitattributes` mantiene los
 
 Se conservan las pruebas OpenAPI 3.0.3 del spike, diez reglas verificadas, referencias externas deshabilitadas, mapeo de niveles desconocidos, política y snapshots/escape de informes. No se regeneran expectativas automáticamente. No se afirma compatibilidad completa con 3.1 ni se valida 3.2 mediante este corpus limitado.
 
+Ampliaciones en desarrollo: #21 elevó a trece las combinaciones de explicación verificadas, #23 añadió informes agrupados y #24 incorpora [cinco pares 3.1.0 en los tres formatos](OPENAPI31-REGRESSION.md), reutilizando los contratos iniciales y añadiendo tres JSON para unión/null y propiedad de respuesta. No cambia el workflow ni las versiones fijadas; el mismo verify exige ejecutar esta nueva regresión con motor real. Los resultados históricos siguientes corresponden al issue #7.
+
 ## Equivalente local
 
 Desde la raíz, con el SDK y oasdiff preparados según [DEVELOPMENT.md](DEVELOPMENT.md):

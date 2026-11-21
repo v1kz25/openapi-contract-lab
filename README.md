@@ -55,7 +55,7 @@ Una lista vacía de hallazgos no implica que los contratos sean idénticos: los 
 
 ## Funciones disponibles y límites
 
-- Comparación de dos archivos locales mediante oasdiff 1.39.0. Regresión probada con fixtures 3.0.3 y casos mínimos 3.1.0; no se afirma cobertura completa de 3.1 ni soporte verificado de 3.2.
+- Comparación de dos archivos locales mediante oasdiff 1.39.0. Regresión probada con fixtures 3.0.3 y, en esta rama, [cinco pares acotados 3.1.0](docs/OPENAPI31-REGRESSION.md), incluidos unión con null y propiedad de respuesta; no se afirma cobertura completa de 3.1 ni soporte verificado de 3.2. v0.1.0 publicada conserva su corpus mínimo original.
 - Clasificación conservada del motor y trece explicaciones deterministas en español en esta rama (diez en v0.1.0); fallback neutral para otras reglas/niveles.
 - Informes JSON/Markdown/HTML offline y gate configurable por severidad. Timeout de comparación de 30 segundos; referencias externas y entradas URL/UNC deshabilitadas.
 - Solo Windows x64 verificado; PowerShell 5.1 y 7. El esquema de informe y la CLI siguen en desarrollo. Sin GUI, comparación por carpetas, editor ni autofix.

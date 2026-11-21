@@ -1,0 +1,59 @@
+[
+  {
+    "name": "identical",
+    "base": "../regression/base.yaml",
+    "head": "../regression/base.yaml",
+    "exit": 0
+  },
+  {
+    "name": "description",
+    "base": "../regression/base.yaml",
+    "head": "../regression/description.yaml",
+    "exit": 0
+  },
+  {
+    "name": "required",
+    "base": "../regression/base.yaml",
+    "head": "../regression/required.yaml",
+    "exit": 3,
+    "ruleId": "request-parameter-became-required",
+    "level": 3,
+    "severity": "error",
+    "compatibility": "breaking",
+    "explanation": "template",
+    "message": "the `query` request parameter `filter` became required",
+    "fingerprint": "291d500b6348",
+    "baseLine": 12, "baseColumn": 11,
+    "headLine": 12, "headColumn": 11
+  },
+  {
+    "name": "union-null",
+    "base": "base.json",
+    "head": "union-null.json",
+    "exit": 3,
+    "ruleId": "request-parameter-became-not-nullable",
+    "level": 3,
+    "severity": "error",
+    "compatibility": "breaking",
+    "explanation": "template",
+    "message": "the `query` request parameter `filter` became not nullable",
+    "fingerprint": "ad20a33ca68e",
+    "baseLine": 11, "baseColumn": 41,
+    "headLine": 11, "headColumn": 22
+  },
+  {
+    "name": "response-property",
+    "base": "base.json",
+    "head": "response-property.json",
+    "exit": 3,
+    "ruleId": "response-property-type-changed",
+    "level": 3,
+    "severity": "error",
+    "compatibility": "breaking",
+    "explanation": "fallback",
+    "message": "the `id` response's property `type` changed from `string` to `integer` for status `200`",
+    "fingerprint": "4bb10e70f9b6",
+    "baseLine": 21, "baseColumn": 41,
+    "headLine": 21, "headColumn": 41
+  }
+]

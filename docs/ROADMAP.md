@@ -8,7 +8,7 @@ La publicación cerró el [issue #18](https://github.com/v1kz25/openapi-contract
 
 ## Próxima iteración: propuesta v0.2.0
 
-Backlog reducido, sin comprometer una fecha ni publicar una nueva versión. Prima explicar el impacto y facilitar la revisión frente a envolver más comandos de oasdiff. La documentación #22 y las tres explicaciones #21 ya están integradas en `develop` mediante las PRs #26 y #27. El trabajo actual se limita a #23, con [presentación agrupada y ejemplos](REPORTS.md); su integración requiere otra aprobación. No se inicia #24 automáticamente.
+Backlog reducido, sin comprometer una fecha ni publicar una nueva versión. Prima explicar el impacto y facilitar la revisión frente a envolver más comandos de oasdiff. La documentación #22, las tres explicaciones #21 y los informes agrupados #23 ya están integrados en `develop` mediante las PRs #26, #27 y #28. El trabajo del #24 amplía la [regresión 3.1 con cinco pares concretos](OPENAPI31-REGRESSION.md), sin prometer cobertura completa; su evidencia y CI se revisan en su PR antes de integrar. #25 sigue siendo un spike separado, sin cambiar durante #24 el comportamiento público.
 
 | Orden / issue | Valor y alcance | Dificultad / dependencias | Riesgo y criterio de corte |
 | --- | --- | --- | --- |
