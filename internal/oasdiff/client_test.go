@@ -9,6 +9,7 @@ import (
 	"slices"
 	"strings"
 	"testing"
+	"time"
 )
 
 func localInputs(t *testing.T) (string, string) {
@@ -34,14 +35,21 @@ func TestClientInvocation(t *testing.T) {
 	}
 	client := New(binary)
 	var config string
+	var deadline time.Time
 	calls := 0
 	client.run = func(ctx context.Context, exe string, args ...string) ([]byte, error) {
 		calls++
 		if exe != binary {
 			t.Fatalf("unexpected executable: %q", exe)
 		}
-		if _, ok := ctx.Deadline(); !ok {
-			t.Fatal("missing deadline")
+		currentDeadline, ok := ctx.Deadline()
+		if !ok || time.Until(currentDeadline) <= 0 || time.Until(currentDeadline) > 30*time.Second {
+			t.Fatal("missing or incorrect 30 second deadline")
+		}
+		if calls == 1 {
+			deadline = currentDeadline
+		} else if !currentDeadline.Equal(deadline) {
+			t.Fatal("version and comparison must share one deadline")
 		}
 		index := slices.Index(args, "--config")
 		if index < 0 || index+1 >= len(args) {

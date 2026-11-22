@@ -3,6 +3,7 @@ package oasdiff
 import (
 	"bytes"
 	"context"
+	"errors"
 	"fmt"
 	"os"
 	"os/exec"
@@ -108,11 +109,13 @@ func localFile(path string) (string, error) {
 type limitedBuffer struct {
 	buffer bytes.Buffer
 	limit  int
+	err    error
 }
 
 func (b *limitedBuffer) Write(p []byte) (int, error) {
 	if len(p) > b.limit-b.buffer.Len() {
-		return 0, fmt.Errorf("engine output exceeds %d bytes", b.limit)
+		b.err = fmt.Errorf("engine output exceeds %d bytes", b.limit)
+		return 0, b.err
 	}
 	return b.buffer.Write(p)
 }
@@ -132,6 +135,14 @@ func runCommand(ctx context.Context, binary string, args ...string) ([]byte, err
 	if err := cmd.Run(); err != nil {
 		if ctx.Err() != nil {
 			return nil, ctx.Err()
+		}
+		// Cmd.Wait may prefer a nonzero exit status over pipe-copy errors.
+		// Retain the limit diagnosis as well as the original process failure.
+		if stdout.err != nil {
+			return nil, errors.Join(fmt.Errorf("stdout: %w", stdout.err), err)
+		}
+		if stderr.err != nil {
+			return nil, errors.Join(fmt.Errorf("stderr: %w", stderr.err), err)
 		}
 		if message := strings.TrimSpace(stderr.buffer.String()); message != "" {
 			return nil, fmt.Errorf("%w: %s", err, message)

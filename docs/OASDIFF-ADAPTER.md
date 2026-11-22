@@ -10,6 +10,17 @@ El contexto limita versión y comparación a 30 segundos en total. La captura de
 
 La CLI devuelve 0 si el informe supera la política, 3 si se genera pero no supera `--fail-on` (por defecto `error`), 1 si falla la entrada/motor/salida y 2 para argumentos inválidos. **Un finding breaking no activa exit 1**: con la política predeterminada activa exit 3. `--fail-on none` permite exportarlo con exit 0. Ver [política vigente](SEVERITY-POLICY.md).
 
+### Límites y alcance de seguridad — issue #38
+
+El uso soportado son **archivos locales revisados**, con el motor fijado de procedencia comprobada. No se ofrece un servicio para contratos arbitrarios hostiles. El rechazo de URL/UNC y referencias externas más el aislamiento de configuración restringen la invocación; no constituyen un sandbox del ejecutable, auditoría de tráfico ni garantía general de que un binario malicioso no acceda a red/archivos.
+
+- El deadline de **30 s** cubre conjuntamente versión y comparación del motor; no incluye renderizado/escritura posterior de la CLI. Un contexto padre más corto también se respeta. `WaitDelay=2 s` limita la espera adicional de proceso/pipes conforme a Go; no es una cuota total de recursos de la aplicación.
+- La captura por invocación acepta hasta **16 MiB stdout / 64 KiB stderr**; exceder cualquiera produce error, nunca un informe truncado aceptado. El diagnóstico identifica el límite y conserva la causa de proceso aunque haya salida no cero. No se garantiza cancelación inmediata al alcanzar el límite: el deadline sigue acotando la ejecución.
+- No hay límite propio de tamaño de entrada, cuota de RAM/CPU del motor ni cuota de memoria total de la CLI: parsear/enriquecer/renderizar puede necesitar más memoria que los bytes capturados. No se prometen manejo seguro de cualquier tamaño/profundidad, aislamiento de procesos descendientes ni defensa universal frente a recursos agotados.
+- Ante fallo de motor/versión/decodificación, la CLI devuelve **1**, sin informe en stdout ni creación del archivo de salida; prevalece incluso con `--fail-on none`. Una escritura posterior puede dejar una salida nueva parcial, como declara el contrato CLI. Ver [recuperación de informes](REPORTS.md#fallos-de-escritura-y-recuperación--issue-38).
+
+Los tests de #38 usan un ejecutable Go sintético en `internal/oasdiff/testdata/engine/main.go` compilado localmente, sin descargas. Prueban pipes reales exactamente en el límite y por encima (incluida terminación no cero), JSON incompleto, fallo de proceso, cancelación activa de comparación y deadline durante versión. La comprobación de proceso terminado usa un handle Windows abierto mientras el helper está vivo: prueba que ese helper directo terminó, no que cualquier árbol de procesos arbitrario quede aislado. El padre de los tests usa deadline de 3 s para ese caso y tolerancia de 8 s, sin esperar 30 s por prueba; el deadline de producción no cambia. Las pruebas CLI recorren ambos umbrales `error`/`none`, tres formatos y salidas a stdout/destino nuevo/existente/entradas, comprobando conservación por hash. Son pruebas de fronteras, no evidencia semántica nueva: el corpus con oasdiff 1.39.0 real se mantiene aparte.
+
 ## Modelo y fidelidad
 
 La referencia completa del JSON enriquecido emitido por la CLI es el [contrato JSON v1](#contrato-json-v1--issue-37). Las estructuras Go internas no son una API pública de biblioteca. Este contrato describe el comportamiento actual a estabilizar; no convierte v0.2.0 en una versión estable.
