@@ -157,6 +157,13 @@ func writeNewFile(path string, data []byte) error {
 	if err != nil {
 		return fmt.Errorf("create %q (existing files are not overwritten): %w", path, err)
 	}
+	return writeAndClose(path, file, data)
+}
+
+// A failed write/close can leave a new partial file; callers must report failure.
+// Keep the writer narrow so write and close failures can be exercised without
+// changing disk capacity or process-wide permissions.
+func writeAndClose(path string, file io.WriteCloser, data []byte) error {
 	_, writeErr := io.Copy(file, bytes.NewReader(data))
 	closeErr := file.Close()
 	if writeErr != nil {

@@ -27,7 +27,7 @@ Ayuda, versión e informes usan stdout; errores y diagnóstico de política usan
 
 JSON se serializa como ASCII con escapes Unicode que recuperan el texto original al parsear, incluida representación UTF-16 de caracteres suplementarios. HTML/Markdown usan UTF-8; `--output` escribe los tres formatos sin BOM y con LF. Para guardar HTML/Markdown en PowerShell 5.1 usar `--output`; una redirección de la shell puede cambiar su codificación. La prosa/maquetación humana no es una interfaz de máquina. No se garantiza identidad de bytes entre rutas, versiones o formatos distintos.
 
-Los códigos son los de la tabla siguiente: 3 significa informe completo; 1 puede dejar stdout o un archivo nuevo parcialmente escritos. No se promete escritura atómica ni recuperación automática de ese destino nuevo; inspeccionarlo o elegir otro nombre antes de repetir. Los archivos preexistentes siguen protegidos. El tratamiento y pruebas de fallos de proceso/escritura restantes corresponden a #38, no se implementan en #37.
+Los códigos son los de la tabla siguiente: 3 significa informe completo; 1 puede dejar stdout o un archivo nuevo parcialmente escritos. No se promete escritura atómica ni recuperación automática de ese destino nuevo; inspeccionarlo o elegir otro nombre antes de repetir. Los archivos preexistentes siguen protegidos. Las [pruebas y límites del motor](OASDIFF-ADAPTER.md#límites-y-alcance-de-seguridad--issue-38) y la [recuperación de escritura](REPORTS.md#fallos-de-escritura-y-recuperación--issue-38) corresponden al issue #38; el contrato acordado en #37 se conserva.
 
 ### Política de severidad
 
