@@ -2,7 +2,7 @@
 
 Alcance: [issue #4](https://github.com/v1kz25/openapi-contract-lab/issues/4), después del adaptador de la PR #12. `internal/explain` enriquece la salida de `compare` con textos propios en español y enlaces locales. Go 1.27.4, oasdiff 1.39.0, biblioteca estándar; ninguna dependencia nueva ni servicio/API de IA. Coste adicional obligatorio: **0 €**. Se mantienen las licencias y la decisión de integración documentadas en el spike.
 
-El [issue #21](https://github.com/v1kz25/openapi-contract-lab/issues/21) añade solo tres plantillas a las diez publicadas en v0.1.0. La ampliación se incluye en el [candidato experimental v0.2.0](releases/v0.2.0.md); no cambia los archivos publicados, las diez explicaciones originales, el esquema JSON ni los códigos de salida. El ajuste de `--version` del candidato corresponde al issue #33, no a nuevas explicaciones.
+El [issue #21](https://github.com/v1kz25/openapi-contract-lab/issues/21) añadió tres plantillas a las diez publicadas en v0.1.0. La ampliación se incluye en [v0.2.0 experimental publicada](https://github.com/v1kz25/openapi-contract-lab/releases/tag/v0.2.0); no altera los archivos de v0.1.0, sus diez explicaciones, el esquema JSON ni los códigos de salida. Las [notas v0.2.0](releases/v0.2.0.md) conservan la redacción histórica del candidato #33.
 
 ## Contrato
 
@@ -20,7 +20,7 @@ No se analiza ni se extraen parámetros del texto libre del motor. El mensaje or
 
 La CLI serializa el JSON usando únicamente bytes ASCII y escapes Unicode estándar (`\u00e1`, por ejemplo). Así, PowerShell 5.1 puede leer el pipeline con CP850, Windows-1252 o UTF-8 antes de `ConvertFrom-Json` sin corromper los acentos. Los valores Unicode, rutas y eventos upstream se conservan al parsear; los caracteres fuera del plano básico se representan con pares sustitutos UTF-16. No se modifica la configuración de la consola del usuario.
 
-Los trece pares verificados en esta rama son:
+Los trece pares verificados y publicados en v0.2.0 son:
 
 | Rule ID | Nivel upstream verificado | Cambio sintético real |
 | --- | --- | --- |

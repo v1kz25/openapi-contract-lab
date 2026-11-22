@@ -2,15 +2,125 @@
 
 ## Estado vigente
 
-[v0.1.0 experimental está publicada](https://github.com/v1kz25/openapi-contract-lab/releases/tag/v0.1.0) como pre-release bajo **Apache-2.0**, con ZIP Windows x64 y checksums, sin redistribuir oasdiff. El [issue #18](https://github.com/v1kz25/openapi-contract-lab/issues/18) está completado; PR #19 integrada en `main`, tag publicado y PR #20 sincronizada a `develop`. Ver [notas de esa versión](releases/v0.1.0.md). No editar el tag, los archivos publicados ni sus evidencias al preparar v0.2.0.
+[v0.2.0 experimental está publicada](https://github.com/v1kz25/openapi-contract-lab/releases/tag/v0.2.0) desde el 2026-11-22, como prerelease bajo **Apache-2.0**, con ZIP Windows x64 y SHA256SUMS.txt, sin redistribuir oasdiff. #33 completado, PR #34 integrada en `main` y #35 sincronizada a `develop`. El tag desreferenciado es `72ebbd87558bd73ae138696fd9dc62a58b6e2c04`. [v0.1.0](https://github.com/v1kz25/openapi-contract-lab/releases/tag/v0.1.0) sigue disponible como versión histórica; sus notas y artefactos se conservan.
 
-El [issue #33](https://github.com/v1kz25/openapi-contract-lab/issues/33) prepara únicamente el **candidato experimental v0.2.0**, desde `release/0.2.0` hacia `main`: [notas](releases/v0.2.0.md), [instrucciones y verificaciones](CANDIDATE-V0.2.0.md). No es una release publicada, ni siquiera draft. `--version` identifica los bytes del candidato; no acredita su publicación. Se mantienen licencia, herramientas y límites; no se añade funcionalidad.
+Las [notas v0.2.0](releases/v0.2.0.md), BUILD.txt y [guía #33](CANDIDATE-V0.2.0.md) registran la preparación anterior a publicar; sus frases «no publicado» son históricas. No modificar tags, archivos ni notas publicadas para corregir ese estado. Usar [INSTALL.md](INSTALL.md) para instalación/actualización vigente. `develop` contiene estabilización posterior de #37/#38; no confundirla con bytes del ZIP publicado ni con una v1.0.0 ya preparada.
 
 ## Proceso para una próxima versión
 
 El [roadmap](ROADMAP.md) describe propuestas, no una publicación aprobada. Antes de una nueva release: revisar alcance/compatibilidad, fijar versión y notas, crear `release/<version>` desde `develop` aprobado, verificar su SHA exacto con tests/CI/smoke y revisar los archivos que se distribuirían. La licencia propia ya es Apache-2.0; volver a revisar avisos de terceros solo según los componentes distribuidos.
 
 Preparar PR hacia `main` y solicitar autorización explícita de fusión/publicación. Solo después crear tag y release sobre el commit aprobado y preparar otra PR de sincronización a `develop`. Sin auto-merge, force push ni borrado de ramas. Esta iteración no crea una release ni modifica tags existentes.
+
+## Procedimiento reproducible de empaquetado
+
+El bloque siguiente es un **ensayo local sobre v0.2.0 ya publicada**, no un candidato v1.0.0 ni un sustituto del ZIP oficial. Resuelve la falta de instrucciones versionadas de #39; no depende de helpers privados en `dist/`. Para una futura versión, #40 deberá seleccionar SHA/versión/notas aprobados, revisar esta lista y revalidar bytes/CI; #41 seguirá exigiendo autorización explícita de publicación. No ejecutar comandos de tag/release como parte de este procedimiento.
+
+Desde la raíz, con Go 1.27.4 en PATH y oasdiff 1.39.0 local según INSTALL. Se extrae el SHA en dos carpetas nuevas, se construye el mismo ejecutable y se empaqueta una lista explícita de **20 archivos**. LICENSE/NOTICE/THIRD_PARTY_NOTICES permanecen íntegros; el motor y sus dependencias no están enlazados ni incluidos. Los archivos propios usados son fixtures sintéticos, no informes reales.
+
+```powershell
+$ErrorActionPreference = 'Stop'
+$repoRoot = (Get-Location).Path
+$sourceCommit = (& git rev-parse 'v0.2.0^{}').Trim()
+if ($LASTEXITCODE -ne 0 -or $sourceCommit -ne '72ebbd87558bd73ae138696fd9dc62a58b6e2c04') { throw 'Unexpected published source' }
+$sourceTree = (& git rev-parse ($sourceCommit + '^{tree}')).Trim()
+if ($LASTEXITCODE -ne 0) { throw 'Source tree unavailable' }
+$env:GOTOOLCHAIN = 'local'; $env:GOPROXY = 'off'; $env:GOSUMDB = 'off'
+$env:GOENV = 'off'; $env:GOTELEMETRY = 'off'; $env:GOWORK = 'off'
+$env:GOCACHE = Join-Path $repoRoot 'dist/go-cache'
+$env:GOMODCACHE = Join-Path $repoRoot 'dist/go-mod-cache'
+$env:CGO_ENABLED = '0'; $env:GOOS = 'windows'; $env:GOARCH = 'amd64'
+$env:GOAMD64 = 'v1'; $env:GOFLAGS = ''; $env:GOEXPERIMENT = ''
+$goVersion = (& go version).Trim()
+if ($LASTEXITCODE -ne 0 -or $goVersion -ne 'go version go1.27.4 windows/amd64') { throw 'Go 1.27.4 Windows x64 required' }
+$env:OASDIFF_BINARY = (Resolve-Path 'dist/oasdiff-1.39.0/oasdiff.exe').Path
+$work = Join-Path $repoRoot ('dist/_tools/packaging-v02-' + [guid]::NewGuid().ToString('N'))
+New-Item -ItemType Directory -Path $work | Out-Null
+$sourceZip = Join-Path $work 'source.zip'
+& git archive --format=zip ('--output=' + $sourceZip) $sourceCommit
+if ($LASTEXITCODE -ne 0) { throw 'Source archive failed' }
+$sourceA = Join-Path $work 'source-a'; $sourceB = Join-Path $work 'source-b'
+Expand-Archive -LiteralPath $sourceZip -DestinationPath $sourceA
+Expand-Archive -LiteralPath $sourceZip -DestinationPath $sourceB
+$binaryA = Join-Path $work 'binary-a.exe'; $binaryB = Join-Path $work 'binary-b.exe'
+Push-Location $sourceA
+try {
+    ./scripts/verify.ps1
+    if ($LASTEXITCODE -ne 0) { throw 'Published source verification failed' }
+    & go build -trimpath -buildvcs=false -o $binaryA ./cmd/openapi-contract-lab
+    if ($LASTEXITCODE -ne 0) { throw 'First build failed' }
+} finally { Pop-Location }
+Push-Location $sourceB
+try {
+    & go build -trimpath -buildvcs=false -o $binaryB ./cmd/openapi-contract-lab
+    if ($LASTEXITCODE -ne 0) { throw 'Second build failed' }
+} finally { Pop-Location }
+$binaryHash = (Get-FileHash $binaryA -Algorithm SHA256).Hash.ToLowerInvariant()
+if ($binaryHash -ne (Get-FileHash $binaryB -Algorithm SHA256).Hash.ToLowerInvariant()) { throw 'Builds differ' }
+if ((& $binaryA --version).Trim() -ne 'openapi-contract-lab v0.2.0' -or $LASTEXITCODE -ne 0) { throw 'Version mismatch' }
+& go version -m $binaryA | Out-File (Join-Path $work 'build-metadata.txt') -Encoding utf8
+if ($LASTEXITCODE -ne 0) { throw 'Build metadata failed' }
+$stage = Join-Path $work 'package'
+New-Item -ItemType Directory -Path $stage | Out-Null
+$files = [ordered]@{
+    'LICENSE' = 'LICENSE'; 'NOTICE' = 'NOTICE'; 'THIRD_PARTY_NOTICES.txt' = 'THIRD_PARTY_NOTICES.txt'
+    'RELEASE_NOTES.md' = 'docs/releases/v0.2.0.md'
+    'examples/base.yaml' = 'spikes/oasdiff/fixtures/base.yaml'
+    'examples/required.yaml' = 'spikes/oasdiff/fixtures/required.yaml'
+    'examples/description.yaml' = 'spikes/oasdiff/fixtures/description.yaml'
+    'examples/reports/grouped.html' = 'docs/examples/issue-23-grouped.html'
+    'examples/reports/grouped.md' = 'docs/examples/issue-23-grouped.md'
+}
+foreach ($name in @('parameter-base','parameter-head','body-base','body-head','response-base','response-head')) {
+    $files['examples/breaking/' + $name + '.json'] = 'internal/explain/testdata/breaking/' + $name + '.json'
+}
+foreach ($name in @('base','union-null','response-property')) {
+    $files['examples/openapi31/' + $name + '.json'] = 'internal/cli/testdata/openapi31/' + $name + '.json'
+}
+foreach ($entry in $files.GetEnumerator()) {
+    $target = Join-Path $stage $entry.Key
+    New-Item -ItemType Directory -Force -Path (Split-Path $target -Parent) | Out-Null
+    Copy-Item -LiteralPath (Join-Path $sourceA $entry.Value) -Destination $target
+}
+Copy-Item -LiteralPath $binaryA -Destination (Join-Path $stage 'openapi-contract-lab.exe')
+$inventory = @($files.Keys) + @('BUILD.txt','openapi-contract-lab.exe') | Sort-Object
+$buildText = @(
+    'OpenAPI Contract Lab v0.2.0 - local packaging rehearsal, not official release bytes',
+    'Source: https://github.com/v1kz25/openapi-contract-lab',
+    ('SourceCommit: ' + $sourceCommit), ('SourceTree: ' + $sourceTree),
+    ('Toolchain: ' + $goVersion), 'ExternalEngine: oasdiff 1.39.0 (not included)',
+    'CGO_ENABLED=0 GOOS=windows GOARCH=amd64 GOAMD64=v1 GOFLAGS= GOEXPERIMENT= GOWORK=off',
+    'Build: go build -trimpath -buildvcs=false -o openapi-contract-lab.exe ./cmd/openapi-contract-lab',
+    ('BinarySHA256: ' + $binaryHash), 'Two source directories: identical executable bytes.',
+    'Windows x64 only; experimental CLI/schema; limited OpenAPI corpus.',
+    'LICENSE/NOTICE: Apache-2.0; Go BSD-3-Clause in THIRD_PARTY_NOTICES.txt.',
+    'Release notes retain their historical candidate wording.',
+    ('Files: ' + ($inventory -join ', '))
+) -join "`n"
+[IO.File]::WriteAllText((Join-Path $stage 'BUILD.txt'), $buildText + "`n", [Text.UTF8Encoding]::new($false))
+$zipName = 'openapi-contract-lab_0.2.0_windows_amd64.zip'
+$zipPath = Join-Path $work $zipName
+Compress-Archive -Path (Join-Path $stage '*') -DestinationPath $zipPath -CompressionLevel Optimal
+Add-Type -AssemblyName System.IO.Compression.FileSystem
+$archive = [IO.Compression.ZipFile]::OpenRead($zipPath)
+try {
+    $actual = @($archive.Entries | Where-Object Name | ForEach-Object { $_.FullName.Replace('\','/') } | Sort-Object)
+    if (@(Compare-Object $inventory $actual).Count -ne 0) { throw 'Unexpected ZIP inventory' }
+} finally { $archive.Dispose() }
+$zipHash = (Get-FileHash $zipPath -Algorithm SHA256).Hash.ToLowerInvariant()
+[IO.File]::WriteAllText((Join-Path $work 'SHA256SUMS.txt'), $zipHash + '  ' + $zipName + "`n", [Text.Encoding]::ASCII)
+$extracted = Join-Path $work 'extracted'
+Expand-Archive -LiteralPath $zipPath -DestinationPath $extracted
+foreach ($name in $inventory) {
+    if ((Get-FileHash (Join-Path $stage $name) -Algorithm SHA256).Hash -ne (Get-FileHash (Join-Path $extracted $name) -Algorithm SHA256).Hash) { throw ('Extracted file changed: ' + $name) }
+}
+./scripts/smoke.ps1 -Binary (Join-Path $extracted 'openapi-contract-lab.exe') -Engine $env:OASDIFF_BINARY
+if ($LASTEXITCODE -ne 0) { throw 'Extracted CLI smoke failed' }
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File ./scripts/smoke.ps1 -Binary (Join-Path $extracted 'openapi-contract-lab.exe') -Engine $env:OASDIFF_BINARY
+if ($LASTEXITCODE -ne 0) { throw 'Extracted CLI PS5.1 smoke failed' }
+```
+
+Registrar SHA fuente/tree, versión Go/motor, flags, SHA del ejecutable/ZIP e inventario y resultados. Este ensayo no garantiza ZIP idéntico entre fechas/herramientas de compresión: sus hashes se calculan sobre bytes reales. No utilizar su ZIP como si fuera el oficial; descargar este desde INSTALL. Antes de una release futura, repetir ejemplos del paquete, inspeccionar BUILD/avisos/inventario y privacidad de fuentes/logs. No empaquetar SDK, oasdiff, cachés, helpers de test, informes de contratos reales ni credenciales. Los hashes no son firma digital.
 
 ## Registro histórico de preparación del issue #8
 
