@@ -2,7 +2,7 @@
 
 Alcance: [issue #4](https://github.com/v1kz25/openapi-contract-lab/issues/4), después del adaptador de la PR #12. `internal/explain` enriquece la salida de `compare` con textos propios en español y enlaces locales. Go 1.27.4, oasdiff 1.39.0, biblioteca estándar; ninguna dependencia nueva ni servicio/API de IA. Coste adicional obligatorio: **0 €**. Se mantienen las licencias y la decisión de integración documentadas en el spike.
 
-El [issue #21](https://github.com/v1kz25/openapi-contract-lab/issues/21) añade solo tres plantillas a las diez publicadas en v0.1.0. La ampliación pertenece a la rama de desarrollo de una futura v0.2.0; no cambia los archivos publicados, las diez explicaciones originales, el esquema JSON, los códigos de salida ni `--version`.
+El [issue #21](https://github.com/v1kz25/openapi-contract-lab/issues/21) añade solo tres plantillas a las diez publicadas en v0.1.0. La ampliación se incluye en el [candidato experimental v0.2.0](releases/v0.2.0.md); no cambia los archivos publicados, las diez explicaciones originales, el esquema JSON ni los códigos de salida. El ajuste de `--version` del candidato corresponde al issue #33, no a nuevas explicaciones.
 
 ## Contrato
 

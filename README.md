@@ -2,9 +2,9 @@
 
 <img src="docs/assets/openapi-contract-lab-logo.png" alt="OpenAPI Contract Lab: comparación y revisión de contratos API" width="640">
 
-> v0.1.0 experimental: CLI local con oasdiff, diez explicaciones, informes y política de severidad. Solo Windows x64 verificado; no se promete estabilidad de CLI/esquema ni cobertura completa de OpenAPI.
+> Candidato experimental v0.2.0 para revisión: CLI local con oasdiff, trece explicaciones, informes agrupados y política de severidad. Solo Windows x64 verificado; CLI/esquema experimentales y cobertura OpenAPI limitada. Todavía no publicado.
 
-En esta rama de desarrollo, el [issue #21](https://github.com/v1kz25/openapi-contract-lab/issues/21) amplía las explicaciones a trece combinaciones verificadas. Aún no hay release v0.2.0: el tag y los archivos de v0.1.0 conservan sus diez explicaciones originales.
+El [issue #33](https://github.com/v1kz25/openapi-contract-lab/issues/33) prepara este candidato desde `release/0.2.0`, sin nuevas funciones. Ver [notas v0.2.0](docs/releases/v0.2.0.md) e [instrucciones de revisión](docs/CANDIDATE-V0.2.0.md). v0.1.0 sigue siendo la versión publicada; su tag, notas y archivos conservan sus diez explicaciones originales.
 
 Explica cambios incompatibles entre contratos OpenAPI usando oasdiff, con informes locales y CI.
 
@@ -31,7 +31,7 @@ go build -trimpath -buildvcs=false -o dist/openapi-contract-lab.exe ./cmd/openap
 $LASTEXITCODE # 3: informe generado; breaking change
 ```
 
-Sin argumentos muestra ayuda. `--version` devuelve `openapi-contract-lab v0.1.0`. Un comando desconocido devuelve un mensaje en stderr y código 2. La CLI no inicia un servidor ni una interfaz gráfica. Ver [notas v0.1.0 experimental](docs/releases/v0.1.0.md).
+Sin argumentos muestra ayuda. En este candidato, `--version` devuelve `openapi-contract-lab v0.2.0`. Un comando desconocido devuelve un mensaje en stderr y código 2. La CLI no inicia un servidor ni una interfaz gráfica. Las [notas v0.1.0](docs/releases/v0.1.0.md) describen únicamente los archivos de aquella versión publicada.
 
 Para comparar, preparar el binario oficial según el [spike](docs/OASDIFF-SPIKE.md). `--oasdiff` puede omitirse si oasdiff está en PATH. Las dos entradas deben ser archivos locales; se deshabilitan las referencias externas. La salida conserva rule ID, severidad, ruta, ubicaciones y el evento original. Ver [modelo y pruebas del adaptador](docs/OASDIFF-ADAPTER.md).
 

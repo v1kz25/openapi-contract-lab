@@ -1,5 +1,7 @@
 # Instalación desde fuente — Windows x64
 
+Esta guía reproduce la versión publicada **v0.1.0**. Para revisar el candidato aún no publicado **v0.2.0**, usar [CANDIDATE-V0.2.0.md](CANDIDATE-V0.2.0.md); sus herramientas siguen fijadas a Go 1.27.4 y oasdiff 1.39.0, pero su ejecutable muestra `v0.2.0`.
+
 Instrucciones del issue #8, actualizadas para [v0.1.0 experimental publicada](https://github.com/v1kz25/openapi-contract-lab/releases/tag/v0.1.0), issue #18 completado. `--version` muestra `openapi-contract-lab v0.1.0`. Licencia propia Apache-2.0, autorizada por el propietario. No se empaqueta oasdiff ni existe instalador. La versión publicada tiene ZIP Windows x64 y checksums.
 
 Para usar el ZIP publicado `openapi-contract-lab_0.1.0_windows_amd64.zip`, comprobar su SHA-256 contra `SHA256SUMS.txt` antes de extraerlo en una carpeta nueva. Incluye la CLI, ejemplos y avisos; no requiere SDK para ejecutarse. Descargar oasdiff por separado como indica el paso 2 y usar `--oasdiff` con su ruta. Las notas incluidas describen los comandos. Los pasos siguientes permiten compilar desde fuente.

@@ -9,7 +9,7 @@ $repoRoot = Split-Path (Split-Path $PSScriptRoot -Parent) -Parent
 Push-Location $repoRoot
 try {
     $binaryPath = (Resolve-Path -LiteralPath $Binary).Path
-    $outputPath = [IO.Path]::GetFullPath($OutputDirectory)
+    $outputPath = [IO.Path]::GetFullPath($OutputDirectory, $repoRoot)
     # Do not overwrite previous observations or contracts.
     New-Item -ItemType Directory -Path $outputPath -ErrorAction Stop | Out-Null
     $poison = Join-Path $outputPath 'ambient-poison.yaml'

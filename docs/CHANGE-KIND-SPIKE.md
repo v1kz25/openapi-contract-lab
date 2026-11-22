@@ -78,6 +78,8 @@ El runner del spike usa exclusivamente fixtures sintéticos, subprocesos sin she
 
 Requiere PowerShell 7 y oasdiff 1.39.0 local, sin SDK, descarga ni nueva instalación. Acepta `-Binary` y `-OutputDirectory`; rechaza un directorio de salida existente. Genera nueva evidencia en `dist/`, compara las quince salidas con las revisadas y registra mediciones nuevas sin actualizar expectativas versionadas.
 
+Estabilización del candidato #33: las rutas relativas de `OutputDirectory` se resuelven explícitamente contra la raíz del repositorio, incluso si el directorio nativo del proceso difiere de `Get-Location`. Las rutas absolutas se conservan. Se reprodujo el comportamiento anterior y se comprobaron ruta relativa, absoluta y rechazo de salida existente invocando desde otra carpeta. No cambia ninguna señal ni clasificación de la aplicación.
+
 **PASS: 25 pruebas por ejecución**, repetidas con las mismas salidas: versión, quince comparaciones, cinco controles de `--fail-on-diff`, una exclusión de descripción y tres bloqueos de referencias externas. También comprueba que las entradas sigan idénticas byte a byte. Comparar outputs con evidencia congelada comprueba reproducibilidad, no clasifica contratos mediante texto/hashes.
 
 El control externo usa una referencia local existente y fue rechazado por los tres comandos antes de cargarla. El motor devolvió **123** y stdout vacío, contrastado con [internal/errors.go](https://github.com/oasdiff/oasdiff/blob/21b8a57a0a192e7478b764ec0164b5694cce3393/internal/errors.go). La primera ejecución del runner había supuesto 100 y falló; se contrastó el resultado real y el código fijado, se corrigió a 123 y se repitieron las comprobaciones completas. No se cambió una salida esperada para ocultar una diferencia de contenido.

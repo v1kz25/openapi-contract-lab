@@ -44,6 +44,8 @@ No hay fechas de generación, IDs aleatorios ni dependencias de la red en el con
 
 ## Prueba manual
 
+La [revisión de aceptación del issue #23](https://github.com/v1kz25/openapi-contract-lab/issues/23#issuecomment-7070896921), sobre `a048d25` el 2026-11-22, registra revisión visual en Chrome local de nueve hallazgos, cuatro grupos 2/2/2/3, navegación global y ventana estrecha sin desbordamiento. El candidato #33 no modifica las plantillas ni los snapshots; conserva esa presentación y vuelve a ejecutar las pruebas automatizadas. Las menciones a revisión visual pendiente en las evidencias históricas siguientes describen su estado en aquel momento.
+
 Abrir PowerShell en la carpeta local `openapi-contract-lab` (no System32). Este bloque genera nombres nuevos y sirve en PowerShell 5.1:
 
 ```powershell
