@@ -20,6 +20,34 @@ Módulo `github.com/v1kz25/openapi-contract-lab`, entrada en `cmd/openapi-contra
 6. Actualizar el README únicamente para funciones realmente disponibles.
 7. Incluir en cada PR los pasos de comprobación manual y sus resultados esperados cuando apliquen. Avisar al usuario cuando deba probar un flujo; arrancar la aplicación local para facilitarlo cuando exista dicho flujo. La ayuda/versión inicial puede comprobarse opcionalmente desde terminal.
 
+## Compatibilidad del contrato v1
+
+Decisión del [issue #37](https://github.com/v1kz25/openapi-contract-lab/issues/37): **contrato normativo JSON v1 ligado a CLI 1.x, documentado sin identificador embebido**. No se añade `schemaVersion`, comando, dependencia ni cambio de comportamiento. No hay necesidad demostrada de negociar varios esquemas dentro del mismo ejecutable; añadir un discriminador ahora no aportaría esa negociación. La referencia está en [OASDIFF-ADAPTER.md](OASDIFF-ADAPTER.md#contrato-json-v1--issue-37) y la [matriz pública CLI](SEVERITY-POLICY.md#referencia-pública-cli--contrato-v1-issue-37). Las garantías de compatibilidad 1.x entrarán en vigor al publicar v1.0.0, no antes: el ejecutable actual sigue identificándose como v0.2.0 experimental.
+
+Migración desde v0.2.0: no cambia la estructura, defaults ni códigos. Los informes antiguos sin campo de esquema siguen leyéndose con los mismos campos. Un consumidor que archiva informes debe guardar fuera del JSON la versión CLI obtenida con `--version` y sus expectativas de contrato; un informe aislado sin esa procedencia no certifica qué versión de la CLI lo generó. No interpretar la ausencia de `schemaVersion` como una versión desconocida numérica, `false` o `engineVersion`; tampoco distinguir futuras versiones incompatibles mediante heurísticas de campos. Si aparece necesidad real de esquemas múltiples, diseñar antes una migración explícita mediante issue/PR independiente.
+
+| Cambio en CLI 1.x / JSON v1 | Política |
+| --- | --- |
+| Campo opcional adicional, que los consumidores pueden ignorar | Compatible si no cambia campos, significados, orden significativo o defaults existentes; documentar y probar con consumidor anterior. |
+| Retirada/renombrado de campo, cambio de tipo o significado, nuevo campo requerido para consumir un informe, cambio de defaults/streams/códigos/gramática documentada | Ruptura: major de CLI/contrato y guía de migración; no introducir silenciosamente en 1.x. |
+| Nuevo valor de enum propio o reclasificación local | No tratar automáticamente como adición inocua: los valores conocidos son parte del contrato. Requiere major/migración si cambia decisiones de consumidores. IDs y enteros upstream ya son abiertos; `unknown` es su manejo explícito. |
+| Prosa de ayuda/errores/explicaciones, espacios/orden de claves/escapes JSON equivalentes, presentación HTML/Markdown | No se congela el texto o los bytes como API; conservar significado, streams, datos y seguridad, con regresión revisada. |
+| Mensajes, fingerprints, campos adicionales y resultados semánticos de oasdiff | Contenido upstream, no garantías propias de estabilidad semántica entre motores. Mantenerlo completo y revisar cambios, sin sustituir el ID por prosa ni reclasificarlo localmente. |
+
+### Actualización de oasdiff y herramientas
+
+La comparación exige oasdiff **1.39.0**. No se admite una versión arbitraria, descarga automática, actualización silenciosa ni cambio de motor por parte del consumidor. Para actualizar:
+
+1. Abrir issue con necesidad, versión exacta propuesta, alcance y compatibilidad Windows x64. Revisar notas upstream y versiones/casos OpenAPI realmente verificables; no convertir sus declaraciones generales en soporte propio.
+2. Revisar licencia y componentes realmente distribuidos; comprobar hash oficial del archivo y registrar procedencia. Mantener coste obligatorio 0 €; motor separado y sin nuevas APIs/servicios.
+3. En una rama/PR propia, ejecutar el corpus existente con motor antiguo y propuesto; registrar diferencias de IDs, niveles/clasificación, campos/tipos, orden, fuentes/fingerprints y mensajes. Comprobar los tres formatos, fallback, gate, errores/aislamiento y smoke Windows PS5.1/7. No regenerar expectativas en bloque para aceptar divergencias.
+4. Evaluar por separado contrato propio y semántica del motor. Si el cambio rompe garantías propias, major/migración antes de integrar. Una actualización semántica aceptada y compatible con el contrato requiere notas explícitas y, como mínimo, una versión minor propia; no ocultarla en un patch. El fallback debe seguir siendo neutral hasta verificar cada regla/nivel con el motor propuesto.
+5. Revisar diff, versiones/hashes/documentación/avisos y evidencia real del SHA. Actualizar únicamente después de revisión y aprobación de integración; la publicación requiere autorización propia según RELEASE.md. Go y acciones CI también se actualizan por necesidad y PR explícitas, con regresión, sin alterar versiones como parte de #37.
+
+### Cobertura contractual del issue #37
+
+Se reutilizan tests de ayuda/versión/argumentos, matriz de políticas, snapshots, Unicode, fallback, corpus 3.0.3/3.1 y exportaciones existentes. Se añaden pruebas de consumidor sobre la serialización pública (campos y tipos requeridos, omisiones, arrays vacíos, fuentes, orden/repeticiones y datos upstream desconocidos) y del uso real de PATH/defaults, `--opción=valor` y separador `--`. Cancelación activa, límites de pipes y recuperación de escrituras parciales pertenecen a #38 y no se implementan aquí. No se publica una versión estable ni se cambia el número de versión.
+
 ## Tests y comandos
 
 Desde la raíz, con Go 1.27.4 en PATH. Estas variables solo afectan a la sesión PowerShell; las pruebas no necesitan descargas:
