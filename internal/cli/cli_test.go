@@ -40,6 +40,9 @@ func TestCompareArguments(t *testing.T) {
 		{"compare", "--output=", "base", "head"},
 		{"compare", "--output", "https://example.invalid/report.html", "base", "head"},
 		{"compare", "--output", `\\server\share\report.html`, "base", "head"},
+		{"compare", "base", "head", "--format", "json"},
+		{"compare", "--format=JSON", "base", "head"},
+		{"compare", "--output=-", "base", "head"},
 	} {
 		t.Run(strings.Join(args, " "), func(t *testing.T) {
 			var stdout, stderr bytes.Buffer
@@ -51,6 +54,15 @@ func TestCompareArguments(t *testing.T) {
 	var stdout, stderr bytes.Buffer
 	if code := cli.Run([]string{"compare", "--help"}, &stdout, &stderr); code != 0 || !strings.Contains(stdout.String(), "oasdiff 1.39.0") || !strings.Contains(stdout.String(), "--fail-on error|warning|info|none") || stderr.Len() != 0 {
 		t.Fatalf("exit = %d; stdout = %q; stderr = %q", code, stdout.String(), stderr.String())
+	}
+}
+
+func TestCompareHelpAliases(t *testing.T) {
+	for _, alias := range []string{"-h", "--help"} {
+		var stdout, stderr bytes.Buffer
+		if code := cli.Run([]string{"compare", alias}, &stdout, &stderr); code != 0 || stdout.Len() == 0 || stderr.Len() != 0 {
+			t.Fatalf("%s exit=%d stdout=%q stderr=%q", alias, code, &stdout, &stderr)
+		}
 	}
 }
 
