@@ -8,7 +8,7 @@ Alcance: [issue #3](https://github.com/v1kz25/openapi-contract-lab/issues/3), ba
 
 El contexto limita versión y comparación a 30 segundos en total. La captura de stdout está limitada a 16 MiB y stderr a 64 KiB; los fallos devuelven un error, no un informe parcial. `*oasdiff.Error` conserva etapa y causa (entrada, ejecutable, versión, configuración, comparación o decodificación). Los errores de proceso incorporan su diagnóstico stderr. No se descarga ni instala oasdiff automáticamente.
 
-La CLI devuelve 0 si termina y produce JSON, 1 si falla la entrada/motor/salida, y 2 para argumentos inválidos. **Un finding breaking no activa exit 1**: la política CI pertenece al issue #6.
+La CLI devuelve 0 si el informe supera la política, 3 si se genera pero no supera `--fail-on` (por defecto `error`), 1 si falla la entrada/motor/salida y 2 para argumentos inválidos. **Un finding breaking no activa exit 1**: con la política predeterminada activa exit 3. `--fail-on none` permite exportarlo con exit 0. Ver [política vigente](SEVERITY-POLICY.md).
 
 ## Modelo y fidelidad
 
@@ -43,7 +43,7 @@ Abrir PowerShell **en la raíz del repositorio** (si se abre en System32, cambia
 
 ```powershell
 .\dist\openapi-contract-lab.exe compare --oasdiff .\dist\oasdiff-1.39.0\oasdiff.exe .\spikes\oasdiff\fixtures\base.yaml .\spikes\oasdiff\fixtures\required.yaml
-$LASTEXITCODE # 0; un finding request-parameter-became-required, error/breaking
+$LASTEXITCODE # 3; un finding request-parameter-became-required, error/breaking
 .\dist\openapi-contract-lab.exe compare --oasdiff .\dist\oasdiff-1.39.0\oasdiff.exe .\spikes\oasdiff\fixtures\base.yaml .\spikes\oasdiff\fixtures\description.yaml
 $LASTEXITCODE # 0; findings: []
 .\dist\openapi-contract-lab.exe compare --oasdiff .\dist\oasdiff-1.39.0\oasdiff.exe .\spikes\oasdiff\fixtures\required.yaml .\spikes\oasdiff\fixtures\base.yaml
@@ -52,7 +52,9 @@ $LASTEXITCODE # 0; request-parameter-became-optional, info/non-breaking
 
 En el primer caso, comprobar GET `/items`, nivel original 3 y ambas fuentes en línea 12, columna 11. El ejecutable se compiló y ejecutó en el workspace para facilitar la revisión; termina al imprimir el JSON, sin servidor que mantener arrancado.
 
-## Verificación real — 2026-11-21
+## Verificación histórica del issue #3 — 2026-11-21
+
+Esta evidencia precede a la política del issue #6. Sus códigos 0 para breaking no describen el comportamiento actual; la comprobación manual anterior usa la política vigente.
 
 En Windows x64 build 26300.9974, SDK portátil Go 1.27.4 y oasdiff 1.39.0 ya comprobados, con descargas Go deshabilitadas:
 

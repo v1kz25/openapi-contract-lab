@@ -35,6 +35,7 @@ func TestSnapshots(t *testing.T) {
 		report explain.Report
 	}{
 		{"mixed", snapshotReport()},
+		{"global", globalReport()},
 		{"empty", explain.Enrich(oasdiff.Report{Engine: "oasdiff", EngineVersion: oasdiff.Version, Base: "base.yaml", Head: "head.yaml"})},
 	} {
 		for _, format := range []string{"markdown", "html"} {
@@ -61,6 +62,12 @@ func TestSnapshots(t *testing.T) {
 			})
 		}
 	}
+}
+
+func globalReport() explain.Report {
+	r := groupedReport()
+	r.Findings = []explain.Finding{r.Findings[3], r.Findings[7], r.Findings[8]}
+	return r
 }
 
 func TestEscapingAndOfflineLinks(t *testing.T) {

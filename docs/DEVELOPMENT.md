@@ -54,11 +54,17 @@ Con Go/gofmt en PATH y `OASDIFF_BINARY` definido, `./scripts/verify.ps1` ejecuta
 
 El issue #8 añade [instalación reproducible](INSTALL.md), [preparación de publicación](RELEASE.md) y `./scripts/smoke.ps1`. El smoke usa el ejecutable compilado y oasdiff local, sin SDK ni descargas; se ejecuta también en CI después de compilar. No crea tags, releases ni paquetes.
 
-El issue #18 prepara `release/0.1.0` hacia `main`, con licencia Apache-2.0 elegida por el propietario y salida `openapi-contract-lab v0.1.0`. Las notas experimentales están en [releases/v0.1.0.md](releases/v0.1.0.md). Los tests y smoke comprueban esa versión exacta; no se publican tags ni archivos sin aprobación explícita posterior. La sincronización a `develop` se propone mediante otra PR.
+El issue #18 está completado: [v0.1.0 experimental](https://github.com/v1kz25/openapi-contract-lab/releases/tag/v0.1.0) publicada bajo Apache-2.0; PR #19 integrada en `main` y PR #20 sincronizada en `develop`. Sus [notas](releases/v0.1.0.md) y archivos publicados se conservan. En `release/0.2.0`, el [issue #33](https://github.com/v1kz25/openapi-contract-lab/issues/33) ajusta únicamente la identificación del [candidato](CANDIDATE-V0.2.0.md): tests y smoke comprueban `openapi-contract-lab v0.2.0`. No autoriza fusiones, tags ni publicación.
 
-Con la misma variable también se ejecutan los diez casos sintéticos de `internal/explain`, uno por regla documentada, y se comprueba que el motor emite los IDs/niveles esperados y las fuentes enlazadas. Los snapshots de mensajes se revisan en `internal/explain/testdata/`; no hay actualización automática de expectativas.
+Con la misma variable también se ejecutan los trece casos sintéticos de `internal/explain`, uno por combinación documentada (diez originales y tres del issue #21), y se comprueba que el motor emite los IDs/niveles esperados y las fuentes enlazadas. `internal/explain/testdata/breaking/` contiene los seis contratos nuevos, también usados por la integración CLI de JSON/Markdown/HTML y política. Las pruebas de control verifican entradas idénticas e inversas; no se infiere la regla inversa. Los snapshots de mensajes se revisan en `internal/explain/testdata/`; no hay actualización automática de expectativas.
 
 `internal/report/testdata/` contiene snapshots revisables de HTML y Markdown para un informe mixto y otro vacío. Los tests de escape y enlaces se ejecutan sin motor. Con `OASDIFF_BINARY`, los tests de CLI también exportan JSON/Markdown/HTML reales a archivos UTF-8 en un directorio temporal. La exportación usa creación exclusiva y no sobrescribe archivos existentes.
+
+El issue #23 añade agrupación en la vista HTML/Markdown, snapshots globales y [ejemplos antes/después](REPORTS.md#ejemplos-comparables-y-revisión-manual-del-issue-23). Los ejemplos agrupados son snapshots comprobados por tests, sin actualización automática. Las pruebas verifican orden, recuentos, conservación de ocurrencias y campos, encabezados hostiles, CSP y JSON sin mutaciones; la integración CLI compara varios endpoints/métodos con el motor real y conserva JSON y gate.
+
+El issue #24 amplía la [regresión OpenAPI 3.1](OPENAPI31-REGRESSION.md): `TestOpenAPI31CorpusIntegration` contrasta cinco pares, reutiliza los tres casos iniciales y añade unión con null y tipo de propiedad de respuesta. `internal/cli/testdata/openapi31/cases.json` contiene expectativas observadas con oasdiff 1.39.0, nunca regeneradas automáticamente. Los tres formatos, fallback, códigos 0/3, fuentes con espacios/Unicode/# y conservación de entradas se comprueban con el motor real al ejecutar verify.
+
+El [spike #25](CHANGE-KIND-SPIKE.md) se reproduce por separado con `./spikes/change-kind/verify.ps1` (PowerShell 7 y motor local). Sus cinco pares, quince salidas congeladas y 25 controles no cambian código ni contrato público. El runner genera nueva evidencia en un directorio nuevo bajo `dist/`, comprueba expectativas sin actualizarlas e incluye configuración ambiental inválida y refs externas bloqueadas. La CI existente no ejecuta este runner de investigación automáticamente.
 
 ### SDK portátil en Windows x64
 
@@ -78,7 +84,7 @@ No requiere instalación global, privilegios de administrador ni oasdiff para ay
 
 El SDK se extrae bajo `_tools` porque `go test ./...` y `go vet ./...` ignoran los directorios que empiezan por `_`. `.gitignore` solo controla Git: extraer el SDK directamente en `dist/go1.27.4` haría que Go intentase recorrer también los tests del compilador.
 
-### Validación del issue #2 — 2026-11-21
+### Validación histórica del issue #2 — 2026-11-21
 
 Ejecutada en Windows x64, build 26300.9974, PowerShell 7.6.9, Go 1.27.4 portátil con checksum comprobado. No se modificó el PATH global. Con `GOTOOLCHAIN=local`, `GOPROXY=off` y `GOSUMDB=off`:
 

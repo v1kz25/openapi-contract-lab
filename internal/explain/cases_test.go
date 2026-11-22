@@ -3,6 +3,9 @@ package explain
 import (
 	"encoding/json"
 	"fmt"
+	"os"
+	"path/filepath"
+	"testing"
 )
 
 type ruleCase struct {
@@ -28,13 +31,14 @@ func responseSpec(enum string) string {
 	return string(data)
 }
 
-func ruleCases() []ruleCase {
+func ruleCases(t *testing.T) []ruleCase {
+	t.Helper()
 	plain := parameterSpec(false, `{"type":"string"}`)
 	required := parameterSpec(true, `{"type":"string"}`)
 	enumOne := parameterSpec(false, `{"type":"string","enum":["red"]}`)
 	enumTwo := parameterSpec(false, `{"type":"string","enum":["red","blue"]}`)
 	nullable := parameterSpec(false, `{"type":"string","nullable":true}`)
-	return []ruleCase{
+	return append([]ruleCase{
 		{"request-parameter-became-required", 3, plain, required},
 		{"request-parameter-became-optional", 1, required, plain},
 		{"request-parameter-became-enum", 3, plain, enumOne},
@@ -45,5 +49,25 @@ func ruleCases() []ruleCase {
 		{"request-parameter-became-not-nullable", 3, nullable, plain},
 		{"response-property-enum-value-added", 3, responseSpec(`["red"]`), responseSpec(`["red","blue"]`)},
 		{"response-property-enum-value-removed", 1, responseSpec(`["red","blue"]`), responseSpec(`["red"]`)},
+	}, breakingRuleCases(t)...)
+}
+
+func breakingRuleCases(t *testing.T) []ruleCase {
+	t.Helper()
+	var cases []ruleCase
+	for _, test := range []struct{ name, id string }{
+		{"parameter", "request-parameter-type-changed"},
+		{"body", "request-body-became-required"},
+		{"response", "response-required-property-removed"},
+	} {
+		read := func(side string) string {
+			data, err := os.ReadFile(filepath.Join("testdata", "breaking", test.name+"-"+side+".json"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			return string(data)
+		}
+		cases = append(cases, ruleCase{test.id, 3, read("base"), read("head")})
 	}
+	return cases
 }

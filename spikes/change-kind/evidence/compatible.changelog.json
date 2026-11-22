@@ -1,0 +1,1 @@
+[{"id":"request-parameter-became-optional","text":"the `query` request parameter `filter` became optional","level":1,"operation":"GET","path":"/items","section":"paths","baseSource":{"file":"spikes/oasdiff/fixtures/required.yaml","line":12,"column":11},"revisionSource":{"file":"spikes/oasdiff/fixtures/base.yaml","line":12,"column":11},"fingerprint":"5eabc70c63af"}]

@@ -16,7 +16,7 @@ func TestIntegration(t *testing.T) {
 		t.Skip("set OASDIFF_BINARY to local oasdiff 1.39.0")
 	}
 	client := oasdiff.New(binary)
-	for _, test := range ruleCases() {
+	for _, test := range ruleCases(t) {
 		t.Run(test.id, func(t *testing.T) {
 			dir := t.TempDir()
 			base, head := filepath.Join(dir, "base.json"), filepath.Join(dir, "head.json")

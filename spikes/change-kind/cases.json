@@ -1,0 +1,7 @@
+[
+  {"name":"identical","base":"spikes/oasdiff/fixtures/base.yaml","head":"spikes/oasdiff/fixtures/base.yaml","diff":false,"ids":[],"levels":[]},
+  {"name":"format","base":"spikes/oasdiff/fixtures/base.yaml","head":"spikes/change-kind/fixtures/formatted.json","diff":false,"ids":[],"levels":[]},
+  {"name":"description","base":"spikes/oasdiff/fixtures/base.yaml","head":"spikes/oasdiff/fixtures/description.yaml","diff":true,"ids":[],"levels":[]},
+  {"name":"compatible","base":"spikes/oasdiff/fixtures/required.yaml","head":"spikes/oasdiff/fixtures/base.yaml","diff":true,"ids":["request-parameter-became-optional"],"levels":[1]},
+  {"name":"breaking","base":"spikes/oasdiff/fixtures/base.yaml","head":"spikes/oasdiff/fixtures/required.yaml","diff":true,"ids":["request-parameter-became-required"],"levels":[3]}
+]
