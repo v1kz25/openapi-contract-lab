@@ -29,7 +29,7 @@ No hay borrado ni sustitución automáticos del destino fallido. Para recuperar:
 
 Ambos formatos incluyen motor/versión, base/head, recuentos por severidad y todos los hallazgos: rule ID, nivel original, operación/ruta, mensaje, explicación, impacto, acción sugerida y ubicaciones. Fuentes o rutas ausentes se muestran como no reportadas. Los datos completos del evento siguen disponibles en JSON.
 
-En la rama de desarrollo de v0.2.0, el [issue #23](https://github.com/v1kz25/openapi-contract-lab/issues/23) agrupa únicamente HTML/Markdown. v0.1.0 publicada conserva la lista plana. El orden de presentación es:
+Desde v0.2.0 publicada, el [issue #23](https://github.com/v1kz25/openapi-contract-lab/issues/23) agrupa únicamente HTML/Markdown. v0.1.0 publicada conserva la lista plana. El orden de presentación es:
 
 1. Pares exactos ruta/método, ordenados lexicográficamente por ruta y después por método (comparación de cadenas Go, sensible a mayúsculas, sin normalizar los valores originales). Por ejemplo: GET `/items`, POST `/items`, GET `/orders`. Métodos desconocidos también forman su propio grupo.
 2. Al final, **Sin ruta u operación**, si existe algún hallazgo al que le falte cualquiera de esos campos o contenga solo espacios. Incluye eventos globales y los que solo tienen ruta o método; cada tarjeta conserva el dato parcial disponible.
