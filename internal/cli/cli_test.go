@@ -40,6 +40,9 @@ func TestCompareArguments(t *testing.T) {
 		{"compare", "--output=", "base", "head"},
 		{"compare", "--output", "https://example.invalid/report.html", "base", "head"},
 		{"compare", "--output", `\\server\share\report.html`, "base", "head"},
+		{"compare", "base", "head", "--format", "json"},
+		{"compare", "--format=JSON", "base", "head"},
+		{"compare", "--output=-", "base", "head"},
 	} {
 		t.Run(strings.Join(args, " "), func(t *testing.T) {
 			var stdout, stderr bytes.Buffer
@@ -54,12 +57,21 @@ func TestCompareArguments(t *testing.T) {
 	}
 }
 
+func TestCompareHelpAliases(t *testing.T) {
+	for _, alias := range []string{"-h", "--help"} {
+		var stdout, stderr bytes.Buffer
+		if code := cli.Run([]string{"compare", alias}, &stdout, &stderr); code != 0 || stdout.Len() == 0 || stderr.Len() != 0 {
+			t.Fatalf("%s exit=%d stdout=%q stderr=%q", alias, code, &stdout, &stderr)
+		}
+	}
+}
+
 func TestVersion(t *testing.T) {
 	for _, arg := range []string{"version", "--version"} {
 		t.Run(arg, func(t *testing.T) {
 			var stdout, stderr bytes.Buffer
 			code := cli.Run([]string{arg}, &stdout, &stderr)
-			if code != 0 || stdout.String() != "openapi-contract-lab v0.2.0\n" || stderr.Len() != 0 {
+			if code != 0 || stdout.String() != "openapi-contract-lab v1.0.0\n" || stderr.Len() != 0 {
 				t.Fatalf("exit = %d; stdout = %q; stderr = %q", code, stdout.String(), stderr.String())
 			}
 		})

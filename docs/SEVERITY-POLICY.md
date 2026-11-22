@@ -2,7 +2,34 @@
 
 Alcance: [issue #6](https://github.com/v1kz25/openapi-contract-lab/issues/6). Gate local por severidad normalizada por el adaptador, sin cambiar reglas, clasificación, explicaciones ni contenido del informe de oasdiff. Go 1.27.4 y oasdiff 1.39.0 permanecen fijados. Sin nuevas dependencias; biblioteca estándar Go (BSD-3-Clause) y binario oasdiff (Apache-2.0) ya documentados. Coste adicional obligatorio: 0 €.
 
-## Configuración
+## Referencia pública CLI — contrato v1, issue #37
+
+Esta referencia fija el comportamiento del candidato v1.0.0. **La versión publicada sigue siendo v0.2.0 experimental**; identificar el candidato como v1.0.0 no anuncia publicación ni estabilidad anticipada. La política para CLI 1.x y JSON está en [DEVELOPMENT.md](DEVELOPMENT.md#compatibilidad-del-contrato-v1).
+
+| Invocación | Resultado en stdout / código |
+| --- | --- |
+| Sin argumentos, `help`, `-h`, `--help` | Ayuda general / 0 |
+| `version`, `--version` | `openapi-contract-lab <versión>` y LF / 0; no ejecuta el motor |
+| `compare -h`, `compare --help` | Ayuda de comparación / 0; no necesita contratos ni motor |
+| `compare [opciones] BASE HEAD` | Informe completo, luego política / 0 o 3 |
+| Comando desconocido, argumentos de más o inválidos | Diagnóstico en stderr / 2 |
+
+Comandos, opciones y valores son sensibles a mayúsculas. BASE/HEAD son exactamente dos archivos regulares locales legibles: no stdin (`-`), URL ni UNC. Las referencias externas están deshabilitadas. Las opciones preceden a ambos archivos; no se interpretan opciones después del primer argumento posicional. Se admite `--` antes de BASE para terminar las opciones (por ejemplo, un nombre que empieza por guion). Las opciones con valor admiten `--opción valor` y `--opción=valor`; las formas documentadas constituyen la interfaz pública, no todas las variantes incidentales del parser Go.
+
+| Opción | Predeterminado | Valores / restricciones |
+| --- | --- | --- |
+| `--oasdiff PATH` | `oasdiff`, resuelto en PATH | Nombre o ruta no vacíos del ejecutable local; debe identificar exactamente oasdiff 1.39.0. No descarga ni actualiza herramientas. |
+| `--format FORMATO` | `json` | `json`, `markdown`, `html` |
+| `--output ARCHIVO` | Ausente: stdout | Archivo local nuevo en directorio existente; vacío, `-`, URL o UNC son argumentos inválidos (2). Archivo existente o padre inexistente: fallo operativo (1). No sobrescribe contratos ni informes. |
+| `--fail-on UMBRAL` | `error` | `error`, `warning`, `info`, `none`; no filtra ni reclasifica los hallazgos. |
+
+Ayuda, versión e informes usan stdout; errores y diagnóstico de política usan stderr. En éxito sin bloqueo (0), stderr está vacío. Con `--output`, el informe va exclusivamente al archivo y stdout queda vacío incluso cuando termina con 3. El diagnóstico operativo empieza por `error:`; el de política por `policy:`. Su prosa, rutas de error y detalles upstream no son una API para parsear. No usar stderr para deducir severidades: leer el JSON y el código de salida.
+
+JSON se serializa como ASCII con escapes Unicode que recuperan el texto original al parsear, incluida representación UTF-16 de caracteres suplementarios. HTML/Markdown usan UTF-8; `--output` escribe los tres formatos sin BOM y con LF. Para guardar HTML/Markdown en PowerShell 5.1 usar `--output`; una redirección de la shell puede cambiar su codificación. La prosa/maquetación humana no es una interfaz de máquina. No se garantiza identidad de bytes entre rutas, versiones o formatos distintos.
+
+Los códigos son los de la tabla siguiente: 3 significa informe completo; 1 puede dejar stdout o un archivo nuevo parcialmente escritos. No se promete escritura atómica ni recuperación automática de ese destino nuevo; inspeccionarlo o elegir otro nombre antes de repetir. Los archivos preexistentes siguen protegidos. Las [pruebas y límites del motor](OASDIFF-ADAPTER.md#límites-y-alcance-de-seguridad--issue-38) y la [recuperación de escritura](REPORTS.md#fallos-de-escritura-y-recuperación--issue-38) corresponden al issue #38; el contrato acordado en #37 se conserva.
+
+### Política de severidad
 
 `compare --fail-on error|warning|info|none`, antes de BASE/HEAD. Predeterminado: `error`. Solo se aceptan esos valores exactos; una cadena vacía o desconocida es un error de argumentos antes de ejecutar el motor. Sin archivo de configuración ni variables de entorno adicionales.
 

@@ -1,5 +1,7 @@
 # Revisar el candidato experimental v0.2.0 — issue #33
 
+> **Registro histórico de preparación.** v0.2.0 ya está [publicada como prerelease](https://github.com/v1kz25/openapi-contract-lab/releases/tag/v0.2.0), tras #34/#35. El resto conserva el estado de #33 antes de autorizar su publicación; no describe una publicación pendiente actual. Para instalar/actualizar, usar [INSTALL.md](INSTALL.md); para próximas versiones, [RELEASE.md](RELEASE.md).
+
 Estado: **candidato preparado para revisión**, no publicado. Rama `release/0.2.0`, PR hacia `main`; ninguna fusión, tag, release ni draft release está autorizada. v0.1.0 publicada permanece intacta. Ver [notas del candidato](releases/v0.2.0.md) para funciones, ejemplos, códigos y límites.
 
 ## Fuente y herramientas

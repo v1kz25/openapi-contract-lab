@@ -17,11 +17,19 @@ Desde la raíz del repositorio, con el ejecutable compilado y oasdiff preparado 
 - Archivos UTF-8 sin BOM, saltos LF. JSON mantiene los escapes Unicode compatibles con consolas antiguas. HTML declara `charset=utf-8` y Markdown conserva los caracteres Unicode.
 - Desde el issue #6, una exportación completada devuelve 0 si supera la política o 3 si no la supera; en ambos casos se conserva el informe. Con `--output`, stdout permanece vacío. Formato/argumentos inválidos: 2. Fallo de motor, renderizado o escritura: 1. Ver [política](SEVERITY-POLICY.md); usar `--fail-on none` para exportar sin gate.
 
+## Fallos de escritura y recuperación — issue #38
+
+La creación exclusiva protege archivos preexistentes, incluidos los contratos. No garantiza escritura atómica de un archivo **nuevo**: si la escritura falla después de algunos bytes, el destino puede quedar incompleto; si falla el cierre, incluso un archivo aparentemente completo sigue siendo una operación fallida. En ambos casos el error de salida debe prevalecer sobre el gate: **exit 1**, sin diagnóstico de política. Con stdout también pueden haberse entregado bytes antes del error. Un archivo creado o un JSON parseable por sí solo no demuestran éxito; comprobar el código de salida.
+
+No hay borrado ni sustitución automáticos del destino fallido. Para recuperar: conservar/revisar la salida fallida y elegir **otro nombre nuevo** para reintentar después de resolver el error; si se desea quitar el archivo parcial, hacerlo explícitamente tras comprobar su ruta. Reintentar el mismo nombre lo rechaza y conserva sus bytes, no lo completa ni lo sobrescribe. No truncar contratos ni otros informes para recuperar espacio o reutilizar una ruta.
+
+`TestNewReportFileFailureRecovery` inyecta escritura parcial, escritura corta, cierre fallido y ambos fallos sobre un archivo temporal real. Se ejecuta el mismo cierre/escritura de producción mediante un `io.WriteCloser`, sin llenar discos ni modificar permisos globales; comprueba el contenido retenido, el cierre incluso tras error, rechazo de reintento y recuperación con nombre nuevo. El error de escritura conserva prioridad si también falla el cierre. No se simula físicamente un disco lleno ni un fallo del SO al cerrar: se comprueba determinísticamente su tratamiento. La creación exclusiva sigue usando `os.OpenFile` real y sus tests existentes. La prueba de stdout parcial con el motor real verifica exit 1 antes del gate con `error` y `none`; las pruebas de fallos de motor verifican que ni se llega a crear el destino. La propagación al código 1 comparte el tratamiento de error de salida de la CLI; no se añade una configuración de fallos accesible al usuario.
+
 ## Contenido y estabilidad
 
 Ambos formatos incluyen motor/versión, base/head, recuentos por severidad y todos los hallazgos: rule ID, nivel original, operación/ruta, mensaje, explicación, impacto, acción sugerida y ubicaciones. Fuentes o rutas ausentes se muestran como no reportadas. Los datos completos del evento siguen disponibles en JSON.
 
-En la rama de desarrollo de v0.2.0, el [issue #23](https://github.com/v1kz25/openapi-contract-lab/issues/23) agrupa únicamente HTML/Markdown. v0.1.0 publicada conserva la lista plana. El orden de presentación es:
+Desde v0.2.0 publicada, el [issue #23](https://github.com/v1kz25/openapi-contract-lab/issues/23) agrupa únicamente HTML/Markdown. v0.1.0 publicada conserva la lista plana. El orden de presentación es:
 
 1. Pares exactos ruta/método, ordenados lexicográficamente por ruta y después por método (comparación de cadenas Go, sensible a mayúsculas, sin normalizar los valores originales). Por ejemplo: GET `/items`, POST `/items`, GET `/orders`. Métodos desconocidos también forman su propio grupo.
 2. Al final, **Sin ruta u operación**, si existe algún hallazgo al que le falte cualquiera de esos campos o contenga solo espacios. Incluye eventos globales y los que solo tienen ruta o método; cada tarjeta conserva el dato parcial disponible.

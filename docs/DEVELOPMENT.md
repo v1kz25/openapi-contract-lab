@@ -20,6 +20,34 @@ Módulo `github.com/v1kz25/openapi-contract-lab`, entrada en `cmd/openapi-contra
 6. Actualizar el README únicamente para funciones realmente disponibles.
 7. Incluir en cada PR los pasos de comprobación manual y sus resultados esperados cuando apliquen. Avisar al usuario cuando deba probar un flujo; arrancar la aplicación local para facilitarlo cuando exista dicho flujo. La ayuda/versión inicial puede comprobarse opcionalmente desde terminal.
 
+## Compatibilidad del contrato v1
+
+Decisión del [issue #37](https://github.com/v1kz25/openapi-contract-lab/issues/37): **contrato normativo JSON v1 ligado a CLI 1.x, documentado sin identificador embebido**. No se añade `schemaVersion`, comando, dependencia ni cambio de comportamiento. No hay necesidad demostrada de negociar varios esquemas dentro del mismo ejecutable; añadir un discriminador ahora no aportaría esa negociación. La referencia está en [OASDIFF-ADAPTER.md](OASDIFF-ADAPTER.md#contrato-json-v1--issue-37) y la [matriz pública CLI](SEVERITY-POLICY.md#referencia-pública-cli--contrato-v1-issue-37). Las garantías de compatibilidad 1.x entrarán en vigor al publicar v1.0.0, no antes. El ejecutable de `release/1.0.0` identifica el candidato como v1.0.0; la versión publicada sigue siendo v0.2.0 experimental.
+
+Migración desde v0.2.0: no cambia la estructura, defaults ni códigos. Los informes antiguos sin campo de esquema siguen leyéndose con los mismos campos. Un consumidor que archiva informes debe guardar fuera del JSON la versión CLI obtenida con `--version` y sus expectativas de contrato; un informe aislado sin esa procedencia no certifica qué versión de la CLI lo generó. No interpretar la ausencia de `schemaVersion` como una versión desconocida numérica, `false` o `engineVersion`; tampoco distinguir futuras versiones incompatibles mediante heurísticas de campos. Si aparece necesidad real de esquemas múltiples, diseñar antes una migración explícita mediante issue/PR independiente.
+
+| Cambio en CLI 1.x / JSON v1 | Política |
+| --- | --- |
+| Campo opcional adicional, que los consumidores pueden ignorar | Compatible si no cambia campos, significados, orden significativo o defaults existentes; documentar y probar con consumidor anterior. |
+| Retirada/renombrado de campo, cambio de tipo o significado, nuevo campo requerido para consumir un informe, cambio de defaults/streams/códigos/gramática documentada | Ruptura: major de CLI/contrato y guía de migración; no introducir silenciosamente en 1.x. |
+| Nuevo valor de enum propio o reclasificación local | No tratar automáticamente como adición inocua: los valores conocidos son parte del contrato. Requiere major/migración si cambia decisiones de consumidores. IDs y enteros upstream ya son abiertos; `unknown` es su manejo explícito. |
+| Prosa de ayuda/errores/explicaciones, espacios/orden de claves/escapes JSON equivalentes, presentación HTML/Markdown | No se congela el texto o los bytes como API; conservar significado, streams, datos y seguridad, con regresión revisada. |
+| Mensajes, fingerprints, campos adicionales y resultados semánticos de oasdiff | Contenido upstream, no garantías propias de estabilidad semántica entre motores. Mantenerlo completo y revisar cambios, sin sustituir el ID por prosa ni reclasificarlo localmente. |
+
+### Actualización de oasdiff y herramientas
+
+La comparación exige oasdiff **1.39.0**. No se admite una versión arbitraria, descarga automática, actualización silenciosa ni cambio de motor por parte del consumidor. Para actualizar:
+
+1. Abrir issue con necesidad, versión exacta propuesta, alcance y compatibilidad Windows x64. Revisar notas upstream y versiones/casos OpenAPI realmente verificables; no convertir sus declaraciones generales en soporte propio.
+2. Revisar licencia y componentes realmente distribuidos; comprobar hash oficial del archivo y registrar procedencia. Mantener coste obligatorio 0 €; motor separado y sin nuevas APIs/servicios.
+3. En una rama/PR propia, ejecutar el corpus existente con motor antiguo y propuesto; registrar diferencias de IDs, niveles/clasificación, campos/tipos, orden, fuentes/fingerprints y mensajes. Comprobar los tres formatos, fallback, gate, errores/aislamiento y smoke Windows PS5.1/7. No regenerar expectativas en bloque para aceptar divergencias.
+4. Evaluar por separado contrato propio y semántica del motor. Si el cambio rompe garantías propias, major/migración antes de integrar. Una actualización semántica aceptada y compatible con el contrato requiere notas explícitas y, como mínimo, una versión minor propia; no ocultarla en un patch. El fallback debe seguir siendo neutral hasta verificar cada regla/nivel con el motor propuesto.
+5. Revisar diff, versiones/hashes/documentación/avisos y evidencia real del SHA. Actualizar únicamente después de revisión y aprobación de integración; la publicación requiere autorización propia según RELEASE.md. Go y acciones CI también se actualizan por necesidad y PR explícitas, con regresión, sin alterar versiones como parte de #37.
+
+### Cobertura contractual del issue #37
+
+Se reutilizan tests de ayuda/versión/argumentos, matriz de políticas, snapshots, Unicode, fallback, corpus 3.0.3/3.1 y exportaciones existentes. Se añaden pruebas de consumidor sobre la serialización pública (campos y tipos requeridos, omisiones, arrays vacíos, fuentes, orden/repeticiones y datos upstream desconocidos) y del uso real de PATH/defaults, `--opción=valor` y separador `--`. Cancelación activa, límites de pipes y recuperación de escrituras parciales pertenecen a #38 y no se implementan aquí. No se publica una versión estable ni se cambia el número de versión.
+
 ## Tests y comandos
 
 Desde la raíz, con Go 1.27.4 en PATH. Estas variables solo afectan a la sesión PowerShell; las pruebas no necesitan descargas:
@@ -54,7 +82,7 @@ Con Go/gofmt en PATH y `OASDIFF_BINARY` definido, `./scripts/verify.ps1` ejecuta
 
 El issue #8 añade [instalación reproducible](INSTALL.md), [preparación de publicación](RELEASE.md) y `./scripts/smoke.ps1`. El smoke usa el ejecutable compilado y oasdiff local, sin SDK ni descargas; se ejecuta también en CI después de compilar. No crea tags, releases ni paquetes.
 
-El issue #18 está completado: [v0.1.0 experimental](https://github.com/v1kz25/openapi-contract-lab/releases/tag/v0.1.0) publicada bajo Apache-2.0; PR #19 integrada en `main` y PR #20 sincronizada en `develop`. Sus [notas](releases/v0.1.0.md) y archivos publicados se conservan. En `release/0.2.0`, el [issue #33](https://github.com/v1kz25/openapi-contract-lab/issues/33) ajusta únicamente la identificación del [candidato](CANDIDATE-V0.2.0.md): tests y smoke comprueban `openapi-contract-lab v0.2.0`. No autoriza fusiones, tags ni publicación.
+Los issues #18/#33 están completados: v0.1.0 y [v0.2.0 experimentales](https://github.com/v1kz25/openapi-contract-lab/releases/tag/v0.2.0) publicadas bajo Apache-2.0. PR #34 integrada en `main`, #35 sincronizada a `develop`. Sus notas/artefactos y la [preparación histórica #33](CANDIDATE-V0.2.0.md) se conservan. `develop` incorpora después contrato #37 y pruebas/corrección de diagnóstico #38; su código no es el ZIP publicado, aunque `--version` siga mostrando v0.2.0 hasta preparar otra versión. No autoriza nuevas fusiones, tags ni publicación.
 
 Con la misma variable también se ejecutan los trece casos sintéticos de `internal/explain`, uno por combinación documentada (diez originales y tres del issue #21), y se comprueba que el motor emite los IDs/niveles esperados y las fuentes enlazadas. `internal/explain/testdata/breaking/` contiene los seis contratos nuevos, también usados por la integración CLI de JSON/Markdown/HTML y política. Las pruebas de control verifican entradas idénticas e inversas; no se infiere la regla inversa. Los snapshots de mensajes se revisan en `internal/explain/testdata/`; no hay actualización automática de expectativas.
 
@@ -99,6 +127,16 @@ Ejecutada en Windows x64, build 26300.9974, PowerShell 7.6.9, Go 1.27.4 portáti
 | Ejecutable con `diff` | `unknown command "diff"; use --help for usage`, stderr, exit 2 esperado |
 
 Los tests cubren las cuatro formas de ayuda (incluida invocación sin argumentos), dos de versión, cinco entradas inválidas y un fallo de escritura simulado. No invocan oasdiff ni servicios. El primer `go test ./...` falló al recorrer el SDK extraído directamente en `dist/`; se movió a `dist/_tools/` y se repitió la verificación completa correctamente. No se oculta ese fallo de preparación. No se probó ARM64 ni Linux/macOS.
+
+## Mantenimiento y reporte de problemas
+
+Mantenimiento individual, sin SLA universal, soporte continuo garantizado ni fecha comprometida para v1. Priorizar bloqueantes del [roadmap](ROADMAP.md), regresiones y seguridad dentro del ámbito Windows x64/corpus declarado. Mantener operación local/offline y coste obligatorio 0 €; no añadir servicios, telemetría, soporte de otros sistemas o reglas por defecto al corregir un fallo.
+
+Para comunicar un problema en [GitHub Issues](https://github.com/v1kz25/openapi-contract-lab/issues), incluir versión CLI y motor, Windows/PowerShell, comando mínimo con rutas ficticias, código de salida esperado/real y dos contratos **sintéticos** que lo reproduzcan. Añadir solo el fragmento de JSON/diagnóstico imprescindible; retirar rutas personales, nombres internos, tokens y contenido sensible también de `upstream`/mensajes. No adjuntar especificaciones privadas ni informes completos por defecto. Si no puede compartirse sin datos sensibles, describir el impacto sin adjuntos y acordar un canal privado con el propietario antes de enviar material; no se presupone infraestructura de recepción privada.
+
+Antes de preparar un candidato y cuando aparezca un aviso relevante o un fallo reproducible, revisar manualmente releases/avisos oficiales de Go y oasdiff, licencias, hashes y acciones CI realmente usadas. Son consultas de mantenimiento, no un autoupdater ni una monitorización programada. La [política de actualización](#actualización-de-oasdiff-y-herramientas) exige issue/PR y comparación del corpus: comprobar pertinencia del aviso a nuestro uso y componentes distribuidos, no actualizar a ciegas ni prometer ausencia absoluta de vulnerabilidades. Registrar aplazamientos con su motivo y limitación real.
+
+Un fallo corregido dentro del contrato 1.x puede publicarse como patch tras revisión; una actualización semántica upstream compatible requiere al menos minor y notas, una ruptura propia exige major/migración. Mientras v0.2.0 siga experimental, documentar igualmente cambios de comportamiento/migración sin atribuirle estabilidad retrospectiva. El [proceso de publicación](RELEASE.md) y la aprobación explícita son obligatorios para cada versión; [instalación/update/rollback](INSTALL.md#actualizar-y-volver-a-la-versión-anterior) conserva carpetas anteriores. No prometer que actualizar/revertir transforma informes ya archivados.
 
 ## Gitflow
 
