@@ -66,7 +66,7 @@ func Run(args []string, stdout, stderr io.Writer) int {
 	case "help", "-h", "--help":
 		output = help
 	case "version", "--version":
-		output = "openapi-contract-lab v0.2.0\n"
+		output = "openapi-contract-lab v1.0.0\n"
 	default:
 		fmt.Fprintf(stderr, "error: unknown command %q; use --help for usage\n", command)
 		return 2

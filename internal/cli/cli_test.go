@@ -71,7 +71,7 @@ func TestVersion(t *testing.T) {
 		t.Run(arg, func(t *testing.T) {
 			var stdout, stderr bytes.Buffer
 			code := cli.Run([]string{arg}, &stdout, &stderr)
-			if code != 0 || stdout.String() != "openapi-contract-lab v0.2.0\n" || stderr.Len() != 0 {
+			if code != 0 || stdout.String() != "openapi-contract-lab v1.0.0\n" || stderr.Len() != 0 {
 				t.Fatalf("exit = %d; stdout = %q; stderr = %q", code, stdout.String(), stderr.String())
 			}
 		})

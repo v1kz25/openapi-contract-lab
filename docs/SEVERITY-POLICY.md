@@ -4,7 +4,7 @@ Alcance: [issue #6](https://github.com/v1kz25/openapi-contract-lab/issues/6). Ga
 
 ## Referencia pública CLI — contrato v1, issue #37
 
-Esta referencia fija el comportamiento actual que se conservará para v1.0.0; **la versión del ejecutable sigue siendo v0.2.0 experimental**. No anuncia publicación ni estabilidad anticipada. La política para CLI 1.x y JSON está en [DEVELOPMENT.md](DEVELOPMENT.md#compatibilidad-del-contrato-v1).
+Esta referencia fija el comportamiento de **v1.0.0 estable publicada**, dentro del ámbito Windows x64 y corpus declarado. Las versiones v0.x conservan su carácter experimental. La política para CLI 1.x y JSON está en [DEVELOPMENT.md](DEVELOPMENT.md#compatibilidad-del-contrato-v1).
 
 | Invocación | Resultado en stdout / código |
 | --- | --- |

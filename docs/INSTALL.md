@@ -1,6 +1,8 @@
 # Instalación y actualización — Windows x64
 
-Versión vigente: [**v0.2.0 experimental publicada**](https://github.com/v1kz25/openapi-contract-lab/releases/tag/v0.2.0), no estable. Solo Windows x64, PowerShell 5.1 y 7 verificados. Go 1.27.4 solo es necesario para **compilar desde fuente**; para ejecutar basta la CLI del ZIP y oasdiff 1.39.0 externo. No hay instalador, autoupdater ni instalación global.
+Versión vigente: [**v1.0.0 estable publicada**](https://github.com/v1kz25/openapi-contract-lab/releases/tag/v1.0.0). Solo Windows x64, PowerShell 5.1 y 7 verificados. Go 1.27.4 solo es necesario para **compilar desde fuente**; para ejecutar basta la CLI del ZIP y oasdiff 1.39.0 externo. No hay instalador, autoupdater ni instalación global.
+
+[v1.0.0](https://github.com/v1kz25/openapi-contract-lab/releases/tag/v1.0.0) se publicó con los bytes aprobados en #46 y verificados tras descarga. Las [notas del candidato](releases/v1.0.0.md) y BUILD incluidos en el ZIP conservan su registro de preparación previo; no invalidan la publicación posterior. Las versiones v0.1.0/v0.2.0 permanecen intactas. [Procedimiento de reproducción](RELEASE.md#procedimiento-reproducible-de-empaquetado).
 
 Se conservan las notas y bytes históricos de v0.1.0/v0.2.0; las frases de candidato pendiente dentro del ZIP v0.2.0 describen su preparación anterior a publicar. El estado vigente se comprueba en la release y aquí, no reescribiendo archivos publicados. Licencia Apache-2.0; conservar LICENSE, NOTICE y THIRD_PARTY_NOTICES.txt (runtime/stdlib Go BSD-3-Clause). oasdiff Apache-2.0 se descarga por separado, conservando sus avisos; no se redistribuye dentro de nuestro ZIP.
 
@@ -12,20 +14,20 @@ Requisitos de ejecución: PowerShell 5.1 o 7 x64 y `tar` de Windows para extraer
 $ErrorActionPreference = 'Stop'
 $installRoot = Join-Path (Get-Location) ('ocl-install-' + [guid]::NewGuid().ToString('N'))
 New-Item -ItemType Directory -Path $installRoot | Out-Null
-$zipName = 'openapi-contract-lab_0.2.0_windows_amd64.zip'
+$zipName = 'openapi-contract-lab_1.0.0_windows_amd64.zip'
 $zipPath = Join-Path $installRoot $zipName
 $sumsPath = Join-Path $installRoot 'SHA256SUMS.txt'
-$releaseBase = 'https://github.com/v1kz25/openapi-contract-lab/releases/download/v0.2.0/'
+$releaseBase = 'https://github.com/v1kz25/openapi-contract-lab/releases/download/v1.0.0/'
 Invoke-WebRequest -UseBasicParsing ($releaseBase + $zipName) -OutFile $zipPath
 Invoke-WebRequest -UseBasicParsing ($releaseBase + 'SHA256SUMS.txt') -OutFile $sumsPath
-$sumLines = [regex]::Matches([IO.File]::ReadAllText($sumsPath), '(?m)^([0-9a-fA-F]{64})  openapi-contract-lab_0\.2\.0_windows_amd64\.zip\r?$')
+$sumLines = [regex]::Matches([IO.File]::ReadAllText($sumsPath), '(?m)^([0-9a-fA-F]{64})  openapi-contract-lab_1\.0\.0_windows_amd64\.zip\r?$')
 $zipHash = (Get-FileHash -LiteralPath $zipPath -Algorithm SHA256).Hash
-if ($sumLines.Count -ne 1 -or $zipHash -ne $sumLines[0].Groups[1].Value -or $zipHash -ne '6c2bfd76f4c123399029e908bb58f73a40b073fe5f19b7eb4069e1af9aff4c81') { throw 'CLI checksum mismatch' }
-$cliFolder = Join-Path $installRoot 'v0.2.0'
+if ($sumLines.Count -ne 1 -or $zipHash -ne $sumLines[0].Groups[1].Value -or $zipHash -ne '5f7273b2ef1046e8c4da7c19e42b35be385865a2174f5e8450603a392ad16061') { throw 'CLI checksum mismatch' }
+$cliFolder = Join-Path $installRoot 'v1.0.0'
 Expand-Archive -LiteralPath $zipPath -DestinationPath $cliFolder
 $cli = Join-Path $cliFolder 'openapi-contract-lab.exe'
 $exeHash = (Get-FileHash -LiteralPath $cli -Algorithm SHA256).Hash
-if ($exeHash -ne 'a5eb2523bce835e8a7ab33796c0baa78bed0e9406796b894fff0c3658f1a15f7') { throw 'CLI executable checksum mismatch' }
+if ($exeHash -ne 'f072fbb75fd6bbbf3a65696995ae3c7c596de902b83f6f208574ad7c495981be') { throw 'CLI executable checksum mismatch' }
 $motorFolder = Join-Path $installRoot 'oasdiff-1.39.0'
 New-Item -ItemType Directory -Path $motorFolder | Out-Null
 $motorArchive = Join-Path $installRoot 'oasdiff.tar.gz'
@@ -42,7 +44,7 @@ if ($LASTEXITCODE -ne 0) { throw 'CLI version failed' }
 if ($LASTEXITCODE -ne 0) { throw 'oasdiff version failed' }
 ```
 
-Esperado: `openapi-contract-lab v0.2.0` y `oasdiff version 1.39.0`. `BUILD.txt` incluido identifica fuente `f6e7f68ac31d81b8e23cff0e18b41b0e19197c35`; su árbol coincide con el tag publicado, aunque el commit del tag sea el merge `72ebbd87558bd73ae138696fd9dc62a58b6e2c04`.
+Esperado: `openapi-contract-lab v1.0.0` y `oasdiff version 1.39.0`. `BUILD.txt` incluido identifica fuente `3939de88994dfbd5240c9e1217e9f415a54b539e`; su árbol coincide con el tag publicado, aunque el commit del tag sea el merge `342aaae133b3807e92b487c51a4316a8dbf3cbce`.
 
 ```powershell
 & $cli compare --oasdiff $motor (Join-Path $cliFolder 'examples/base.yaml') (Join-Path $cliFolder 'examples/required.yaml')
@@ -65,7 +67,7 @@ $previousCli = $cli
 $previousMotor = $motor
 ```
 
-Volver a ejecutar el bloque de instalación con la versión **publicada y verificada** que se quiera seleccionar; los valores actuales son exclusivamente para v0.2.0, no sustituir el nombre de versión manteniendo sus hashes. Cada ejecución crea una carpeta nueva. Revisar notas y [compatibilidad CLI/JSON](DEVELOPMENT.md#compatibilidad-del-contrato-v1), verificar hashes/versión y probar ejemplos antes de usar contratos propios. No copiar el ejecutable sobre la carpeta antigua, no mover informes ni contratos, no modificar PATH global ni borrar la versión previa. `$cli`/`$motor` seleccionan los nuevos binarios solo en esta sesión.
+Volver a ejecutar el bloque de instalación con la versión **publicada y verificada** que se quiera seleccionar; los valores actuales son exclusivamente para v1.0.0, no sustituir el nombre de versión manteniendo sus hashes. Cada ejecución crea una carpeta nueva. Revisar notas y [compatibilidad CLI/JSON](DEVELOPMENT.md#compatibilidad-del-contrato-v1), verificar hashes/versión y probar ejemplos antes de usar contratos propios. No copiar el ejecutable sobre la carpeta antigua, no mover informes ni contratos, no modificar PATH global ni borrar la versión previa. `$cli`/`$motor` seleccionan los nuevos binarios solo en esta sesión.
 
 Para revertir, usar las rutas guardadas y comprobar la versión:
 
@@ -80,20 +82,20 @@ La reversión no convierte informes nuevos a un esquema antiguo ni deshace cambi
 
 ## Compilar desde fuente
 
-Solo esta alternativa requiere Git, Go 1.27.4 y espacio para el SDK portátil. Los pasos siguientes reproducen **v0.2.0 publicada**, no los cambios posteriores de `develop` ni una futura v1 estable. Para empaquetar desde un SHA concreto, seguir [RELEASE.md](RELEASE.md#procedimiento-reproducible-de-empaquetado).
+Solo esta alternativa requiere Git, Go 1.27.4 y espacio para el SDK portátil. Los pasos siguientes reproducen **v1.0.0 publicada**, no futuras modificaciones de `develop`. Para empaquetar desde un SHA concreto, seguir [RELEASE.md](RELEASE.md#procedimiento-reproducible-de-empaquetado).
 
 ## 1. Código y carpeta de trabajo
 
 En una carpeta de trabajo nueva, no en System32:
 
 ```powershell
-git clone --branch v0.2.0 https://github.com/v1kz25/openapi-contract-lab.git
+git clone --branch v1.0.0 https://github.com/v1kz25/openapi-contract-lab.git
 Set-Location .\openapi-contract-lab
 git remote get-url origin
 git rev-parse HEAD
 ```
 
-Guardar el SHA mostrado junto con la evidencia de compilación. El tag publicado `v0.2.0` identifica esa versión en detached HEAD; no se trabaja sobre él. Para reproducir otra revisión concreta, usar su SHA aprobado en un checkout limpio (`git switch --detach SHA_APROBADO`) y comprobarlo con `git rev-parse HEAD`. Si ya se tiene el repositorio, no volver a clonarlo ni sobrescribir cambios. Para desarrollar, seguir Gitflow desde `develop` según [DEVELOPMENT.md](DEVELOPMENT.md).
+Guardar el SHA mostrado junto con la evidencia de compilación. El tag publicado `v1.0.0` identifica esa versión en detached HEAD; no se trabaja sobre él. Para reproducir otra revisión concreta, usar su SHA aprobado en un checkout limpio (`git switch --detach SHA_APROBADO`) y comprobarlo con `git rev-parse HEAD`. Si ya se tiene el repositorio, no volver a clonarlo ni sobrescribir cambios. Para desarrollar, seguir Gitflow desde `develop` según [DEVELOPMENT.md](DEVELOPMENT.md).
 
 ## 2. Go y oasdiff fijados
 
