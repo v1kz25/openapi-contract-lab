@@ -2,11 +2,15 @@
 
 ## Estado publicado
 
+[**v1.0.0 estable**](https://github.com/v1kz25/openapi-contract-lab/releases/tag/v1.0.0) publicada el 2026-11-22 tras aprobar PR #46/SHA/artefactos y ejecutar #41. Tag sobre `main` `342aaae133b3807e92b487c51a4316a8dbf3cbce`, árbol idéntico al candidato `3939de88994dfbd5240c9e1217e9f415a54b539e`. [CI exacta](https://github.com/v1kz25/openapi-contract-lab/actions/runs/45040822531), descargas/checksums y smoke de archivos publicados PS5.1/7 correctos. Contrato CLI 1.x/JSON v1 vigente, solo Windows x64/corpus acotado; límites de OpenAPI, recursos, privacidad y mantenimiento conservados. La sincronización posterior y actualización del estado se realizan mediante PR de #41 con autorización explícita; no se abre otra tarea automáticamente.
+
 [v0.2.0 experimental](https://github.com/v1kz25/openapi-contract-lab/releases/tag/v0.2.0) está publicada desde el **2026-11-22**, como prerelease, no draft. PR [#34](https://github.com/v1kz25/openapi-contract-lab/pull/34) integrada en `main` y [#35](https://github.com/v1kz25/openapi-contract-lab/pull/35) sincronizada hacia `develop`. Incluye comparación local con oasdiff 1.39.0, trece explicaciones deterministas, JSON e informes HTML/Markdown agrupados, gate por severidad y cinco pares concretos OpenAPI 3.1.0. ZIP Windows x64 y checksums publicados; motor obtenido por separado. CLI/esquema siguen siendo experimentales: no se promete estabilidad ni cobertura completa de OpenAPI.
 
 Apache-2.0, Go 1.27.4, oasdiff 1.39.0, sin módulos Go externos ni coste adicional obligatorio. Solo Windows x64 verificado, PowerShell 5.1 y 7. [v0.1.0](https://github.com/v1kz25/openapi-contract-lab/releases/tag/v0.1.0), sus diez explicaciones y [notas](releases/v0.1.0.md) permanecen como historia. Las [notas v0.2.0](releases/v0.2.0.md) y [guía de candidato](CANDIDATE-V0.2.0.md) describen la preparación de #33: sus frases «no publicado» son anteriores a la publicación. #39 reconcilia guías activas de instalación, empaquetado y mantenimiento sin modificar bytes ni notas publicados. #37/#38 ya están integrados en `develop`; la siguiente preparación de candidato corresponde a #40 después de revisar #39. Cada futura integración/publicación requiere aprobación independiente según [RELEASE.md](RELEASE.md).
 
 ## Candidato v1.0.0 — preparación para revisión
+
+**Histórico:** preparación #40 completada y publicación #41 autorizada/realizada. Las notas y la descripción siguientes conservan el estado previo del candidato; el estado publicado actual es el anterior.
 
 La siguiente preparación, [candidato v1.0.0 #40](releases/v1.0.0.md), parte de `develop` `b3f0d3c72758ffe318ae96ca7f0aec81219001da` con #36–#39 completados y revisados. Su PR hacia `main` registra la evaluación de cada punto de la checklist con evidencias del SHA exacto; la aprobación explícita/publicación permanece pendiente para #41. No hay tag ni release v1.0.0 ni se inicia #41 al preparar ese candidato.
 
@@ -102,7 +106,7 @@ El primer fetch/consultas gh falló por restricciones de permisos/red del entorn
 
 **Evidencia histórica reutilizada:** [CI 45003351377](https://github.com/v1kz25/openapi-contract-lab/actions/runs/45003351377) success en `72ebbd8`, consultada ahora pero ejecutada previamente; [CI 44962771145](https://github.com/v1kz25/openapi-contract-lab/actions/runs/44962771145) success en candidato `f6e7f68ac31d81b8e23cff0e18b41b0e19197c35`. #34 registra dos builds idénticos y nueve pares empaquetados × tres formatos en PS5.1/7. No se repitieron esos builds ni el runner de investigación #25 (no cambia ni es contrato público); no se afirma otra inspección visual, instalación limpia de SO, otro equipo, otra arquitectura ni auditoría completa de red/dependencias transitivas del motor. CI de la PR de planificación se registra en ella; no sustituye la del futuro candidato.
 
-## Objetivo y fases hacia v1.0.0
+## Objetivo y fases hacia v1.0.0 — plan ejecutado
 
 **Estable significa CLI local fiable, documentada y distribuible dentro de un alcance declarado.** Propuesta: Windows x64/PowerShell 5.1 y 7, Go 1.27.4 para construir y oasdiff 1.39.0 externo para comparar, corpus actual 3.0.3 y casos enumerados 3.1.0, trece explicaciones más fallback, tres formatos y gate vigente. Sin garantía universal sobre contratos ni comportamiento real de servidores. El contrato CLI/JSON propio será estable en 1.x con política explícita de compatibilidad; la semántica upstream permanece ligada al motor comprobado.
 
@@ -121,22 +125,22 @@ Seis issues nuevos en total, contando planificación. Cada uno contiene evidenci
 
 ### Checklist verificable de estabilidad
 
-Estas casillas son aceptación de **v1.0.0 futura**; que una capacidad pase hoy no acredita los bytes de esa versión.
+Checklist resuelta para **v1.0.0 publicada**: evidencia del SHA aprobado en [PR #46](https://github.com/v1kz25/openapi-contract-lab/pull/46), [CI exacta](https://github.com/v1kz25/openapi-contract-lab/actions/runs/45040822531), y descarga/versión/smoke de los bytes publicados comprobados en #41. La aprobación explícita de publicación y de sincronización fue recibida; las versiones y artefactos antiguos se conservan.
 
-- [ ] **Alcance**: Windows x64/PS5.1/7 y corpus exacto enumerados; 3.1 parcial/3.2 no verificado, refs externas/URL/UNC/stdin y demás exclusiones explícitas. Sin afirmar igualdad por `[]`.
-- [ ] **CLI**: comandos/aliases, orden de argumentos, defaults, formatos, streams, codificación y códigos 0/1/2/3 normativos, probados; exit 3 entrega informe y error operativo tiene prioridad.
-- [ ] **JSON/compatibilidad**: tabla completa de campos/tipos/omisión/arrays/enums/upstream/orden, decisión de versión de esquema y migración desde experimental, política major/aditiva y actualización del motor revisadas (#37).
-- [ ] **Regresión**: verify sin omisiones con motor fijado; trece pares 3.0.3, cinco pares 3.1.0, desconocidos/fallback, gate y Unicode conservados; CI gratuita del SHA candidato exacto correcta.
-- [ ] **Seguridad/recursos**: entradas y configuración aisladas; timeout/pipes reales y comportamiento de fallos probados; limitaciones de tamaño/RAM/sandbox explícitas, sin promesas no verificadas (#38).
-- [ ] **Informes/archivos**: escape HTML/Markdown, CSP y enlaces restringidos, orden/conservación de hallazgos y determinismo sin regresión; existentes/inputs intactos; recuperación de destino nuevo parcial documentada. Revisión visual reutilizable o nueva según cambios.
-- [ ] **Instalación/artefactos**: descarga/verificación/extracción/uso y actualización/reversión en carpeta nueva documentados y recorridos; smoke PS5.1/7 del ejecutable exacto del ZIP, sin SDK para ejecutar; motor separado.
-- [ ] **Versiones/avisos/checksums**: SHA fuente, versiones/flags/build reproducible, BUILD e inventario de archivos; LICENSE/NOTICE/avisos Go conservados; SHA256SUMS de bytes exactos; sin motor/SDK/cachés/logs privados empaquetados.
-- [ ] **Notas/mantenimiento/privacidad**: guías activas coherentes, notas de release con límites/migración, reporte sintético de errores y proceso de parches/actualización upstream; revisar rutas/datos antes de compartir, sin subirlos automáticamente ni prometer SLA universal (#39/#40).
-- [ ] **Autorización**: propietario aprueba explícitamente PR/SHA/archivos antes de merge/tag/release. Nunca auto-merge ni borrado de ramas; sincronización posterior por otra PR con aprobación propia (#41).
+- [x] **Alcance**: Windows x64/PS5.1/7 y corpus exacto enumerados; 3.1 parcial/3.2 no verificado, refs externas/URL/UNC/stdin y demás exclusiones explícitas. Sin afirmar igualdad por `[]`.
+- [x] **CLI**: comandos/aliases, orden de argumentos, defaults, formatos, streams, codificación y códigos 0/1/2/3 normativos, probados; exit 3 entrega informe y error operativo tiene prioridad.
+- [x] **JSON/compatibilidad**: tabla completa de campos/tipos/omisión/arrays/enums/upstream/orden, decisión de versión de esquema y migración desde experimental, política major/aditiva y actualización del motor revisadas (#37).
+- [x] **Regresión**: verify sin omisiones con motor fijado; trece pares 3.0.3, cinco pares 3.1.0, desconocidos/fallback, gate y Unicode conservados; CI gratuita del SHA candidato exacto correcta.
+- [x] **Seguridad/recursos**: entradas y configuración aisladas; timeout/pipes reales y comportamiento de fallos probados; limitaciones de tamaño/RAM/sandbox explícitas, sin promesas no verificadas (#38).
+- [x] **Informes/archivos**: escape HTML/Markdown, CSP y enlaces restringidos, orden/conservación de hallazgos y determinismo sin regresión; existentes/inputs intactos; recuperación de destino nuevo parcial documentada. Revisión visual reutilizable o nueva según cambios.
+- [x] **Instalación/artefactos**: descarga/verificación/extracción/uso y actualización/reversión en carpeta nueva documentados y recorridos; smoke PS5.1/7 del ejecutable exacto del ZIP, sin SDK para ejecutar; motor separado.
+- [x] **Versiones/avisos/checksums**: SHA fuente, versiones/flags/build reproducible, BUILD e inventario de archivos; LICENSE/NOTICE/avisos Go conservados; SHA256SUMS de bytes exactos; sin motor/SDK/cachés/logs privados empaquetados.
+- [x] **Notas/mantenimiento/privacidad**: guías activas coherentes, notas de release con límites/migración, reporte sintético de errores y proceso de parches/actualización upstream; revisar rutas/datos antes de compartir, sin subirlos automáticamente ni prometer SLA universal (#39/#40).
+- [x] **Autorización**: propietario aprueba explícitamente PR/SHA/archivos antes de merge/tag/release. Nunca auto-merge ni borrado de ramas; sincronización posterior por otra PR con aprobación propia (#41).
 
 No se exige ausencia absoluta de errores. Son bloqueantes los fallos reproducibles de garantías declaradas (pérdida/clasificación alterada, informe activo inseguro, sobrescritura, streams/códigos incorrectos, incompatibilidad propia sin migración), la falta de evidencia del candidato y la falta de aprobación. Un defecto fuera del alcance documentado se registra y evalúa; no se amplía el soporte para poder cerrar la checklist.
 
-### Esfuerzo y primera tarea
+### Esfuerzo y primera tarea — estimación histórica
 
 Restan **4,5–10 jornadas efectivas** para #37–#41 (6 h de trabajo concentrado por jornada, aproximadamente **27–60 h**), además de revisión/espera; presupuesto prudente con margen por fallos de Windows/subprocesos: **6–13 jornadas**. No es una fecha comprometida. Supuestos: un desarrollador, herramientas existentes, sin nuevas funciones/plataformas, corpus semántico vigente suficiente y revisión disponible. Incertidumbre principal: pruebas deterministas de fallos de escritura/proceso y posibles defectos descubiertos; un cambio material de contrato obliga a revisar estimación y alcance. Esta auditoría #36 supone 0,5–1 jornada adicional al cálculo restante.
 
@@ -155,13 +159,13 @@ Restan **4,5–10 jornadas efectivas** para #37–#41 (6 h de trabajo concentrad
 1. **Validación técnica / PoC**: completada, #1.
 2. **Configuración inicial**: completada, #2.
 3. **MVP incremental**: completado, #3–#8; v0.1.0 publicada y v0.2.0 experimental publicada.
-4. **Pruebas y estabilización**: siguiente objetivo, #37–#39 tras revisión de #36.
-5. **Primera versión estable**: candidato #40 y publicación #41 solo con aprobación explícita.
+4. **Pruebas y estabilización**: completadas y revisadas, #37–#39.
+5. **Primera versión estable**: candidato #40 aprobado y v1.0.0 publicada en #41; nuevas publicaciones siguen requiriendo aprobación propia.
 6. **Ampliaciones**: según necesidades demostradas, separadas de la estabilidad.
 
 ## Primeras tareas
 
-Las tareas iniciales ya están completadas; no son un backlog pendiente. Revisar primero la PR documental de #36. Después, #37 es la primera implementación recomendada; las demás siguen las dependencias anteriores. Esta ejecución termina al entregar planificación/PR y no comienza ninguna de ellas.
+Las tareas iniciales y #36–#40 ya están completadas; #41 registra publicación y sincronización de v1.0.0. Las tablas de fases/esfuerzo anteriores conservan el plan acordado, no tareas que deban volver a ejecutarse. No se asignan ampliaciones automáticamente: futuros cambios requieren necesidad demostrada e issue acotado.
 
 ## Principio de alcance
 

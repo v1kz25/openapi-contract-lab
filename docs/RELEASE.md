@@ -2,11 +2,17 @@
 
 ## Estado vigente
 
+[**v1.0.0 estable publicada**](https://github.com/v1kz25/openapi-contract-lab/releases/tag/v1.0.0), no draft ni prerelease, desde el 2026-11-22. PR #46 fusionada con autorización explícita; tag anotado sobre `main` `342aaae133b3807e92b487c51a4316a8dbf3cbce`, árbol idéntico al candidato aprobado `3939de88994dfbd5240c9e1217e9f415a54b539e`. ZIP SHA-256 `5f7273b2ef1046e8c4da7c19e42b35be385865a2174f5e8450603a392ad16061`, ejecutable `f072fbb75fd6bbbf3a65696995ae3c7c596de902b83f6f208574ad7c495981be`: descargados tras publicar, coincidentes con los aprobados y smoke PS5.1/7 correcto. [CI del candidato exacto](https://github.com/v1kz25/openapi-contract-lab/actions/runs/45040822531) SUCCESS.
+
+El propietario autorizó también finalizar la actualización documental y sincronizar hacia `develop` mediante PR con comprobaciones. No se cambian tag, notas empaquetadas ni bytes publicados: los textos de revisión dentro del ZIP registran su preparación histórica. Para instalar, [INSTALL.md](INSTALL.md). Las siguientes referencias v0.2.0 y a #40 son historia/procedimiento, no una publicación pendiente actual.
+
 [v0.2.0 experimental está publicada](https://github.com/v1kz25/openapi-contract-lab/releases/tag/v0.2.0) desde el 2026-11-22, como prerelease bajo **Apache-2.0**, con ZIP Windows x64 y SHA256SUMS.txt, sin redistribuir oasdiff. #33 completado, PR #34 integrada en `main` y #35 sincronizada a `develop`. El tag desreferenciado es `72ebbd87558bd73ae138696fd9dc62a58b6e2c04`. [v0.1.0](https://github.com/v1kz25/openapi-contract-lab/releases/tag/v0.1.0) sigue disponible como versión histórica; sus notas y artefactos se conservan.
 
 Las [notas v0.2.0](releases/v0.2.0.md), BUILD.txt y [guía #33](CANDIDATE-V0.2.0.md) registran la preparación anterior a publicar; sus frases «no publicado» son históricas. No modificar tags, archivos ni notas publicadas para corregir ese estado. Usar [INSTALL.md](INSTALL.md) para instalación/actualización vigente. `develop` contiene estabilización posterior de #37/#38, y `release/1.0.0` prepara el candidato siguiente; no confundir ninguno con bytes de una versión ya publicada.
 
 ## Candidato v1.0.0 — issue #40
+
+**Registro histórico de preparación, ya completada y publicada por #41.** Los siguientes párrafos conservan el contexto de revisión anterior a autorizar/publicar; el estado vigente y la evidencia de publicación están arriba.
 
 `release/1.0.0` parte de `develop` aprobado `b3f0d3c72758ffe318ae96ca7f0aec81219001da`. #36–#39 ya revisados e integrados; sus cierres anteriores a `main` se verifican expresamente porque GitHub no cierra automáticamente los issues al fusionar a `develop`. El candidato solo ajusta identificación/expectativas a v1.0.0, cabecera de avisos y documentación. [Notas, contrato, migración y límites](releases/v1.0.0.md). La versión publicada sigue siendo v0.2.0; **no existe publicación v1.0.0**.
 
