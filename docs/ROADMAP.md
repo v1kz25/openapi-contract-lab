@@ -6,6 +6,10 @@
 
 Apache-2.0, Go 1.27.4, oasdiff 1.39.0, sin módulos Go externos ni coste adicional obligatorio. Solo Windows x64 verificado, PowerShell 5.1 y 7. [v0.1.0](https://github.com/v1kz25/openapi-contract-lab/releases/tag/v0.1.0), sus diez explicaciones y [notas](releases/v0.1.0.md) permanecen como historia. Las [notas v0.2.0](releases/v0.2.0.md) y [guía de candidato](CANDIDATE-V0.2.0.md) describen la preparación de #33: sus frases «no publicado» son anteriores a la publicación. #39 reconcilia guías activas de instalación, empaquetado y mantenimiento sin modificar bytes ni notas publicados. #37/#38 ya están integrados en `develop`; la siguiente preparación de candidato corresponde a #40 después de revisar #39. Cada futura integración/publicación requiere aprobación independiente según [RELEASE.md](RELEASE.md).
 
+## Candidato v1.0.0 — preparación para revisión
+
+La siguiente preparación, [candidato v1.0.0 #40](releases/v1.0.0.md), parte de `develop` `b3f0d3c72758ffe318ae96ca7f0aec81219001da` con #36–#39 completados y revisados. Su PR hacia `main` registra la evaluación de cada punto de la checklist con evidencias del SHA exacto; la aprobación explícita/publicación permanece pendiente para #41. No hay tag ni release v1.0.0 ni se inicia #41 al preparar ese candidato.
+
 ## Candidato experimental v0.2.0 — trabajo completado
 
 Este backlog histórico está cerrado; no son tareas nuevas para v1. La documentación #22, las tres explicaciones #21, los informes agrupados #23 y la [regresión 3.1 con cinco pares concretos](OPENAPI31-REGRESSION.md) del #24 se integraron mediante las PRs #26, #27, #28 y #31. El [spike #25](CHANGE-KIND-SPIKE.md), integrado en #32, concluyó reducir la propuesta a una señal de diferencias detectadas/no detectadas/desconocido y posponer su integración pública; no demuestra categorías generales de igualdad o cambio solo documental. La clasificación no está implementada.

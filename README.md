@@ -2,9 +2,9 @@
 
 <img src="docs/assets/openapi-contract-lab-logo.png" alt="OpenAPI Contract Lab: comparación y revisión de contratos API" width="640">
 
-> v0.2.0 experimental publicada: CLI local con oasdiff, trece explicaciones, informes agrupados y política de severidad. Solo Windows x64 verificado; CLI/esquema experimentales y cobertura OpenAPI limitada. v1.0.0 todavía no preparada ni publicada.
+> Candidato v1.0.0 para revisión: contrato CLI/JSON documentado, trece explicaciones, informes locales y política de severidad. Solo Windows x64 y corpus OpenAPI acotado. No publicado; versión pública vigente v0.2.0 experimental.
 
-La [prerelease v0.2.0](https://github.com/v1kz25/openapi-contract-lab/releases/tag/v0.2.0) está publicada y sincronizada a `develop` mediante #34/#35. Las [notas v0.2.0](docs/releases/v0.2.0.md) y [preparación #33](docs/CANDIDATE-V0.2.0.md) conservan su redacción histórica de candidato; para instalar usar la [guía vigente](docs/INSTALL.md). v0.1.0, sus notas y archivos conservan sus diez explicaciones originales. `develop` incluye estabilización posterior; no es el ZIP publicado aunque conserve la identificación v0.2.0.
+La [prerelease v0.2.0](https://github.com/v1kz25/openapi-contract-lab/releases/tag/v0.2.0) está publicada y sincronizada a `develop` mediante #34/#35. Las [notas v0.2.0](docs/releases/v0.2.0.md) y [preparación #33](docs/CANDIDATE-V0.2.0.md) conservan su redacción histórica de candidato; para instalar usar la [guía vigente](docs/INSTALL.md). v0.1.0, sus notas y archivos conservan sus diez explicaciones originales. `release/1.0.0` prepara el [candidato #40](docs/releases/v1.0.0.md), identificado como v1.0.0 y distinto del ZIP público. Contrato estable propuesto para CLI 1.x/JSON v1; sus garantías entrarán en vigor al aprobar y publicar v1.0.0.
 
 Explica cambios incompatibles entre contratos OpenAPI usando oasdiff, con informes locales y CI.
 
@@ -31,7 +31,7 @@ go build -trimpath -buildvcs=false -o dist/openapi-contract-lab.exe ./cmd/openap
 $LASTEXITCODE # 3: informe generado; breaking change
 ```
 
-Sin argumentos muestra ayuda. `--version` devuelve `openapi-contract-lab v0.2.0`. Un comando desconocido devuelve un mensaje en stderr y código 2. La CLI no inicia un servidor ni una interfaz gráfica. Las [notas v0.1.0](docs/releases/v0.1.0.md) describen únicamente los archivos de aquella versión publicada.
+Sin argumentos muestra ayuda. En esta rama de candidato, `--version` devuelve `openapi-contract-lab v1.0.0`; no implica publicación. Un comando desconocido devuelve un mensaje en stderr y código 2. La CLI no inicia un servidor ni una interfaz gráfica. Las [notas v0.1.0](docs/releases/v0.1.0.md) describen únicamente los archivos de aquella versión publicada.
 
 Para comparar, preparar el binario oficial según el [spike](docs/OASDIFF-SPIKE.md). `--oasdiff` puede omitirse si oasdiff está en PATH. Las dos entradas deben ser archivos locales; se deshabilitan las referencias externas. La salida conserva rule ID, severidad, ruta, ubicaciones y el evento original. Ver [modelo y pruebas del adaptador](docs/OASDIFF-ADAPTER.md).
 
@@ -58,7 +58,7 @@ Una lista vacía de hallazgos no implica que los contratos sean idénticos: los 
 - Comparación de dos archivos locales mediante oasdiff 1.39.0. Regresión probada con fixtures 3.0.3 y [cinco pares acotados 3.1.0](docs/OPENAPI31-REGRESSION.md), incluidos unión con null y propiedad de respuesta; no se afirma cobertura completa de 3.1 ni soporte verificado de 3.2. v0.1.0 publicada conserva su corpus mínimo original.
 - Clasificación conservada del motor y trece explicaciones deterministas en español en v0.2.0 (diez en v0.1.0); fallback neutral para otras reglas/niveles.
 - Informes JSON/Markdown/HTML offline y gate configurable por severidad. Timeout de comparación de 30 segundos; referencias externas y entradas URL/UNC deshabilitadas.
-- Solo Windows x64 verificado; PowerShell 5.1 y 7. El esquema de informe y la CLI siguen en desarrollo. Sin GUI, comparación por carpetas, editor ni autofix.
+- Solo Windows x64 verificado; PowerShell 5.1 y 7. Contrato CLI 1.x/JSON v1 documentado en el candidato, sin nuevo campo de esquema; v0.2.0 publicada conserva su carácter experimental. Sin GUI, comparación por carpetas, editor ni autofix.
 
 ### Fuera del MVP
 

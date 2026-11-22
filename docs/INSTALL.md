@@ -2,6 +2,8 @@
 
 Versión vigente: [**v0.2.0 experimental publicada**](https://github.com/v1kz25/openapi-contract-lab/releases/tag/v0.2.0), no estable. Solo Windows x64, PowerShell 5.1 y 7 verificados. Go 1.27.4 solo es necesario para **compilar desde fuente**; para ejecutar basta la CLI del ZIP y oasdiff 1.39.0 externo. No hay instalador, autoupdater ni instalación global.
 
+El [candidato v1.0.0 de #40](releases/v1.0.0.md) aún no está publicado: usar únicamente sus archivos locales y SHA/checksums registrados en la PR para revisarlo. No cambiar las URLs/hashes de descarga de v0.2.0 por una v1.0.0 inexistente. [Preparación reproducible del candidato](RELEASE.md#candidato-v100--issue-40); las instrucciones siguientes siguen reproduciendo v0.2.0 publicada.
+
 Se conservan las notas y bytes históricos de v0.1.0/v0.2.0; las frases de candidato pendiente dentro del ZIP v0.2.0 describen su preparación anterior a publicar. El estado vigente se comprueba en la release y aquí, no reescribiendo archivos publicados. Licencia Apache-2.0; conservar LICENSE, NOTICE y THIRD_PARTY_NOTICES.txt (runtime/stdlib Go BSD-3-Clause). oasdiff Apache-2.0 se descarga por separado, conservando sus avisos; no se redistribuye dentro de nuestro ZIP.
 
 ## Usar el ZIP sin SDK

@@ -32,7 +32,7 @@ function Invoke-Smoke {
 $helpText = Invoke-Smoke 'help' @('--help') 0
 if ($helpText -notmatch 'Usage:' -or $helpText -notmatch 'compare') { throw 'Help regression' }
 $version = Invoke-Smoke 'version' @('--version') 0
-if ($version.Trim() -ne 'openapi-contract-lab v0.2.0') { throw 'Unexpected release version' }
+if ($version.Trim() -ne 'openapi-contract-lab v1.0.0') { throw 'Unexpected release version' }
 $compareHelp = Invoke-Smoke 'compare-help' @('compare','--help') 0
 if ($compareHelp -notmatch '--fail-on') { throw 'Policy help missing' }
 $common = @('compare','--oasdiff',$Engine)
